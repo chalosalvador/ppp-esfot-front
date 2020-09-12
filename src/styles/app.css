@@ -124,6 +124,10 @@ body {
     -ms-word-break: break-all;
 }
 
+.ant-descriptions {
+    margin-bottom: 20px;
+}
+
 .ant-descriptions-item-label {
     font-weight: bold;
 }

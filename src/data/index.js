@@ -21,7 +21,7 @@ let headers = { 'Accept': 'application/json' };
  * @returns {Promise<{data: *, status: number}|*|{data, status: number}>}
  */
 const handleRequest = async( endpoint, method, params = null ) => {
-  if( !API.headers[ 'Authorization' ] ) {
+  if( Cookies.get( 'token' ) && !API.headers[ 'Authorization' ] ) {
     API.headers[ 'Authorization' ] = `Bearer ${ Cookies.get( 'token' ) }`;
   }
   const requestData = { method };

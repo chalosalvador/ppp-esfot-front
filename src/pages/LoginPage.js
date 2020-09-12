@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import '../styles/login.css';
 import ErrorList from '../components/ErrorList';
 
-const Login = () => {
+const LoginPage = () => {
   const { setAuthenticated, setCurrentUser } = useAuth();
 
   const onFinish = async( userData ) => {
@@ -109,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default withoutAuth( Login );
+export default withoutAuth( LoginPage );

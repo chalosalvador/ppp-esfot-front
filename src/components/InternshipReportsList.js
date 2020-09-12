@@ -66,13 +66,13 @@ const InternshipReportsList = ( { id } ) => {
   const getDataSource = () => {
     if( reports ) {
       return reports.map( ( report ) => ({
+          ...report,
           key: report.id,
-          created_at: moment( report.created_at ).format( 'DD/MM/YYYY' ),
+          created_at: moment( report.created_at ).format( 'DD/MM/YYYY HH:mm:ss' ),
           from_date: moment( report.from_date ).format( 'DD/MM/YYYY' ),
           to_date: report.to_date && moment( report.to_date ).format( 'DD/MM/YYYY' ),
           hours_worked: report.hours_worked,
           status: report.status,
-          ...report
         })
       );
     } else {

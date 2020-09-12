@@ -3,19 +3,16 @@
  */
 
 const publicRoutes = {
+  INDEX: '/',
   LOGIN: '/ingreso',
   REGISTER: '/registro',
-  ARTICLES: '/articulos',
-  USERS: '/usuarios',
-  USERS_ID: `/usuario/:id`,
-  HOME: '/',
+  HOME: '/inicio',
   ABOUT: '/acerca-de',
-  ANTD: '/antd'
 };
 
 const privateRoutes = {
   LOGOUT: '/logout',
-  PRIVATE: '/privada',
+  USERS: '/usuarios',
   INTERNSHIP_ID: '/practica/:id'
 };
 

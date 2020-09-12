@@ -20,13 +20,14 @@ import Loading from '../components/Loading';
  */
 const loadableOptions = { fallback: <Loading /> };
 
-const AsyncHome = loadable( () => import( '../pages/Index' ), loadableOptions );
-const AsyncLogin = loadable( () => import( '../pages/Login' ), loadableOptions );
-const AsyncRegister = loadable( () => import( '../pages/Register' ), loadableOptions );
+const AsyncIndex = loadable( () => import( '../pages/Index' ), loadableOptions );
+const AsyncLogin = loadable( () => import( '../pages/LoginPage' ), loadableOptions );
+const AsyncRegister = loadable( () => import( '../pages/RegisterPage' ), loadableOptions );
+const AsyncHome = loadable( () => import( '../pages/HomePage' ), loadableOptions );
 // const AsyncPrivate = loadable( () => import( '../pages/Private' ), loadableOptions );
 // const AsyncArticles = loadable( () => import( '../pages/Articles' ), loadableOptions );
 const AsyncInternship = loadable( () => import( '../pages/InternshipPage' ), loadableOptions );
-const AsyncAbout = loadable( () => import( '../pages/About' ), loadableOptions );
+const AsyncAbout = loadable( () => import( '../pages/AboutPage' ), loadableOptions );
 const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions );
 
 
@@ -43,11 +44,12 @@ const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions
  */
 const AppRouter = () => (
   <Switch>
-    <PublicRoute exact path={ Routes.HOME } component={ AsyncHome } />
+    <PublicRoute exact path={ Routes.INDEX } component={ AsyncIndex } />
     <PublicRoute path={ Routes.LOGIN } component={ AsyncLogin } />
     <PublicRoute path={ Routes.REGISTER } component={ AsyncRegister } />
     <PublicRoute path={ Routes.ABOUT } component={ AsyncAbout } />
 
+    <PrivateRoute path={ Routes.HOME } component={ AsyncHome } />
     <PrivateRoute path={ Routes.INTERNSHIP_ID } component={ AsyncInternship } />
     <PrivateRoute path={ Routes.LOGOUT } component={ AsyncLogout } />
 

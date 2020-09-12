@@ -14,7 +14,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons/lib';
 
 const { Title } = Typography;
 
-const Register = () => {
+const RegisterPage = () => {
   // const auth = useAuth();
   // const router = useRouter();
 
@@ -22,7 +22,7 @@ const Register = () => {
   //   const checkAuthentication = () => {
   //     console.log( 'auth.token', auth );
   //     if( auth.token ) {
-  //       router.push( Routes.HOME );
+  //       router.push( Routes.INDEX );
   //     }
   //   };
   //
@@ -182,4 +182,4 @@ const Register = () => {
   );
 };
 
-export default withoutAuth( Register );
+export default withoutAuth( RegisterPage );
