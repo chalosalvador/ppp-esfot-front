@@ -4,7 +4,8 @@
 import React from 'react';
 import { List, Divider, Typography, Descriptions, Rate } from 'antd';
 import { FrownFilled, SmileFilled, MehFilled, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
-import moment from 'moment';
+
+const { Title } = Typography;
 
 const InternshipReportDetail = ( { report } ) => {
   // const {report, isLoading, isError} = useInternshipReport()
@@ -65,22 +66,36 @@ const InternshipReportDetail = ( { report } ) => {
   return (
     report &&
     <>
-      <Descriptions title={ `Reporte ${ report.type === 'partial'
-        ? 'parcial'
-        : 'final' }` } bordered column={ 2 }>
-        <Descriptions.Item label='Desde'>{ moment( report.from_date ).format( 'DD/MM/YYYY' ) }</Descriptions.Item>
-        <Descriptions.Item label='Hasta'>{ moment( report.to_date ).format( 'DD/MM/YYYY' ) }</Descriptions.Item>
+      <Title>
+        { `Reporte ${ report.type === 'partial'
+          ? 'parcial'
+          : 'final' }` }
+      </Title>
+
+      <Descriptions title={ <Divider orientation='center'><strong>REPORTE DEL ESTUDIANTE</strong></Divider> }
+                    bordered
+                    column={ 2 }>
+        <Descriptions.Item label='Desde'>{ report.from_date }</Descriptions.Item>
+        <Descriptions.Item label='Hasta'>{ report.to_date }</Descriptions.Item>
+        <Descriptions.Item label='Horas ejecutadas hasta la fecha'>{ report.hours_worked }</Descriptions.Item>
+        <Descriptions.Item label='Área asignada'>{ report.area }</Descriptions.Item>
+        <Descriptions.Item label='Actividades principales desarrolladas' span={ 2 }>
+          <List
+            dataSource={ report.activities.map( ( activity ) => activity.description ) }
+            renderItem={ item => <List.Item>{ item }</List.Item> }
+          />
+        </Descriptions.Item>
         <Descriptions.Item label='Observaciones del estudiante'
                            span={ 2 }>{ report.student_observations }</Descriptions.Item>
 
         {
-          report.useful_topics &&
+          report.type === 'final' && report.useful_topics &&
           <Descriptions.Item label='Asignaturas de la malla curricular y temáticas de mayor utilidad para el desarrollo de la práctica:'
                              span={ 2 }>{ renderUsefulTopics( report.useful_topics ) }</Descriptions.Item>
         }
 
         {
-          report.recommended_topics &&
+          report.type === 'final' && report.recommended_topics &&
           <Descriptions.Item label='Temáticas que hicieron falta y que no constan en la malla curricular'
                              span={ 2 }>{
             <ul>{
@@ -91,20 +106,10 @@ const InternshipReportDetail = ( { report } ) => {
         }
       </Descriptions>
 
-      <Descriptions title='REPORTE DE AVANCE DE LA PRÁCTICA' bordered column={ 2 }>
-        <Descriptions.Item label='Área asignada' span={ 2 }>{ report.area }</Descriptions.Item>
-        <Descriptions.Item label='Horas ejecutadas hasta la fecha'
-                           span={ 2 }>{ report.hours_worked }</Descriptions.Item>
-        <Descriptions.Item label='Actividades principales desarrolladas' span={ 2 }>
-          <List
-            dataSource={ report.activities.map( ( activity ) => activity.description ) }
-            renderItem={ item => <List.Item>{ item }</List.Item> }
-          />
-        </Descriptions.Item>
-        <Descriptions.Item label='Observaciones' span={ 2 }>{ report.evaluation_observations }</Descriptions.Item>
-      </Descriptions>
 
-      <Descriptions title='Evaluación general cualitativa' bordered column={ 2 }>
+      <Descriptions title={ <Divider orientation='center'><strong>REPORTE DE LA EMPRESA</strong></Divider> }
+                    bordered
+                    column={ 2 }>
         <Descriptions.Item label='Desempeño'
                            span={ 2 }>{ renderRate( report.evaluation_performance ) }</Descriptions.Item>
         <Descriptions.Item label='Motivación'
@@ -113,42 +118,45 @@ const InternshipReportDetail = ( { report } ) => {
                            span={ 2 }>{ renderRate( report.evaluation_knowledge ) }</Descriptions.Item>
         <Descriptions.Item label='Puntualidad y responsabilidad'
                            span={ 2 }>{ renderRate( report.evaluation_punctuality ) }</Descriptions.Item>
+        <Descriptions.Item label='Observaciones' span={ 2 }>{ report.evaluation_observations }</Descriptions.Item>
       </Descriptions>
 
-      <Descriptions title='EVALUACIÓN DE LA PRÁCTICA PREPROFESIONAL' bordered column={ 2 }>
-        <Descriptions.Item label='Novedades Reportadas por el estudiante/empresa'
+
+      <Descriptions title={ <Divider orientation='center'><strong>REPORTE DEL TUTOR ACADÉMICO</strong></Divider> }
+                    bordered
+                    column={ 2 }>
+        <Descriptions.Item label='Novedades reportadas por el estudiante/empresa'
                            span={ 2 }>{ report.tutor_observations }</Descriptions.Item>
+        {
+          report.type === 'final'
+            ? <>
+              <Descriptions.Item label='Desempeño'>{ report.tutor_recommends !== null
+                ? report.tutor_recommends
+                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                : null }</Descriptions.Item>
+              <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_observations }</Descriptions.Item>
+              <Descriptions.Item label='Motivación'>{ report.tutor_knowledge_contribution !== null
+                ? report.tutor_knowledge_contribution
+                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                : null }</Descriptions.Item>
+              <Descriptions.Item label='Observaciones'>{ report.tutor_knowledge_contribution_observations }</Descriptions.Item>
+              <Descriptions.Item label='Habilidades y destrezas'>{ report.tutor_recommends_approval !== null
+                ? report.tutor_recommends_approval
+                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                : null }</Descriptions.Item>
+              <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_approval_observations }</Descriptions.Item>
+            </>
+            : <>
+              <Descriptions.Item label='Actividades de seguimiento ejecutadas'
+                                 span={ 2 }>{ report.tutor_followup_actions }</Descriptions.Item>
+              <Descriptions.Item label='Acciones de mejora'
+                                 span={ 2 }>{ report.tutor_improvement_actions }</Descriptions.Item>
+            </>
+        }
       </Descriptions>
-
-      {
-        report.type === 'final'
-          ? <Descriptions title='Evaluación cualitativa' bordered column={ 2 }>
-            <Descriptions.Item label='Desempeño'>{ report.tutor_recommends !== null
-              ? report.tutor_recommends
-                ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-              : null }</Descriptions.Item>
-            <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_observations }</Descriptions.Item>
-            <Descriptions.Item label='Motivación'>{ report.tutor_knowledge_contribution !== null
-              ? report.tutor_knowledge_contribution
-                ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-              : null }</Descriptions.Item>
-            <Descriptions.Item label='Observaciones'>{ report.tutor_knowledge_contribution_observations }</Descriptions.Item>
-            <Descriptions.Item label='Habilidades y destrezas'>{ report.tutor_recommends_approval !== null
-              ? report.tutor_recommends_approval
-                ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-              : null }</Descriptions.Item>
-            <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_approval_observations }</Descriptions.Item>
-          </Descriptions>
-          : <Descriptions title='REPORTE DE SEGUIMIENTO A LAS PRÁCTICAS PREPROFESIONALES' bordered column={ 2 }>
-            <Descriptions.Item label='Actividades de seguimiento ejecutadas por el tutor'
-                               span={ 2 }>{ report.tutor_followup_actions }</Descriptions.Item>
-            <Descriptions.Item label='Acciones de mejora'
-                               span={ 2 }>{ report.tutor_improvement_actions }</Descriptions.Item>
-          </Descriptions>
-      }
 
 
     </>

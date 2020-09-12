@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Row, Skeleton, Table } from 'antd';
+import { Table } from 'antd';
 import { useInternshipsList } from '../data/useInternshipsList';
 import ShowError from './ShowError';
 import moment from 'moment';
@@ -15,6 +15,11 @@ const InternshipsList = ( props ) => {
       title: 'Fecha de creación',
       dataIndex: 'created_at',
       key: 'created_at',
+    },
+    {
+      title: 'Empresa',
+      dataIndex: 'company',
+      key: 'company',
     },
     {
       title: 'Fecha de inicio',
@@ -50,8 +55,8 @@ const InternshipsList = ( props ) => {
       title: 'Acciones',
       dataIndex: 'actions',
       key: 'actions',
-      render: (value, internship)=>{
-        return <Link to={Routes.INTERNSHIP_ID.replace( ':id', internship.key )}>Ver detalles</Link>
+      render: ( value, internship ) => {
+        return <Link to={ Routes.INTERNSHIP_ID.replace( ':id', internship.key ) }>Ver detalles</Link>;
       }
     },
   ];
@@ -69,7 +74,6 @@ const InternshipsList = ( props ) => {
   }
 
   const getDataSource = () => {
-    console.log( 'internships', internships );
     if( internships ) {
       return internships.map( ( internship ) => ({
           key: internship.id,
@@ -79,6 +83,7 @@ const InternshipsList = ( props ) => {
           type: internship.type,
           student: `${ internship.student.name } ${ internship.student.lastname }`,
           tutor: internship.teacher && `${ internship.teacher.name } ${ internship.teacher.lastname }`,
+          company: internship.company && internship.company.name,
           status: internship.status,
         })
       );
@@ -99,7 +104,7 @@ const InternshipsList = ( props ) => {
   return <Table
     dataSource={ getDataSource() }
     columns={ columns }
-    rowKey={ record => record.id }
+    rowKey={ record => record.key }
     pagination={ pagination }
     loading={ isLoading }
     onChange={ ( pagination ) => setPageIndex( pagination.current ) }
