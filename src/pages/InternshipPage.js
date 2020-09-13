@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import InternshipDetail from '../components/InternshipDetail';
 import InternshipReportsList from '../components/InternshipReportsList';
 import { useAuth } from '../providers/Auth';
-import CreateReportModal from '../components/CreateReportModal';
+import ReportStudentSectionFormModal from '../components/ReportStudentSectionFormModal';
 import { Divider } from 'antd';
 
 const InternshipPage = () => {
@@ -15,9 +15,13 @@ const InternshipPage = () => {
     <>
       <InternshipDetail id={ id } />
 
-      <Divider orientation='center' style={{marginTop: 40}}><strong>REPORTES REGISTRADOS</strong></Divider>
-      { currentUser.role === 'ROLE_STUDENT' && <CreateReportModal internshipId={ id } /> }
-      <InternshipReportsList id={ id } />
+      <Divider orientation='center'
+               style={ {
+                 marginTop: 40,
+                 marginBottom: 40
+               } }><strong>REPORTES REGISTRADOS</strong></Divider>
+      { currentUser.role === 'ROLE_STUDENT' && <ReportStudentSectionFormModal internshipId={ id } /> }
+      <InternshipReportsList internshipId={ id } />
     </>
   );
 

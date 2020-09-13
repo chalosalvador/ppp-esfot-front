@@ -2,13 +2,20 @@
  * Created by chalosalvador on 9/10/20
  */
 import React from 'react';
-import { List, Divider, Typography, Descriptions, Rate } from 'antd';
-import { FrownFilled, SmileFilled, MehFilled, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+import { List, Divider, Typography, Descriptions, Rate, Button } from 'antd';
+import {
+  FrownFilled, SmileFilled, MehFilled, CheckCircleTwoTone, CloseCircleTwoTone, EditOutlined
+} from '@ant-design/icons';
+import { useAuth } from '../providers/Auth';
+import ReportStudentSectionFormModal from './ReportStudentSectionFormModal';
+import { useInternshipReport } from '../data/useInternshipReport';
+import ShowError from './ShowError';
 
 const { Title } = Typography;
 
-const InternshipReportDetail = ( { report } ) => {
-  // const {report, isLoading, isError} = useInternshipReport()
+const InternshipReportDetail = ( props ) => {
+  const { report, isLoading, isError } = useInternshipReport( props.report.internship_id, props.report.id );
+  const { currentUser } = useAuth();
 
   const customIcons = {
     1: {
@@ -53,7 +60,7 @@ const InternshipReportDetail = ( { report } ) => {
           <div><strong>{ topicsBySubject[ subject_id ][ 0 ].subject_name.toUpperCase() }</strong></div>
           <ul>
             {
-              topicsBySubject[ subject_id ].map( ( topic ) => <li>{ topic.name }</li> )
+              topicsBySubject[ subject_id ].map( ( topic, i ) => <li key={ i }>{ topic.name }</li> )
             }
           </ul>
         </div>
@@ -62,6 +69,14 @@ const InternshipReportDetail = ( { report } ) => {
 
     return items;
   };
+
+  if( isLoading ) {
+    return <div>Cargando...</div>;
+  }
+
+  if( isError ) {
+    return <ShowError error={ isError } />;
+  }
 
   return (
     report &&
@@ -74,16 +89,17 @@ const InternshipReportDetail = ( { report } ) => {
 
       <Descriptions title={ <Divider orientation='center'><strong>REPORTE DEL ESTUDIANTE</strong></Divider> }
                     bordered
-                    column={ 2 }>
+                    column={ 2 }
+                    extra={ currentUser.role === 'ROLE_STUDENT' && currentUser.id === report.user_id && report.status === 'representative_pending' &&
+                    <ReportStudentSectionFormModal edit={ true } report={ report } /> }>
         <Descriptions.Item label='Desde'>{ report.from_date }</Descriptions.Item>
         <Descriptions.Item label='Hasta'>{ report.to_date }</Descriptions.Item>
         <Descriptions.Item label='Horas ejecutadas hasta la fecha'>{ report.hours_worked }</Descriptions.Item>
         <Descriptions.Item label='Área asignada'>{ report.area }</Descriptions.Item>
         <Descriptions.Item label='Actividades principales desarrolladas' span={ 2 }>
-          <List
-            dataSource={ report.activities.map( ( activity ) => activity.description ) }
-            renderItem={ item => <List.Item>{ item }</List.Item> }
-          />
+          <ol>
+            { report.activities.map( ( activity, i ) => <li key={ i }>{ activity.description }</li> ) }
+          </ol>
         </Descriptions.Item>
         <Descriptions.Item label='Observaciones del estudiante'
                            span={ 2 }>{ report.student_observations }</Descriptions.Item>
@@ -99,7 +115,7 @@ const InternshipReportDetail = ( { report } ) => {
           <Descriptions.Item label='Temáticas que hicieron falta y que no constan en la malla curricular'
                              span={ 2 }>{
             <ul>{
-              report.recommended_topics.map( ( topic ) => <li>{ topic.name }</li> )
+              report.recommended_topics.map( ( topic, i ) => <li key={ i }>{ topic.name }</li> )
             }</ul>
 
           }</Descriptions.Item>

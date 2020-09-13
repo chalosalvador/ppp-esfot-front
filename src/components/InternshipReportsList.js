@@ -4,14 +4,12 @@
 import React, { useState } from 'react';
 import { useInternshipReportsList } from '../data/useInternshipReportsList';
 import ShowError from './ShowError';
-import { Divider, Row, Col, Drawer, Table, Button } from 'antd';
+import { Drawer, Table, Button } from 'antd';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import Routes from '../constants/routes';
 import InternshipReportDetail from './InternshipReportDetail';
 
-const InternshipReportsList = ( { id } ) => {
-  const { reports, isLoading, isError } = useInternshipReportsList( id );
+const InternshipReportsList = ( { internshipId } ) => {
+  const { reports, isLoading, isError } = useInternshipReportsList( internshipId );
   const [ report, setReport ] = useState( null );
 
   const columns = [
@@ -90,6 +88,7 @@ const InternshipReportsList = ( { id } ) => {
         // pagination={ pagination }
         // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
       />
+
       <Drawer
         closable={ false }
         onClose={ () => setReport( null ) }
@@ -99,7 +98,9 @@ const InternshipReportsList = ( { id } ) => {
         width='1100px'
         destroyOnClose
       >
-        <InternshipReportDetail report={ report } />
+        {
+          report && <InternshipReportDetail report={ report } />
+        }
       </Drawer>
     </>
   );

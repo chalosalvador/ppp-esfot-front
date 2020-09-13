@@ -2,10 +2,11 @@
  * Created by chalosalvador on 9/9/20
  */
 import React from 'react';
-import { Descriptions, Badge, Divider } from 'antd';
+import { Descriptions, Typography, Divider } from 'antd';
 import { useInternship } from '../data/useInternship';
 import ShowError from './ShowError';
 
+const { Title } = Typography;
 const InternshipDetail = ( { id } ) => {
   const { internship, isLoading, isError } = useInternship( id );
 
@@ -19,6 +20,10 @@ const InternshipDetail = ( { id } ) => {
 
   return (
     <>
+      <Title>
+        Detalles de la práctica
+      </Title>
+
       <Descriptions title={ <Divider orientation='center'><strong>DATOS DEL PRACTICANTE</strong></Divider> }
                     bordered
                     column={ 2 }>
