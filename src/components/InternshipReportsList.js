@@ -34,6 +34,11 @@ const InternshipReportsList = ( { internshipId } ) => {
       key: 'hours_worked',
     },
     {
+      title: 'Tipo',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
       title: 'Estado',
       dataIndex: 'status',
       key: 'status',
@@ -71,6 +76,7 @@ const InternshipReportsList = ( { internshipId } ) => {
           to_date: report.to_date && moment( report.to_date ).format( 'DD/MM/YYYY' ),
           hours_worked: report.hours_worked,
           status: report.status,
+          type: report.type,
         })
       );
     } else {
@@ -83,9 +89,32 @@ const InternshipReportsList = ( { internshipId } ) => {
       <Table
         dataSource={ getDataSource() }
         columns={ columns }
-        rowKey={ record => record.id }
+        // rowKey={ record => record.id }
         loading={ isLoading }
-        // pagination={ pagination }
+        summary={ ( reports ) => {
+          let totalHoursApproved = 0;
+          let totalHoursPending = 0;
+          reports.forEach( ( { hours_worked, status } ) => {
+            if( status === 'approved' || status === 'registered' ) {
+              totalHoursApproved += hours_worked;
+            } else {
+              totalHoursPending += hours_worked;
+            }
+          } );
+          return (
+            <>
+              <Table.Summary.Row>
+                <Table.Summary.Cell colSpan={ 3 }>Total de horas aprobadas</Table.Summary.Cell>
+                <Table.Summary.Cell index={ 3 }>{ totalHoursApproved }</Table.Summary.Cell>
+              </Table.Summary.Row>
+              <Table.Summary.Row>
+                <Table.Summary.Cell colSpan={ 3 }>Total de horas pendientes</Table.Summary.Cell>
+                <Table.Summary.Cell index={ 3 }>{ totalHoursPending }</Table.Summary.Cell>
+              </Table.Summary.Row>
+            </>
+          );
+        } }
+        pagination={ false }
         // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
       />
 
@@ -98,12 +127,11 @@ const InternshipReportsList = ( { internshipId } ) => {
         width='1100px'
         destroyOnClose
       >
-        {
-          report && <InternshipReportDetail report={ report } />
-        }
+        { report && <InternshipReportDetail report={ report } /> }
       </Drawer>
     </>
-  );
+  )
+    ;
 };
 
 export default InternshipReportsList;

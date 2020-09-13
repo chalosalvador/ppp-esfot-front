@@ -5,24 +5,32 @@ import React from 'react';
 import { Descriptions, Typography, Divider } from 'antd';
 import { useInternship } from '../data/useInternship';
 import ShowError from './ShowError';
+import moment from 'moment';
 
 const { Title } = Typography;
-const InternshipDetail = ( { id } ) => {
-  const { internship, isLoading, isError } = useInternship( id );
-
-  if( isLoading ) {
-    return <div>Cargando...</div>;
-  }
-
-  if( isError ) {
-    return <ShowError error={ isError } />;
-  }
+const InternshipDetail = ( { internship } ) => {
 
   return (
     <>
       <Title>
         Detalles de la práctica
       </Title>
+
+      <Descriptions bordered column={ 2 }>
+        <Descriptions.Item label='Tipo'>{ internship.type }</Descriptions.Item>
+        <Descriptions.Item label='Estado'>{ internship.status }</Descriptions.Item>
+        <Descriptions.Item label='Tutor(a)'>
+          { internship.teacher
+            ? `${ internship.teacher.name } ${ internship.teacher.lastname }`
+            : null }
+        </Descriptions.Item>
+        <Descriptions.Item label='Tipo'>{ internship.type }</Descriptions.Item>
+        <Descriptions.Item label='Fecha de inicio'>{ moment( internship.start_date )
+          .format( 'DD/MM/YYYY' ) }</Descriptions.Item>
+        <Descriptions.Item label='Fecha de fin'>
+          { internship.finish_date && moment( internship.finish_date ).format( 'DD/MM/YYYY' ) }
+        </Descriptions.Item>
+      </Descriptions>
 
       <Descriptions title={ <Divider orientation='center'><strong>DATOS DEL PRACTICANTE</strong></Divider> }
                     bordered
@@ -36,7 +44,7 @@ const InternshipDetail = ( { id } ) => {
         <Descriptions.Item label='Teléfono'>{ internship.student.phone }</Descriptions.Item>
       </Descriptions>
 
-      <Descriptions title={ <Divider orientation='center'><strong>DATOS DE LA EMPRESA</strong></Divider> }
+      <Descriptions title={ <Divider orientation='center'><strong>DATOS DE LA INSTITUCIÓN RECEPTORA</strong></Divider> }
                     bordered
                     column={ 2 }>
         <Descriptions.Item label='Razón social'>{ internship.company.name }</Descriptions.Item>
