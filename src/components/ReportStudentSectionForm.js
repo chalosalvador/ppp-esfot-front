@@ -3,15 +3,10 @@
  */
 import React from 'react';
 import { Form, Button, Input, DatePicker, Select, InputNumber, message } from 'antd';
-import API from '../data';
-import ErrorList from './ErrorList';
-import { translateMessage } from '../utils/translateMessage';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
-const { Option } = Select;
-
 
 const formItemLayout = {
   labelCol: {
@@ -36,7 +31,7 @@ const formItemLayoutWithOutLabel = {
   },
 };
 
-const ReportForm = ( { form, onSubmit } ) => {
+const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
 
   const disabledDate = ( current ) => current && current > moment().endOf( 'day' );
 
@@ -46,7 +41,15 @@ const ReportForm = ( { form, onSubmit } ) => {
       onFinish={ onSubmit }
       form={ form }
       name='report'
-      initialValues={ { activities: [ '' ] } }
+      initialValues={ !props.report
+        ? { activities: [ '' ] }
+        : {
+          ...props.report,
+          dates: [ moment( props.report.from_date ), moment( props.report.to_date ) ],
+          activities: props.report.activities.length > 0
+            ? props.report.activities.map( ( activity ) => activity.description )
+            : [ '' ]
+        } }
     >
       <Form.Item name='dates' label='Fechas' rules={ [
         {
@@ -55,7 +58,10 @@ const ReportForm = ( { form, onSubmit } ) => {
         },
 
       ] }>
-        <RangePicker placeholder={ [ 'Inicio', 'Fin' ] } inputReadOnly disabledDate={ disabledDate } />
+        <RangePicker placeholder={ [ 'Inicio', 'Fin' ] }
+                     inputReadOnly
+                     disabledDate={ disabledDate }
+                     format='DD/MM/YYYY' />
       </Form.Item>
 
       <Form.Item label='Área' name='area' rules={ [
@@ -75,6 +81,7 @@ const ReportForm = ( { form, onSubmit } ) => {
         },
         {
           type: 'number',
+          min: 1,
           message: 'Ingresa un valor numérico.'
         },
       ] }>
@@ -152,11 +159,8 @@ const ReportForm = ( { form, onSubmit } ) => {
                         autoSize={ { maxRows: 4 } } />
       </Form.Item>
 
-      {/*<Button type='primary' htmlType='submit'>*/}
-      {/*  Submit*/}
-      {/*</Button>*/}
     </Form>
   );
 };
 
-export default ReportForm;
+export default ReportStudentSectionForm;

@@ -4,8 +4,8 @@
 import useSWR from 'swr';
 import API from './index';
 
-export const useInternshipReport = ( id, reportId, options= {} ) => {
-  const { data, error } = useSWR( `/internships/${ id }/internship-reports/${reportId}`, API.fetcher, options );
+export const useInternshipReport = ( internshipId, reportId, options= {} ) => {
+  const { data, error } = useSWR( `/internships/${ internshipId }/internship-reports/${reportId}`, API.fetcher, options );
 
   return {
     report: data && data.data,
