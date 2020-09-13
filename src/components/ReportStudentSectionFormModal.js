@@ -26,6 +26,7 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
 
       await mutate( `/internships/${ internshipId }/internship-reports` );
       setShowModal( false );
+      form.resetFields();
       message.success( 'El reporte se ha guardado correctamente.' );
     } catch( e ) {
       const errorList = e.error && <ErrorList errors={ e.error } />;
@@ -45,6 +46,7 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
       await mutate( `/internships/${ report.internship_id }/internship-reports` );
       await mutate( `/internships/${ report.internship_id }/internship-reports/${ report.id }` );
       setShowModal( false );
+      form.resetFields();
       message.success( 'El reporte se ha guardado correctamente.' );
     } catch( e ) {
       const errorList = e.error && <ErrorList errors={ e.error } />;
@@ -54,23 +56,25 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
 
   return (
     <>
-      <Row>
-        <Col align='right'>
-          {
-            !props.edit
-              ? <Button type='primary'
-                        style={ { marginBottom: 20 } }
-                        onClick={ () => setShowModal( true ) }
-                        icon={ <PlusOutlined /> }>Nuevo reporte</Button>
-              : <Button onClick={ () => setShowModal( true ) }
-                        icon={ <EditOutlined /> }>Editar</Button>
-          }
-        </Col>
-      </Row>
+      {
+        <Row>
+          <Col align='right'>
+            {
+              !props.edit
+                ? <Button type='primary'
+                          style={ { marginBottom: 20 } }
+                          onClick={ () => setShowModal( true ) }
+                          icon={ <PlusOutlined /> }>Nuevo reporte</Button>
+                : <Button onClick={ () => setShowModal( true ) }
+                          icon={ <EditOutlined /> }>Editar</Button>
+            }
+          </Col>
+        </Row>
+      }
 
       <Modal
         visible={ showModal }
-        onCancel={ () => setShowModal( false ) }
+        onCancel={ () => { form.resetFields(); setShowModal( false )} }
         onOk={ () => form.submit() }>
         {
           !props.edit

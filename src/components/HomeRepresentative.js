@@ -3,11 +3,14 @@
  */
 import React from 'react';
 import InternshipsList from './InternshipsList';
+import { Typography } from 'antd';
 
+const { Title } = Typography;
 const HomeRepresentative = () => {
   return (
     <div>
-      <h2>REPRESENTATIVE HOME</h2>
+      <Title>Lista de pasantes a cargo</Title>
+      <InternshipsList />
     </div>
   );
 };

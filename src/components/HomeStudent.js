@@ -10,7 +10,6 @@ import withAuth from '../hocs/withAuth';
 
 const HomeStudent = () => {
   const { currentUser } = useAuth();
-  console.log( 'currentUser', currentUser );
   return (
     <div>
 
@@ -36,7 +35,7 @@ const HomeStudent = () => {
                      prefix={ <CloseCircleTwoTone twoToneColor='#f5222d' /> } />
         </Col>
       </Row>
-      <h2>Prácticas realizadas</h2>
+      <h2>Prácticas preprofesionales realizadas</h2>
       <InternshipsList />
     </div>
   );

@@ -1,10 +1,11 @@
 /**
  * Created by chalosalvador on 9/11/20
  */
-import React from 'react';
-import { Form, Button, Input, DatePicker, Select, InputNumber, message } from 'antd';
+import React, { useState } from 'react';
+import { Alert, Form, Button, Input, DatePicker, InputNumber } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { useAuth } from '../providers/Auth';
 
 const { RangePicker } = DatePicker;
 
@@ -32,8 +33,20 @@ const formItemLayoutWithOutLabel = {
 };
 
 const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
+  const { currentUser } = useAuth();
+  const [ isFinalReport, setIsFinalReport ] = useState( false );
 
   const disabledDate = ( current ) => current && current > moment().endOf( 'day' );
+  const handleChangeHoursWorked = ( hours ) => {
+    const total_hours = currentUser.hours_registered + currentUser.hours_approved;
+    const sum_hours = total_hours + hours;
+    setIsFinalReport( sum_hours >= 480 );
+    form.setFieldsValue( {
+      type: sum_hours > 480
+        ? 'final'
+        : 'partial'
+    } );
+  };
 
   return (
     <Form
@@ -42,7 +55,10 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
       form={ form }
       name='report'
       initialValues={ !props.report
-        ? { activities: [ '' ] }
+        ? {
+          activities: [ '' ],
+          type: 'partial'
+        }
         : {
           ...props.report,
           dates: [ moment( props.report.from_date ), moment( props.report.to_date ) ],
@@ -50,6 +66,8 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
             ? props.report.activities.map( ( activity ) => activity.description )
             : [ '' ]
         } }
+      // onValuesChange={(changedValues, allValues)=> console.log( 'changedValues', changedValues )}
+      // onFieldsChange={(changedFields, allFields)=> console.log( 'changedFields', changedFields )}
     >
       <Form.Item name='dates' label='Fechas' rules={ [
         {
@@ -74,18 +92,39 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
         <Input />
       </Form.Item>
 
-      <Form.Item label='Horas' name='hours_worked' rules={ [
-        {
-          required: true,
-          message: 'Ingresa la cantidad de horas que vas a reportar.'
-        },
-        {
-          type: 'number',
-          min: 1,
-          message: 'Ingresa un valor numérico.'
-        },
-      ] }>
-        <InputNumber style={ { width: '100%' } } />
+      <Form.Item label='Horas' name='hours_worked'
+                 rules={ [
+                   {
+                     required: true,
+                     message: 'Ingresa la cantidad de horas que vas a reportar.'
+                   },
+                   {
+                     type: 'number',
+                     min: 1,
+                     message: 'Ingresa un valor numérico.'
+                   },
+                 ] }
+                 extra={
+                   isFinalReport && <Alert message='Reporte final de prácticas'
+                                           description='Tus horas de prácticas llegan o superan las 480 horas requeridas por lo que este será tu reporte final.'
+                                           type='info' showIcon />
+                 }>
+        <InputNumber style={ { width: '100%' } } onChange={ handleChangeHoursWorked } />
+      </Form.Item>
+
+      <Form.Item name='type' hidden
+                 rules={ [
+                   {
+                     required: true,
+                     message: 'El tipo de reporte no es válido.'
+                   },
+                   {
+                     enum: [ 'partial', 'final' ],
+                     message: 'El tipo de reporte no es válido.'
+                   },
+                 ] }
+                 >
+        <InputNumber style={ { width: '100%' } } onChange={ handleChangeHoursWorked } />
       </Form.Item>
 
       <Form.List name='activities'>
@@ -158,6 +197,10 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
         <Input.TextArea placeholder='Observaciones sobre las prácticas que ha realizado en la empresa.'
                         autoSize={ { maxRows: 4 } } />
       </Form.Item>
+
+      {
+        isFinalReport && <h1>Final</h1>
+      }
 
     </Form>
   );

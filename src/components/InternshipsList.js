@@ -17,9 +17,19 @@ const InternshipsList = ( props ) => {
       key: 'created_at',
     },
     {
+      title: 'Estudiante',
+      dataIndex: 'student',
+      key: 'student',
+    },
+    {
       title: 'Empresa',
       dataIndex: 'company',
       key: 'company',
+    },
+    {
+      title: 'Tutor',
+      dataIndex: 'tutor',
+      key: 'tutor',
     },
     {
       title: 'Fecha de inicio',
@@ -35,16 +45,6 @@ const InternshipsList = ( props ) => {
       title: 'Tipo',
       dataIndex: 'type',
       key: 'type',
-    },
-    {
-      title: 'Estudiante',
-      dataIndex: 'student',
-      key: 'student',
-    },
-    {
-      title: 'Tutor',
-      dataIndex: 'tutor',
-      key: 'tutor',
     },
     {
       title: 'Estado',
@@ -77,7 +77,7 @@ const InternshipsList = ( props ) => {
     if( internships ) {
       return internships.map( ( internship ) => ({
           key: internship.id,
-          created_at: moment( internship.created_at ).format( 'DD/MM/YYYY' ),
+          created_at: moment( internship.created_at ).format( 'DD/MM/YYYY HH:mm:ss' ),
           start_date: moment( internship.start_date ).format( 'DD/MM/YYYY' ),
           finish_date: internship.finish_date && moment( internship.finish_date ).format( 'DD/MM/YYYY' ),
           type: internship.type,
