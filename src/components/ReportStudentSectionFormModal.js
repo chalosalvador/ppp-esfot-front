@@ -11,13 +11,15 @@ import { translateMessage } from '../utils/translateMessage';
 import { mutate } from 'swr';
 import moment from 'moment';
 
-const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => {
+const ReportStudentSectionFormModal = ( { internshipId, report, edit } ) => {
   const [ form ] = Form.useForm();
   const [ showModal, setShowModal ] = useState( false );
+  const [ isSubmitting, setIsSubmitting ] = useState( false );
 
   const handleCreate = async( values ) => {
     console.log( 'values', values );
     try {
+      setIsSubmitting( true );
       await API.post( `/internships/${ internshipId }/internship-reports`, {
         ...values,
         from_date: moment( values.dates[ 0 ] ).format( 'YYYY-MM-DD' ),
@@ -32,11 +34,13 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
       const errorList = e.error && <ErrorList errors={ e.error } />;
       message.error( <>{ translateMessage( e.message ) }{ errorList }</> );
     }
+    setIsSubmitting( false );
   };
 
   const handleEdit = async( values ) => {
     console.log( 'values', values );
     try {
+      setIsSubmitting( true );
       await API.put( `/internships/${ report.internship_id }/internship-reports/${ report.id }`, {
         ...values,
         from_date: moment( values.dates[ 0 ] ).format( 'YYYY-MM-DD' ),
@@ -52,6 +56,7 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
       const errorList = e.error && <ErrorList errors={ e.error } />;
       message.error( <>{ translateMessage( e.message ) }{ errorList }</> );
     }
+    setIsSubmitting( false );
   };
 
   return (
@@ -60,7 +65,7 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
         <Row>
           <Col align='right'>
             {
-              !props.edit
+              !edit
                 ? <Button type='primary'
                           style={ { marginBottom: 20 } }
                           onClick={ () => setShowModal( true ) }
@@ -73,13 +78,24 @@ const ReportStudentSectionFormModal = ( { internshipId, report, ...props } ) => 
       }
 
       <Modal
+        title={ `${ !edit
+          ? 'Nuevo'
+          : 'Editar' } reporte de prácticas` }
         visible={ showModal }
-        onCancel={ () => { form.resetFields(); setShowModal( false )} }
+        closable={ false }
+        maskClosable={ false }
+        okText='Enviar reporte'
+        confirmLoading={ isSubmitting }
+        cancelText={ 'Cancelar' }
+        onCancel={ () => {
+          form.resetFields();
+          setShowModal( false );
+        } }
         onOk={ () => form.submit() }>
         {
-          !props.edit
-            ? <ReportStudentSectionForm internshipId={ internshipId } form={ form } onSubmit={ handleCreate } />
-            : <ReportStudentSectionForm report={ report } form={ form } onSubmit={ handleEdit } />
+          !edit
+            ? <ReportStudentSectionForm form={ form } onSubmit={ handleCreate } internshipId={ internshipId } />
+            : <ReportStudentSectionForm form={ form } onSubmit={ handleEdit } report={ report } />
         }
       </Modal>
     </>

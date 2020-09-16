@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-
+import esES from 'antd/lib/locale-provider/es_ES';
+import 'moment/locale/es';
+import { ConfigProvider } from 'antd';
 
 /**
  * Este es el punto de entrada del sistema
@@ -12,10 +14,12 @@ import * as serviceWorker from './serviceWorker';
  */
 ReactDOM.render(
   // <React.StrictMode>
+  <ConfigProvider locale={ esES }>
     <App />
+  </ConfigProvider>
   // </React.StrictMode>
-,
-  document.getElementById('root')
+  ,
+  document.getElementById( 'root' )
 );
 
 // If you want your app to work offline and load faster, you can change

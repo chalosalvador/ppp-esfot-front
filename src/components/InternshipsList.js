@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Table } from 'antd';
+import { Table, Empty, Button } from 'antd';
 import { useInternshipsList } from '../data/useInternshipsList';
 import ShowError from './ShowError';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Routes from '../constants/routes';
+import { useAuth } from '../providers/Auth';
 
-const InternshipsList = ( props ) => {
+const InternshipsList = () => {
   const [ pageIndex, setPageIndex ] = useState( 1 );
-  const { internships, links, meta, isLoading, isError, mutate } = useInternshipsList( pageIndex );
+  const { internships, meta, isLoading, isError } = useInternshipsList( pageIndex );
+  const { currentUser } = useAuth();
 
   const columns = [
     {
@@ -108,6 +110,13 @@ const InternshipsList = ( props ) => {
     pagination={ pagination }
     loading={ isLoading }
     onChange={ ( pagination ) => setPageIndex( pagination.current ) }
+    locale={
+      {
+        emptyText: <Empty image={ Empty.PRESENTED_IMAGE_SIMPLE }
+                          description={ <span>No hay prácticas preprofesionales registradas</span> }
+        />
+      }
+    }
   />;
 };
 
