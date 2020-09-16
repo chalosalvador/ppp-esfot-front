@@ -66,8 +66,6 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
             ? props.report.activities.map( ( activity ) => activity.description )
             : [ '' ]
         } }
-      // onValuesChange={(changedValues, allValues)=> console.log( 'changedValues', changedValues )}
-      // onFieldsChange={(changedFields, allFields)=> console.log( 'changedFields', changedFields )}
     >
       <Form.Item name='dates' label='Fechas' rules={ [
         {

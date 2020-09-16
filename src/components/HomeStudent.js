@@ -2,12 +2,15 @@
  * Created by chalosalvador on 9/11/20
  */
 import React from 'react';
-import { Statistic, Row, Col } from 'antd';
+import { Statistic, Row, Col, Typography, Divider } from 'antd';
 import { CheckCircleTwoTone, CloseCircleTwoTone, ClockCircleTwoTone } from '@ant-design/icons';
 import InternshipsList from './InternshipsList';
 import { useAuth } from '../providers/Auth';
 import withAuth from '../hocs/withAuth';
+import ReportStudentSectionFormModal from './ReportStudentSectionFormModal';
+import InternshipFormModal from './InternshipFormModal';
 
+const { Title } = Typography;
 const HomeStudent = () => {
   const { currentUser } = useAuth();
   return (
@@ -35,7 +38,11 @@ const HomeStudent = () => {
                      prefix={ <CloseCircleTwoTone twoToneColor='#f5222d' /> } />
         </Col>
       </Row>
-      <h2>Prácticas preprofesionales realizadas</h2>
+
+
+      <Divider><Title>Prácticas preprofesionales realizadas</Title></Divider>
+
+      <InternshipFormModal />
       <InternshipsList />
     </div>
   );
