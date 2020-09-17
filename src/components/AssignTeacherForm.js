@@ -49,7 +49,7 @@ const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
         },
       ] }>
         <Select placeholder='Selecciona...' loading={ isLoading }>
-          { currentTeachers.map( ( career ) => <Option value={ career.id }>{ career.name }</Option> ) }
+          { currentTeachers.map( ( teacher ) => <Option value={ teacher.id }>{ teacher.name } { teacher.lastname }</Option> ) }
         </Select>
       </Form.Item>
     </Form>

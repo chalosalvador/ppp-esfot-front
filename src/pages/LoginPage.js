@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Routes from '../constants/routes';
 import { useAuth } from '../providers/Auth';
 import { Checkbox, Col, Form, Input, Row, Button, message } from 'antd';
@@ -13,9 +13,10 @@ import ErrorList from '../components/ErrorList';
 
 const LoginPage = () => {
   const { setAuthenticated, setCurrentUser } = useAuth();
+  const [ isSubmitting, setIsSubmitting ] = useState( false );
 
   const onFinish = async( userData ) => {
-
+    setIsSubmitting( true );
     try {
       const response = await API.post( '/login', {
         email: userData.username,
@@ -34,6 +35,7 @@ const LoginPage = () => {
       const errorList = e.error && <ErrorList errors={ e.error } />;
       message.error( <>{ translateMessage( e.message ) }{ errorList }</> );
     }
+    setIsSubmitting( false );
   };
 
   return (
@@ -80,13 +82,11 @@ const LoginPage = () => {
               >
                 <Input.Password
                   prefix={ <LockOutlined className='site-form-item-icon' /> }
-                  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                  iconRender={ visible => (visible
+                    ? <EyeTwoTone />
+                    : <EyeInvisibleOutlined />) }
                   placeholder='Password' autoComplete='password'
                 />
-              </Form.Item>
-
-              <Form.Item name='remember' valuePropName='checked' noStyle>
-                <Checkbox>Recordarme</Checkbox>
               </Form.Item>
 
               <Form.Item>
@@ -96,10 +96,10 @@ const LoginPage = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type='primary' htmlType='submit' className='login-form-button'>
+                <Button type='primary' htmlType='submit' className='login-form-button' loading={ isSubmitting }>
                   Ingresar
                 </Button>
-                <div>Soy nuevo, <Link to={ Routes.REGISTER }>registrarme</Link></div>
+                <div>Si es la primera vez que usas el sistema, <Link to={ Routes.REGISTER }>ingresa aquí</Link></div>
               </Form.Item>
             </Form>
           </Col>
