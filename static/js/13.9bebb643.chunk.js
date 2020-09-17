@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-api-boilerplate"]=this["webpackJsonpreact-api-boilerplate"]||[]).push([[13],{1964:function(e,t,a){"use strict";a.r(t);var n=a(0),r=a.n(n);t.default=function(){return r.a.createElement(r.a.Fragment,null,r.a.createElement("h1",{className:"title"},"About Page"))}}}]);
+//# sourceMappingURL=13.9bebb643.chunk.js.map
