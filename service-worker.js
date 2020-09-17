@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ppp-esfot-front/precache-manifest.abd309345ffb1213a17f3b77217f6aa8.js"
+  "/ppp-esfot-front/precache-manifest.4318a1f42c95ad2a33270ae962e53774.js"
 );
 
 self.addEventListener('message', (event) => {
