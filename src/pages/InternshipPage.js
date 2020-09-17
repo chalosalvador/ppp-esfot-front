@@ -36,7 +36,7 @@ const InternshipPage = () => {
           ?
           internship.status === 'in_progress'
             ? <ReportStudentSectionFormModal internshipId={ id } />
-            : internship.status === 'pending_authorization'
+            : internship.status === 'pending'
             ? <Alert message='Pendiente de autorización'
                      description='Estas prácticas deben ser autorizadas antes de que puedas registrar reportes.'
                      type='warning'

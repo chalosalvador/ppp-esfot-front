@@ -11,7 +11,7 @@ import { translateMessage } from '../utils/translateMessage';
 import { useInternship } from '../data/useInternship';
 import ShowError from './ShowError';
 import AssignTeacherForm from './AssignTeacherForm';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 
 const { confirm } = Modal;
 const { Title } = Typography;
@@ -65,13 +65,6 @@ const InternshipDetail = ( props ) => {
           { moment( internship.created_at ).format( 'DD/MM/YYYY HH:mm:ss' ) }
         </Descriptions.Item>
         <Descriptions.Item label='Estado'>{ internship.status }</Descriptions.Item>
-        <Descriptions.Item label='Tutor(a)'>
-          { internship.teacher
-            ? `${ internship.teacher.name } ${ internship.teacher.lastname }`
-            : currentUser.role === 'ROLE_ADMINISTRATIVE' &&
-            <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Asignar tutor</Button>
-          }
-        </Descriptions.Item>
         <Descriptions.Item label='Tipo'>{ internship.type }</Descriptions.Item>
         <Descriptions.Item label='Fecha de inicio'>
           { moment( internship.start_date ).format( 'DD/MM/YYYY' ) }
@@ -96,7 +89,7 @@ const InternshipDetail = ( props ) => {
         </Descriptions.Item>
       </Descriptions>
 
-      <Descriptions title={ <Divider orientation='center'><strong>DATOS DEL PRACTICANTE</strong></Divider> }
+      <Descriptions title={ <Divider orientation='center'><strong>DATOS DE PRACTICANTE</strong></Divider> }
                     bordered
                     column={ 2 }>
         <Descriptions.Item label='Nombre'>
@@ -107,6 +100,28 @@ const InternshipDetail = ( props ) => {
         <Descriptions.Item label='Correo'>{ internship.student.email }</Descriptions.Item>
         <Descriptions.Item label='Teléfono'>{ internship.student.phone }</Descriptions.Item>
       </Descriptions>
+
+      {
+        internship.teacher
+          ? <Descriptions title={ <Divider orientation='center'><strong>DATOS DE TUTOR(A)</strong></Divider> }
+                          bordered column={ 2 }
+                          extra={ currentUser.role === 'ROLE_ADMINISTRATIVE' &&
+                          <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Editar</Button>
+                          }>
+            <Descriptions.Item label='Nombre'>
+              { internship.teacher.name } { internship.teacher.lastname }
+            </Descriptions.Item>
+            <Descriptions.Item label='Email'>{ internship.teacher.email }</Descriptions.Item>
+            <Descriptions.Item label='Carrera'>{ internship.teacher.career }</Descriptions.Item>
+            <Descriptions.Item label='Título'>{ internship.teacher.degree }</Descriptions.Item>
+          </Descriptions>
+          : <>
+            { currentUser.role === 'ROLE_ADMINISTRATIVE' &&
+            <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Asignar tutor</Button>
+            }
+          </>
+      }
+
 
       <Descriptions title={ <Divider orientation='center'><strong>DATOS DE LA INSTITUCIÓN RECEPTORA</strong></Divider> }
                     bordered
