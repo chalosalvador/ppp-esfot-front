@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8f296828c996208559539182e3e3407c",
+    "revision": "e243ee5a496b5eaec651c4b05acde43d",
     "url": "/ppp-esfot-front/index.html"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ppp-esfot-front/static/css/9.61b05767.chunk.css"
   },
   {
-    "revision": "9c0b0926f0952e329454",
+    "revision": "4d196575f048ba22bd60",
     "url": "/ppp-esfot-front/static/css/main.6e7b89e8.chunk.css"
   },
   {
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ppp-esfot-front/static/js/9.fa80cc65.chunk.js"
   },
   {
-    "revision": "9c0b0926f0952e329454",
-    "url": "/ppp-esfot-front/static/js/main.86962860.chunk.js"
+    "revision": "4d196575f048ba22bd60",
+    "url": "/ppp-esfot-front/static/js/main.73e1331c.chunk.js"
   },
   {
     "revision": "083c5b9b6f2cf1f9bea2",
