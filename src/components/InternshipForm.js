@@ -52,6 +52,7 @@ const InternshipForm = ( { form } ) => {
 
   const disabledDate = ( current ) => current && current > moment().endOf( 'day' );
   const handleChangeWideField = ( value ) => {
+    form.setFieldsValue( { specific_field: null } );
     setCurrentSpecifics( specificFields[ wideFields.indexOf( value ) ] );
   };
 
@@ -105,7 +106,7 @@ const InternshipForm = ( { form } ) => {
       ] }>
         <DatePicker format='DD/MM/YYYY'
                     inputReadOnly
-                    disabledDate={ disabledDate }/>
+                    disabledDate={ disabledDate } />
       </Form.Item>
 
       <Form.Item name='student_activities'
