@@ -65,6 +65,7 @@ const CompanyStep = ( { form, onSubmit } ) => {
                      ] }>
             <Input disabled={ foundCompany } style={ { width: 160 } } />
           </Form.Item>
+          <Form.Item name='name' hidden rules={ [ { required: true } ] }><Input /></Form.Item>
           {
             !foundCompany
               ? <Button onClick={ handleCheckCompany } loading={ isLoadingCompany }>Verificar</Button>

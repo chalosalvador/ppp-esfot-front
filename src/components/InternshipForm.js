@@ -117,6 +117,10 @@ const InternshipForm = ( { form } ) => {
                      whitespace: true,
                      message: 'Detalla las actividades que desarrollarás durante las prácticas.',
                    },
+                   {
+                     min: 40,
+                     message: 'Debes ingresar al menos 40 caracteres.'
+                   }
                  ] }>
         <Input.TextArea placeholder='Detalla las actividades que desarrollarás durante las prácticas.'
                         autoSize={ { maxRows: 4 } } />

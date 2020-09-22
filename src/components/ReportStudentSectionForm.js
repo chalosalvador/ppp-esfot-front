@@ -2,10 +2,11 @@
  * Created by chalosalvador on 9/11/20
  */
 import React, { useState } from 'react';
-import { Alert, Form, Button, Input, DatePicker, InputNumber } from 'antd';
+import { Alert, Form, Button, Input, DatePicker, InputNumber, TreeSelect } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useAuth } from '../providers/Auth';
+import { useTopicsBySubject } from '../data/useTopicsBySubjectList';
 
 const { RangePicker } = DatePicker;
 
@@ -33,6 +34,8 @@ const formItemLayoutWithOutLabel = {
 };
 
 const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
+  const { topicsBySubject, isLoading, isError } = useTopicsBySubject( 1 );
+
   const { currentUser } = useAuth();
   const [ isFinalReport, setIsFinalReport ] = useState( false );
 
@@ -48,6 +51,21 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
     } );
   };
 
+  const getTopicsTreeData = () => {
+    return topicsBySubject.map( ( subject ) => (
+      {
+        key: `subject-${subject.id}`,
+        title: subject.name,
+        value: `subject-${subject.id}`,
+        children: subject.topics.map( ( topic ) => ({
+          key: topic.id,
+          title: topic.name,
+          value: topic.id
+        }) )
+      })
+    );
+  };
+
   return (
     <Form
       { ...formItemLayout }
@@ -57,7 +75,8 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
       initialValues={ !props.report
         ? {
           activities: [ '' ],
-          type: 'partial'
+          type: 'partial',
+          recommended_topics: [ '' ]
         }
         : {
           ...props.report,
@@ -121,7 +140,7 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
                      message: 'El tipo de reporte no es válido.'
                    },
                  ] }
-                 >
+      >
         <InputNumber style={ { width: '100%' } } onChange={ handleChangeHoursWorked } />
       </Form.Item>
 
@@ -149,6 +168,10 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
                         whitespace: true,
                         message: 'Detalla las actividades desarrolladas durante las prácticas.',
                       },
+                      {
+                        min: 40,
+                        message: 'Debes ingresar al menos 40 caracteres.'
+                      }
                     ] }
                     noStyle
                   >
@@ -191,13 +214,102 @@ const ReportStudentSectionForm = ( { form, onSubmit, ...props } ) => {
           whitespace: true,
           message: 'Detalla las actividades desarrolladas durante las prácticas.',
         },
+        {
+          min: 40,
+          message: 'Debes ingresar al menos 40 caracteres.'
+        }
       ] }>
-        <Input.TextArea placeholder='Observaciones sobre las prácticas que ha realizado en la empresa.'
+        <Input.TextArea placeholder='Observaciones sobre las prácticas que has realizado en la empresa.'
                         autoSize={ { maxRows: 4 } } />
       </Form.Item>
 
       {
-        isFinalReport && <h1>Final</h1>
+        isFinalReport && <>
+          <Form.Item name='useful_topics'
+                     label='Temas útiles:'
+                     extra='Asignaturas de la malla curricular y temáticas de mayor utilidad para el desarrollo de la práctica:'
+                     rules={ [
+                       {
+                         required: true,
+                         message: 'Selecciona los temas que fueron útiles durante tu práctica.',
+                       },
+                     ] }>
+            <TreeSelect
+              allowClear={ true }
+              dropdownStyle={ {
+                maxHeight: 400,
+                overflow: 'auto'
+              } }
+              treeData={ getTopicsTreeData() }
+              placeholder='Puedes seleccionar varios temas...'
+              // showCheckedStrategy={ TreeSelect.SHOW_CHILD }
+              treeCheckable={ true }
+              maxTagCount={ 10 }
+              // onChange={(value)=> console.log( 'value', value )}
+            />
+          </Form.Item>
+
+          <Form.List name='recommended_topics'>
+            { ( fields, { add, remove } ) => {
+              return (
+                <div>
+                  { fields.map( ( field, index ) => (
+                    <Form.Item
+                      { ...(index === 0
+                        ? formItemLayout
+                        : formItemLayoutWithOutLabel) }
+                      label={ index === 0
+                        ? 'Temas recomendados:'
+                        : '' }
+                      // required={ true }
+                      key={ field.key }
+                    >
+                      <Form.Item
+                        { ...field }
+                        // validateTrigger={ [ 'onChange', 'onBlur' ] }
+                        rules={ [
+                          {
+                            required: fields.length > 1,
+                            whitespace: true,
+                            message: 'Ingresa el tema.',
+                          },
+                        ] }
+                        noStyle
+                      >
+                        <Input.TextArea placeholder=''
+                                        autoSize={ { maxRows: 4 } }
+                                        style={ { width: '90%' } } />
+                      </Form.Item>
+                      { fields.length > 1
+                        ? (
+                          <MinusCircleOutlined
+                            className='dynamic-delete-button'
+                            style={ { margin: '0 8px' } }
+                            onClick={ () => {
+                              remove( field.name );
+                            } }
+                          />
+                        )
+                        : null }
+                    </Form.Item>
+                  ) ) }
+                  <Form.Item { ...formItemLayoutWithOutLabel }
+                             extra='Temas que fueron necesario y que no constan en la malla curricular'>
+                    <Button
+                      type='dashed'
+                      onClick={ () => {
+                        add();
+                      } }
+                      style={ { width: '90%' } }
+                    >
+                      <PlusOutlined /> Añadir un tema
+                    </Button>
+                  </Form.Item>
+                </div>
+              );
+            } }
+          </Form.List>
+        </>
       }
 
     </Form>
