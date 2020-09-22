@@ -4,10 +4,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Modal, Form, message } from 'antd';
 import { EditOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import API from '../data';
-import ErrorList from './ErrorList';
-import { translateMessage } from '../utils/translateMessage';
-import { mutate } from 'swr';
 import InternshipFormSteps from './InternshipFormSteps';
 
 const { confirm } = Modal;

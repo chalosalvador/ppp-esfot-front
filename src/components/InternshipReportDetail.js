@@ -10,6 +10,9 @@ import { useAuth } from '../providers/Auth';
 import ReportStudentSectionFormModal from './ReportStudentSectionFormModal';
 import { useInternshipReport } from '../data/useInternshipReport';
 import ShowError from './ShowError';
+import ReportRepresentativeSectionFormModal from './ReportRepresentativeSectionFormModal';
+import { customRateIcons } from '../utils/form';
+import ReportTeacherSectionFormModal from './ReportTeacherSectionFormModal';
 
 const { Title } = Typography;
 
@@ -17,38 +20,13 @@ const InternshipReportDetail = ( props ) => {
   const { report, isLoading, isError } = useInternshipReport( props.report.internship_id, props.report.id );
   const { currentUser } = useAuth();
 
-  const customIcons = {
-    1: {
-      text: 'Deficiente',
-      icon: <FrownFilled />
-    },
-    2: {
-      text: 'Malo',
-      icon: <FrownFilled />
-    },
-    3: {
-      text: 'Regular',
-      icon: <MehFilled />
-    },
-    4: {
-      text: 'Muy Bueno',
-      icon: <SmileFilled />
-    },
-    5: {
-      text: 'Excelente',
-      icon: <SmileFilled />
-    }
-  };
-
   const renderRate = ( value ) =>
     <>
       <Rate disabled
-            defaultValue={ value }
-            character={ ( { index } ) => {
-              return customIcons[ index + 1 ].icon;
-            } } />
+            value={ value }
+            character={ ( { index } ) => customRateIcons[ index + 1 ].icon } />
       { value
-        ? <span className='ant-rate-text'>{ customIcons[ value ].text }</span>
+        ? <span className='ant-rate-text'>{ customRateIcons[ value ].text }</span>
         : '' }
     </>;
 
@@ -90,8 +68,10 @@ const InternshipReportDetail = ( props ) => {
       <Descriptions title={ <Divider orientation='center'><strong>REPORTE DEL ESTUDIANTE</strong></Divider> }
                     bordered
                     column={ 2 }
-                    extra={ currentUser.role === 'ROLE_STUDENT' && currentUser.id === report.user_id && report.status === 'representative_pending' &&
-                    <ReportStudentSectionFormModal edit={ true } report={ report } /> }>
+                    extra={ currentUser.role === 'ROLE_STUDENT'
+                    && currentUser.id === report.student_id
+                    && report.status === 'representative_pending'
+                    && <ReportStudentSectionFormModal edit={ true } report={ report } /> }>
         <Descriptions.Item label='Desde'>{ report.from_date }</Descriptions.Item>
         <Descriptions.Item label='Hasta'>{ report.to_date }</Descriptions.Item>
         <Descriptions.Item label='Horas ejecutadas hasta la fecha'>{ report.hours_worked }</Descriptions.Item>
@@ -125,44 +105,70 @@ const InternshipReportDetail = ( props ) => {
 
       <Descriptions title={ <Divider orientation='center'><strong>REPORTE DE LA EMPRESA</strong></Divider> }
                     bordered
-                    column={ 2 }>
-        <Descriptions.Item label='Desempeño'
-                           span={ 2 }>{ renderRate( report.evaluation_performance ) }</Descriptions.Item>
-        <Descriptions.Item label='Motivación'
-                           span={ 2 }>{ renderRate( report.evaluation_motivation ) }</Descriptions.Item>
-        <Descriptions.Item label='Habilidades y destrezas'
-                           span={ 2 }>{ renderRate( report.evaluation_knowledge ) }</Descriptions.Item>
-        <Descriptions.Item label='Puntualidad y responsabilidad'
-                           span={ 2 }>{ renderRate( report.evaluation_punctuality ) }</Descriptions.Item>
+                    column={ 2 }
+                    extra={ currentUser.role === 'ROLE_REPRESENTATIVE'
+                    && currentUser.id === report.representative_id
+                    && report.status === 'representative_pending'
+                    && <ReportRepresentativeSectionFormModal report={ report } />
+                    }>
+        <Descriptions.Item label='Desempeño' span={ 2 }>
+          { renderRate( report.evaluation_performance ) }
+        </Descriptions.Item>
+        <Descriptions.Item label='Motivación' span={ 2 }>
+          { renderRate( report.evaluation_motivation ) }
+        </Descriptions.Item>
+        <Descriptions.Item label='Habilidades y destrezas' span={ 2 }>
+          { renderRate( report.evaluation_knowledge ) }
+        </Descriptions.Item>
+        <Descriptions.Item label='Puntualidad y responsabilidad' span={ 2 }>
+          { renderRate( report.evaluation_punctuality ) }
+        </Descriptions.Item>
         <Descriptions.Item label='Observaciones' span={ 2 }>{ report.evaluation_observations }</Descriptions.Item>
       </Descriptions>
 
 
       <Descriptions title={ <Divider orientation='center'><strong>REPORTE DEL TUTOR ACADÉMICO</strong></Divider> }
                     bordered
-                    column={ 2 }>
+                    column={ 2 }
+                    extra={ currentUser.role === 'ROLE_TEACHER'
+                    && currentUser.id === report.teacher_id
+                    && report.status === 'tutor_pending'
+                    && <ReportTeacherSectionFormModal report={ report } />
+                    }>
         <Descriptions.Item label='Novedades reportadas por el estudiante/empresa'
                            span={ 2 }>{ report.tutor_observations }</Descriptions.Item>
         {
           report.type === 'final'
             ? <>
-              <Descriptions.Item label='Desempeño'>{ report.tutor_recommends !== null
-                ? report.tutor_recommends
-                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-                : null }</Descriptions.Item>
+              <Descriptions.Item label='Desempeño'>
+                {
+                  report.tutor_recommends !== null
+                    ? report.tutor_recommends
+                    ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                    : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                    : null
+                }
+              </Descriptions.Item>
               <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_observations }</Descriptions.Item>
-              <Descriptions.Item label='Motivación'>{ report.tutor_knowledge_contribution !== null
-                ? report.tutor_knowledge_contribution
-                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-                : null }</Descriptions.Item>
+              <Descriptions.Item label='Motivación'>
+                {
+                  report.tutor_knowledge_contribution !== null
+                    ? report.tutor_knowledge_contribution
+                    ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                    : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                    : null
+                }
+              </Descriptions.Item>
               <Descriptions.Item label='Observaciones'>{ report.tutor_knowledge_contribution_observations }</Descriptions.Item>
-              <Descriptions.Item label='Habilidades y destrezas'>{ report.tutor_recommends_approval !== null
-                ? report.tutor_recommends_approval
-                  ? <CheckCircleTwoTone twoToneColor='#52c41a' />
-                  : <CloseCircleTwoTone twoToneColor='#eb2f96' />
-                : null }</Descriptions.Item>
+              <Descriptions.Item label='Habilidades y destrezas'>
+                {
+                  report.tutor_recommends_approval !== null
+                    ? report.tutor_recommends_approval
+                    ? <CheckCircleTwoTone twoToneColor='#52c41a' />
+                    : <CloseCircleTwoTone twoToneColor='#eb2f96' />
+                    : null
+                }
+              </Descriptions.Item>
               <Descriptions.Item label='Observaciones'>{ report.tutor_recommends_approval_observations }</Descriptions.Item>
             </>
             : <>

@@ -2,7 +2,9 @@
  * Created by chalosalvador on 9/9/20
  */
 import React, { useState } from 'react';
-import { Descriptions, Typography, Divider, PageHeader, Button, message, Modal, Form, Select } from 'antd';
+import {
+  Row, Descriptions, Typography, Divider, PageHeader, Button, message, Modal, Form, Select, Alert, Col, Space
+} from 'antd';
 import moment from 'moment';
 import { useAuth } from '../providers/Auth';
 import API from '../data';
@@ -27,7 +29,6 @@ const InternshipDetail = ( props ) => {
     confirm( {
         title: '¿Confirmas que deseas enviar el formulario?',
         icon: <ExclamationCircleOutlined />,
-        // content: 'Se perderá toda la información ingresada.',
         okText: 'Sí',
         cancelText: 'No',
         onOk: async() => {
@@ -116,9 +117,24 @@ const InternshipDetail = ( props ) => {
             <Descriptions.Item label='Título'>{ internship.teacher.degree }</Descriptions.Item>
           </Descriptions>
           : <>
-            { currentUser.role === 'ROLE_ADMINISTRATIVE' &&
-            <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Asignar tutor</Button>
-            }
+            <Row justify='center'>
+              <Col span={ 24 } align='center'>
+                <Divider orientation='center'><strong>DATOS DE TUTOR(A)</strong></Divider>
+              </Col>
+            </Row>
+            <Row justify='center'>
+              <Col span={ 12 } align='center'>
+                <Space direction='vertical'>
+                  <Alert message='Aún no se ha asignado un tutor para estas prácticas.'
+                         description={ currentUser.role === 'ROLE_ADMINISTRATIVE' &&
+                         <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Asignar tutor</Button>
+                         }
+                         type='warning'
+                         showIcon />
+
+                </Space>
+              </Col>
+            </Row>
           </>
       }
 

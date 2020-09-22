@@ -19,9 +19,9 @@ const formItemLayout = {
 };
 
 const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
-  const { careers, isLoading, isError, mutate } = useCareersList();
+  const { careers, isLoading } = useCareersList();
   const [ currentTeachers, setCurrentTeachers ] = useState( [] );
-  console.log( 'careers', careers );
+
   const handleChangeCareer = ( value ) => {
     form.setFieldsValue( { teacherId: null } );
     setCurrentTeachers( careers[ value ].teachers );
@@ -29,7 +29,7 @@ const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
 
   return (
     <Form form={ form } { ...formItemLayout }
-          name='assign-teacher' initialValues={ teacherId }
+          name='assign-teacher'
           onFinish={ onSubmit }>
       <Form.Item name='career_id' label='Carrera' rules={ [
         {
@@ -38,7 +38,7 @@ const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
         },
       ] }>
         <Select placeholder='Selecciona...' onChange={ handleChangeCareer } loading={ isLoading }>
-          { careers.map( ( career ) => <Option value={ career.id }>{ career.name }</Option> ) }
+          { careers.map( ( career, i ) => <Option key={ career.id } value={ i }>{ career.name }</Option> ) }
         </Select>
       </Form.Item>
 
@@ -49,7 +49,8 @@ const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
         },
       ] }>
         <Select placeholder='Selecciona...' loading={ isLoading }>
-          { currentTeachers.map( ( teacher ) => <Option value={ teacher.id }>{ teacher.name } { teacher.lastname }</Option> ) }
+          { currentTeachers.map( ( teacher ) =>
+            <Option key={ teacher.id } value={ teacher.id }>{ teacher.name } { teacher.lastname }</Option> ) }
         </Select>
       </Form.Item>
     </Form>
