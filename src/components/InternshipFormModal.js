@@ -2,8 +2,8 @@
  * Created by chalosalvador on 9/12/20
  */
 import React, { useState } from 'react';
-import { Row, Col, Button, Modal, Form, message } from 'antd';
-import { EditOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Button, Col, Modal, Row } from 'antd';
+import { EditOutlined, ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import InternshipFormSteps from './InternshipFormSteps';
 
 const { confirm } = Modal;

@@ -2,12 +2,12 @@
  * Created by chalosalvador on 9/21/20
  */
 import React from 'react';
-import { Form, Input, Rate } from 'antd';
-import { useAuth } from '../providers/Auth';
+import { Alert, Form, Input, Rate, Typography } from 'antd';
 import { customRateIcons, formItemLayout } from '../utils/form';
 
-const ReportRepresentativeSectionForm = ( { form, onSubmit, ...props } ) => {
-  const { currentUser } = useAuth();
+const { Title } = Typography;
+
+const ReportRepresentativeSectionForm = ( { form, onSubmit, internship } ) => {
 
   return (
     <Form
@@ -15,15 +15,24 @@ const ReportRepresentativeSectionForm = ( { form, onSubmit, ...props } ) => {
       onFinish={ onSubmit }
       form={ form }
       name='report-representative'
-      initialValues={ props.report }
+      initialValues={ internship }
     >
+      <Title level={ 5 }>¿Cuántos buhos le otorgas a este estudiante?</Title>
+
+      <Alert message='¿Por qué los buhos?'
+             description='El buho ha identificado a la EPN durante todos sus años de existencia'
+             showIcon />
+
       <Form.Item name='evaluation_performance' label='Desempeño' style={ { alignItems: 'center' } } rules={ [
         {
           required: true,
           message: '¿Cuántos búhos le otorgas por su desempeño?'
         }
       ] }>
-        <Rate style={ { fontSize: 40 } } allowClear={ false } character={ ( { index } ) => {
+        <Rate style={ {
+          fontSize: 40,
+          color: '#096dd9'
+        } } allowClear={ false } character={ ( { index } ) => {
           return customRateIcons[ index + 1 ].icon;
         } } />
       </Form.Item>
@@ -34,7 +43,10 @@ const ReportRepresentativeSectionForm = ( { form, onSubmit, ...props } ) => {
           message: '¿Cuántos búhos le otorgas por su motivación?'
         }
       ] }>
-        <Rate style={ { fontSize: 40 } } allowClear={ false } character={ ( { index } ) => {
+        <Rate style={ {
+          fontSize: 40,
+          color: '#096dd9'
+        } } allowClear={ false } character={ ( { index } ) => {
           return customRateIcons[ index + 1 ].icon;
         } } />
       </Form.Item>
@@ -45,13 +57,16 @@ const ReportRepresentativeSectionForm = ( { form, onSubmit, ...props } ) => {
           message: '¿Cuántos búhos le otorgas por sus conocimientos?'
         }
       ] }>
-        <Rate style={ { fontSize: 40 } } allowClear={ false } character={ ( { index } ) => {
+        <Rate style={ {
+          fontSize: 40,
+          color: '#096dd9'
+        } } allowClear={ false } character={ ( { index } ) => {
           return customRateIcons[ index + 1 ].icon;
         } } />
       </Form.Item>
 
       <Form.Item name='evaluation_punctuality'
-                 label='Puntualidad y resposabilidad'
+                 label='Puntualidad y responsabilidad'
                  style={ { alignItems: 'center' } }
                  rules={ [
                    {
@@ -59,7 +74,10 @@ const ReportRepresentativeSectionForm = ( { form, onSubmit, ...props } ) => {
                      message: '¿Cuántos búhos le otorgas por sus puntualidad y responsabilidad?'
                    }
                  ] }>
-        <Rate style={ { fontSize: 40 } } allowClear={ false } character={ ( { index } ) => {
+        <Rate style={ {
+          fontSize: 40,
+          color: '#096dd9'
+        } } allowClear={ false } character={ ( { index } ) => {
           return customRateIcons[ index + 1 ].icon;
         } } />
       </Form.Item>

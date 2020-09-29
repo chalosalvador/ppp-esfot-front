@@ -2,8 +2,7 @@
  * Created by chalosalvador on 9/12/20
  */
 import React, { useState } from 'react';
-import { Form, Divider, Row, Col, Steps, Button, message, Modal, Result } from 'antd';
-import CompanyForm from './CompanyForm';
+import { Button, Col, Divider, Form, message, Modal, Result, Row, Steps } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import API from '../data';
 import { mutate } from 'swr';
@@ -83,7 +82,7 @@ const InternshipFormSteps = ( { internship, ...props } ) => {
               console.log( 'company created', company );
             }
 
-            let representativeId = representativeData.id;
+            let representativeId = representativeData.representative_id;
             if( !representativeId ) {
               // crear representante
               message.loading( {
@@ -91,7 +90,7 @@ const InternshipFormSteps = ( { internship, ...props } ) => {
                 key: messageKey
               } );
               const representative = await API.post( `/companies/${ companyId }/representatives`, representativeData );
-              representativeId = representative.data.id;
+              representativeId = representative.data.representative_id;
               console.log( 'representative created', representative );
             }
 

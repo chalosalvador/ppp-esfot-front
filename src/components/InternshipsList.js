@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Empty, Button } from 'antd';
+import { Empty, Table } from 'antd';
 import { useInternshipsList } from '../data/useInternshipsList';
 import ShowError from './ShowError';
 import moment from 'moment';
