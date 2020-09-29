@@ -18,7 +18,7 @@ const formItemLayout = {
   },
 };
 
-const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
+const AssignTeacherForm = ( { onSubmit, form } ) => {
   const { careers, isLoading } = useCareersList();
   const [ currentTeachers, setCurrentTeachers ] = useState( [] );
 
@@ -42,7 +42,7 @@ const AssignTeacherForm = ( { onSubmit, form, teacherId } ) => {
         </Select>
       </Form.Item>
 
-      <Form.Item name='teacherId' label='Profesor' rules={ [
+      <Form.Item name='teacher_id' label='Profesor' rules={ [
         {
           required: true,
           message: 'Selecciona un profesor...'

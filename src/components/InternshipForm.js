@@ -2,7 +2,7 @@
  * Created by chalosalvador on 9/14/20
  */
 import React, { useState } from 'react';
-import { Form, Input, Select, Switch, DatePicker } from 'antd';
+import { DatePicker, Form, Input, Select, Switch } from 'antd';
 import moment from 'moment';
 
 const { Option } = Select;
@@ -107,6 +107,16 @@ const InternshipForm = ( { form } ) => {
         <DatePicker format='DD/MM/YYYY'
                     inputReadOnly
                     disabledDate={ disabledDate } />
+      </Form.Item>
+
+      <Form.Item label='Área' name='area' rules={ [
+        {
+          required: true,
+          whitespace: true,
+          message: 'Indica el área de la empresa donde desarrollarás tus actividades.'
+        }
+      ] }>
+        <Input />
       </Form.Item>
 
       <Form.Item name='student_activities'

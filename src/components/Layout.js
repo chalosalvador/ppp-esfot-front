@@ -4,9 +4,10 @@
 import React from 'react';
 import Routes from '../constants/routes';
 import Navigation from './Navigation';
-import { Layout, Row, Col, Button, Popover } from 'antd';
-import { FacebookOutlined, InstagramOutlined, GithubOutlined, MailOutlined, WhatsAppOutlined } from '@ant-design/icons';
-import logo from '../images/logo-menta.png';
+import { Button, Col, Layout, Popover, Row } from 'antd';
+import { FacebookOutlined, GithubOutlined, InstagramOutlined, MailOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import logoEsfot from '../images/logo-esfot.png';
+import logoMenta from '../images/logo-menta.png';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -34,7 +35,8 @@ const MainLayout = props => {
               <Row type='flex' justify='space-between' align='bottom'>
                 <Col xs={ 24 } md={ 6 } className='logo-wrapper'>
                   <a href={ process.env.REACT_APP_DOMAIN }>
-                    <img className='logo' src={ logo } alt='Grupo Menta' /></a>
+                    <img className='logo' src={ logoEsfot } alt='ESFOT' height={ 50 } />
+                  </a>
                 </Col>
 
                 <Col md={ 14 } align='right' className='main-menu'>
@@ -107,7 +109,7 @@ const MainLayout = props => {
                  className='logo-menta'>
               Elaborado por: <br />
               <a href='https://grupomenta.com' rel='noopener noreferrer' target='_blank'>
-                <img src={ logo } alt='Profe a Tiempo' height={ 50 } />
+                <img src={ logoMenta } alt='Profe a Tiempo' height={ 50 } />
               </a>
             </Col>
 

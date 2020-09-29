@@ -3,7 +3,7 @@
  */
 import React, { useState } from 'react';
 import {
-  Row, Descriptions, Typography, Divider, PageHeader, Button, message, Modal, Form, Select, Alert, Col, Space
+  Alert, Button, Col, Descriptions, Divider, Form, message, Modal, PageHeader, Row, Space, Typography
 } from 'antd';
 import moment from 'moment';
 import { useAuth } from '../providers/Auth';
@@ -13,19 +13,19 @@ import { translateMessage } from '../utils/translateMessage';
 import { useInternship } from '../data/useInternship';
 import ShowError from './ShowError';
 import AssignTeacherForm from './AssignTeacherForm';
-import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { confirm } = Modal;
 const { Title } = Typography;
 
-const InternshipDetail = ( props ) => {
+const InternshipHeader = ( props ) => {
   const { internship, isLoading, isError, mutate } = useInternship( props.internship.id );
   const { currentUser } = useAuth();
   const [ isSubmitting, setIsSubmitting ] = useState( false );
   const [ showAssignTeacherModal, setShowAssignTeacherModal ] = useState( false );
   const [ assignTeacherForm ] = Form.useForm();
 
-  const handleAssignTeacher = async( { teacherId } ) => {
+  const handleAssignTeacher = async( { teacher_id } ) => {
     confirm( {
         title: '¿Confirmas que deseas enviar el formulario?',
         icon: <ExclamationCircleOutlined />,
@@ -34,9 +34,10 @@ const InternshipDetail = ( props ) => {
         onOk: async() => {
           try {
             setIsSubmitting( true );
-            await API.post( `/internships/${ internship.id }/teacher/${ teacherId }` );
+            await API.put( `/internships/${ internship.id }/teacher`, { teacher_id } );
             await mutate();
             message.success( 'La práctica se ha autorizado correctamente.' );
+            assignTeacherForm.resetFields();
             setShowAssignTeacherModal( false );
           } catch( e ) {
             const errorList = e.error && <ErrorList errors={ e.error } />;
@@ -61,35 +62,6 @@ const InternshipDetail = ( props ) => {
     <>
       <PageHeader title={ <Title>Detalles de la práctica</Title> } />
 
-      <Descriptions bordered column={ 2 }>
-        <Descriptions.Item label='Fecha de creación'>
-          { moment( internship.created_at ).format( 'DD/MM/YYYY HH:mm:ss' ) }
-        </Descriptions.Item>
-        <Descriptions.Item label='Estado'>{ internship.status }</Descriptions.Item>
-        <Descriptions.Item label='Tipo'>{ internship.type }</Descriptions.Item>
-        <Descriptions.Item label='Fecha de inicio'>
-          { moment( internship.start_date ).format( 'DD/MM/YYYY' ) }
-        </Descriptions.Item>
-        <Descriptions.Item label='Fecha de fin'>
-          { internship.finish_date && moment( internship.finish_date ).format( 'DD/MM/YYYY' ) }
-        </Descriptions.Item>
-
-        <Descriptions.Item label='Convenio'>
-          <p>Código: { internship.institutional_agreement_code }</p>
-          <p>Nombre: { internship.institutional_agreement_name }</p>
-        </Descriptions.Item>
-
-        <Descriptions.Item label='Proyecto de investigación'>
-          <p>Código: { internship.research_project_code }</p>
-          <p>Nombre: { internship.research_project_name }</p>
-        </Descriptions.Item>
-
-        <Descriptions.Item label='Proyecto de vinculación'>
-          <p>Código: { internship.social_project_code }</p>
-          <p>Nombre: { internship.social_project_name }</p>
-        </Descriptions.Item>
-      </Descriptions>
-
       <Descriptions title={ <Divider orientation='center'><strong>DATOS DE PRACTICANTE</strong></Divider> }
                     bordered
                     column={ 2 }>
@@ -100,6 +72,89 @@ const InternshipDetail = ( props ) => {
         <Descriptions.Item label='Créditos aprobados'>{ 0 }</Descriptions.Item>
         <Descriptions.Item label='Correo'>{ internship.student.email }</Descriptions.Item>
         <Descriptions.Item label='Teléfono'>{ internship.student.phone }</Descriptions.Item>
+      </Descriptions>
+
+      <Descriptions bordered column={ 2 }
+                    title={ <Divider orientation='center'><strong>DATOS DE LA PRÁCTICA</strong></Divider> }>
+        <Descriptions.Item label='Fecha de creación'>
+          { moment( internship.created_at ).format( 'DD/MM/YYYY HH:mm:ss' ) }
+        </Descriptions.Item>
+        <Descriptions.Item label='Estado'>{ internship.status }</Descriptions.Item>
+
+        <Descriptions.Item label='Fecha de inicio'>
+          { moment( internship.start_date ).format( 'DD/MM/YYYY' ) }
+        </Descriptions.Item>
+        <Descriptions.Item label='Fecha de fin'>
+          { internship.finish_date && moment( internship.finish_date ).format( 'DD/MM/YYYY' ) }
+        </Descriptions.Item>
+
+        <Descriptions.Item label='Tipo'>{ internship.type }</Descriptions.Item>
+
+        <Descriptions.Item label='Convenio'>
+          {
+            internship.institutional_agreement_code
+              ? <>
+                <p>Código: { internship.institutional_agreement_code }</p>
+                <p>Nombre: { internship.institutional_agreement_name }</p>
+              </>
+              : 'No'
+          }
+        </Descriptions.Item>
+
+        <Descriptions.Item label='Proyecto de investigación'>
+          {
+            internship.research_project_code
+              ? <>
+                <p>Código: { internship.research_project_code }</p>
+                <p>Nombre: { internship.research_project_name }</p>
+              </>
+              : 'No'
+          }
+        </Descriptions.Item>
+
+        <Descriptions.Item label='Proyecto de vinculación'>
+          {
+            internship.social_project_code
+              ? <>
+                <p>Código: { internship.social_project_code }</p>
+                <p>Nombre: { internship.social_project_name }</p>
+              </>
+              : 'No'
+          }
+        </Descriptions.Item>
+
+        <Descriptions.Item label='Área'>{ internship.area }</Descriptions.Item>
+
+        <Descriptions.Item label='Actividades a desarrollar'>
+          { internship.student_activities }
+        </Descriptions.Item>
+      </Descriptions>
+
+
+      <Descriptions title={ <Divider orientation='center'><strong>DATOS DE LA INSTITUCIÓN RECEPTORA</strong></Divider> }
+                    bordered
+                    column={ 2 }>
+        <Descriptions.Item label='RUC'>{ internship.company.ruc }</Descriptions.Item>
+        <Descriptions.Item label='Razón social'>{ internship.company.name }</Descriptions.Item>
+        <Descriptions.Item label='Dirección'>{ internship.company.address }</Descriptions.Item>
+        <Descriptions.Item label='Ciudad'>{ internship.company.city }</Descriptions.Item>
+        <Descriptions.Item label='Correo'>{ internship.company.email }</Descriptions.Item>
+        <Descriptions.Item label='Teléfono 1'>{ internship.company.phone }</Descriptions.Item>
+        <Descriptions.Item label='Teléfono 2'>{ internship.company.mobile }</Descriptions.Item>
+        <Descriptions.Item label='Tipo'>{ internship.company.type }</Descriptions.Item>
+      </Descriptions>
+
+      <Descriptions title={ <Divider orientation='center'><strong>DATOS DEL RESPONSABLE DE LA INSTITUCIÓN
+        RECEPTORA</strong></Divider> }
+                    bordered
+                    column={ 2 }>
+        <Descriptions.Item label='Nombre'>
+          { internship.representative.name } { internship.representative.lastname }
+        </Descriptions.Item>
+        <Descriptions.Item label='Cargo'>{ internship.representative.job_title }</Descriptions.Item>
+        <Descriptions.Item label='Correo'>{ internship.representative.email }</Descriptions.Item>
+        <Descriptions.Item label='Teléfono 1'>{ internship.representative.phone }</Descriptions.Item>
+        <Descriptions.Item label='Teléfono 2'>{ internship.representative.mobile }</Descriptions.Item>
       </Descriptions>
 
       {
@@ -138,33 +193,6 @@ const InternshipDetail = ( props ) => {
           </>
       }
 
-
-      <Descriptions title={ <Divider orientation='center'><strong>DATOS DE LA INSTITUCIÓN RECEPTORA</strong></Divider> }
-                    bordered
-                    column={ 2 }>
-        <Descriptions.Item label='RUC'>{ internship.company.ruc }</Descriptions.Item>
-        <Descriptions.Item label='Razón social'>{ internship.company.name }</Descriptions.Item>
-        <Descriptions.Item label='Dirección'>{ internship.company.address }</Descriptions.Item>
-        <Descriptions.Item label='Ciudad'>{ internship.company.city }</Descriptions.Item>
-        <Descriptions.Item label='Correo'>{ internship.company.email }</Descriptions.Item>
-        <Descriptions.Item label='Teléfono 1'>{ internship.company.phone }</Descriptions.Item>
-        <Descriptions.Item label='Teléfono 2'>{ internship.company.mobile }</Descriptions.Item>
-        <Descriptions.Item label='Tipo'>{ internship.company.type }</Descriptions.Item>
-      </Descriptions>
-
-      <Descriptions title={ <Divider orientation='center'><strong>DATOS DEL RESPONSABLE DE LA INSTITUCIÓN
-        RECEPTORA</strong></Divider> }
-                    bordered
-                    column={ 2 }>
-        <Descriptions.Item label='Nombre'>
-          { internship.representative.name } { internship.representative.lastname }
-        </Descriptions.Item>
-        <Descriptions.Item label='Cargo'>{ internship.representative.job_title }</Descriptions.Item>
-        <Descriptions.Item label='Correo'>{ internship.representative.email }</Descriptions.Item>
-        <Descriptions.Item label='Teléfono 1'>{ internship.representative.phone }</Descriptions.Item>
-        <Descriptions.Item label='Teléfono 2'>{ internship.representative.mobile }</Descriptions.Item>
-      </Descriptions>
-
       <Modal
         title='Asignar tutor de prácticas'
         visible={ showAssignTeacherModal }
@@ -178,13 +206,11 @@ const InternshipDetail = ( props ) => {
         // footer={ null }
         // width={ 800 }
         destroyOnClose={ true }>
-        <AssignTeacherForm form={ assignTeacherForm }
-                           onSubmit={ handleAssignTeacher }
-                           teacherId={ internship.teacher_id } />
+        <AssignTeacherForm form={ assignTeacherForm } onSubmit={ handleAssignTeacher } />
       </Modal>
 
     </>
   );
 };
 
-export default InternshipDetail;
+export default InternshipHeader;

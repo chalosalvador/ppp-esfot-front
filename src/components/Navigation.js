@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import Routes from '../constants/routes';
 import { useAuth } from '../providers/Auth';
 import { Menu } from 'antd';
-import { LogoutOutlined, LoginOutlined, LoadingOutlined, UserOutlined } from '@ant-design/icons';
+import { LoadingOutlined, LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/navigation.css';
 

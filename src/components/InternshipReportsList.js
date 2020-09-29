@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useInternshipReportsList } from '../data/useInternshipReportsList';
 import ShowError from './ShowError';
-import { Drawer, Table, Button } from 'antd';
+import { Button, Drawer, Table } from 'antd';
 import moment from 'moment';
 import InternshipReportDetail from './InternshipReportDetail';
 
@@ -76,7 +76,7 @@ const InternshipReportsList = ( { internshipId } ) => {
           to_date: report.to_date && moment( report.to_date ).format( 'DD/MM/YYYY' ),
           hours_worked: report.hours_worked,
           status: report.status,
-          type: report.type,
+          // type: report.type,
         })
       );
     } else {
