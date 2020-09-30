@@ -68,20 +68,6 @@ const ReportCommissionSection = ( { internship } ) => {
     }
   };
 
-  const renderRate = ( value ) =>
-    <>
-      <Rate disabled
-            value={ value }
-            style={ {
-              color: '#096dd9',
-              fontSize: 25
-            } }
-            character={ ( { index } ) => customRateIcons[ index + 1 ].icon } />
-      { value
-        ? <span className='ant-rate-text'>{ customRateIcons[ value ].text }</span>
-        : '' }
-    </>;
-
   return (
     <>
       <Descriptions title={ <Divider orientation='center'><strong>REPORTE DE LA COMISIÓN DE PPP</strong></Divider> }
