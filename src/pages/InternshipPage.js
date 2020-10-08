@@ -9,6 +9,7 @@ import ShowError from '../components/ShowError';
 import ReportRepresentativeSection from '../components/ReportRepresentativeSection';
 import ReportTutorSection from '../components/ReportTutorSection';
 import ReportCommissionSection from '../components/ReportCommissionSection';
+import ReportAdministrativeSection from '../components/ReportAdministrativeSection';
 
 const InternshipPage = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const InternshipPage = () => {
       <ReportRepresentativeSection internship={ internship } />
       <ReportTutorSection internship={ internship } />
       <ReportCommissionSection internship={ internship } />
+      <ReportAdministrativeSection internship={ internship } />
     </>
   );
 
