@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Form, Input, Select, Button} from 'antd';
+import {useFacultiesList} from '../data/useFacultiesList'
+
 
 const Faculties = () => {
+
+    const faculties = useFacultiesList(); 
+    console.log(faculties);
     return (
-        <p>FACULTADES</p>
+        <>
+        <h3>FACULTADES</h3>
+        </>
     )
 }
 
