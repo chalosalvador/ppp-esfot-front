@@ -1,17 +1,27 @@
 import React, {useState} from 'react';
-import {Form, Input, Select, Button} from 'antd';
+import {Form, Input, Select, Button, Card, Table, Modal} from 'antd';
 import {useFacultiesList} from '../data/useFacultiesList'
+import FacultiesFormModal from '../components/FacultiesFormModal';
+import InternshipFormModal from '../components/InternshipFormModal';
+import withAuth from '../hocs/withAuth';
+import ModalContext, { ModalContextProvider } from '../context/ModalContext';
+import Actions from '../components/Actions';
+import FacultiesList from '../components/FacultiesList';
 
 
 const Faculties = () => {
 
-    const faculties = useFacultiesList(); 
-    console.log(faculties);
     return (
         <>
-        <h3>FACULTADES</h3>
+            <ModalContextProvider>
+                <Card title={<h3>FACULTADES</h3>} extra={<Actions form='FacultiesForm'/>}>        
+                <FacultiesList form='FacultiesForm'/>      
+                </Card>  
+            </ModalContextProvider>
+
+            
         </>
     )
 }
 
-export default Faculties;
+export default withAuth(Faculties);
