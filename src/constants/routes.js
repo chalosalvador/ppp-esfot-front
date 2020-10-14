@@ -8,6 +8,8 @@ const publicRoutes = {
   REGISTER: '/registro',
   HOME: '/inicio',
   ABOUT: '/acerca-de',
+    PROFILE: '/Profile',
+
 };
 
 const adminRoutes = [
@@ -16,9 +18,17 @@ const adminRoutes = [
     label: 'FACULTADES'   
     },
     {
-      url: '/other',
-      label: 'OTHER'
-    }
+      url: '/Carreras',
+      label: 'CARRERAS'
+    },
+    {
+        url: '/Temas',
+        label: 'TEMAS'
+    },
+    {
+        url: '/Materias',
+        label: 'MATERIAS'
+    },
 ]
 
 const privateRoutes = {

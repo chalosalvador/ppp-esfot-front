@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'; 
-import {Form, Input, Select, Button, Card, Table, Modal} from 'antd';
+import { Button, Table} from 'antd';
 import {useFacultiesList} from '../data/useFacultiesList'
 import ModalContext from '../context/ModalContext';
 const FacultiesList = (props) => {
