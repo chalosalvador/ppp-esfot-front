@@ -10,10 +10,10 @@ import ReportRepresentativeSection from '../components/ReportRepresentativeSecti
 import ReportTutorSection from '../components/ReportTutorSection';
 import ReportCommissionSection from '../components/ReportCommissionSection';
 import ReportAdministrativeSection from '../components/ReportAdministrativeSection';
+import InternshipFollowups from '../components/InternshipFollowups';
 
 const InternshipPage = () => {
   const { id } = useParams();
-  const { currentUser } = useAuth();
   const { internship, isLoading, isError } = useInternship( id );
 
   if( isLoading ) {
@@ -26,6 +26,7 @@ const InternshipPage = () => {
   return (
     <>
       <InternshipHeader internship={ internship } />
+      <InternshipFollowups internship={ internship } />
       <ReportStudentSection internship={ internship } />
       <ReportRepresentativeSection internship={ internship } />
       <ReportTutorSection internship={ internship } />
