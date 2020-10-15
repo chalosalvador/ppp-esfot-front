@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { Button, Col, Modal, Row } from 'antd';
-import { EditOutlined, ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Modal, } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import FacultiesForm from '../components/FacultiesForm';
+import CarrierForm from "../components/CarrierForm";
 
 const ModalContext = React.createContext({});
 const { confirm } = Modal;
@@ -25,11 +26,14 @@ export const ModalContextProvider = ({children}) => {
         } );
       };
     
-    const ModalForm = () => {
+    const ModalForm = (props) => {
         let contentForm;
         switch(form){
             case 'FacultiesForm':
                 contentForm = <FacultiesForm edit={edit} register={register}/>
+                break;
+            case 'CarrierForm':
+                contentForm = <CarrierForm edit={edit} register={register}/>
                 break;
             default:
                 console.log('No se ha enviado un formulario como paráemtro');
@@ -42,7 +46,7 @@ export const ModalContextProvider = ({children}) => {
       <ModalContext.Provider value= {{setShowModal, setEdit, setRegister, setForm}}>
       {children}
       <Modal
-        title={!edit? <h3>Nueva Facultad</h3> : <h3>Edición de Facultad</h3>}
+        title={!edit? <h3>Agregar</h3> : <h3>Edicion</h3>}
         visible={ showModal }
         // closable={ false }
         maskClosable={ false }
@@ -54,8 +58,6 @@ export const ModalContextProvider = ({children}) => {
         footer={ null }
         width={ 800 }
         destroyOnClose={ true }>
-        
-         
          <ModalForm/> 
          
         

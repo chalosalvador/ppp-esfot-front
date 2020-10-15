@@ -40,6 +40,7 @@ const FacultiesForm = (props) => {
             <Form.Item name="name" label="Nombre">
                 <Input />
             </Form.Item>
+
             <Form.Item>
                 <Button htmlType="submit" loading={ isSubmitting }>Registrar</Button>
             </Form.Item>

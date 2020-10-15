@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Form, Input, Select, Button, Card, Table, Modal} from 'antd';
+import { Card } from 'antd';
 import withAuth from '../hocs/withAuth';
 import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
@@ -13,7 +13,7 @@ const Faculties = () => {
         <>
             <ModalContextProvider>
                 <Card title={<h3>FACULTADES</h3>} extra={<Actions form='FacultiesForm' title='NUEVA FACULTAD'/>}>
-                <FacultiesList form='FacultiesForm'/>      
+                <FacultiesList form='FacultiesForm'/>
                 </Card>  
             </ModalContextProvider>
 
