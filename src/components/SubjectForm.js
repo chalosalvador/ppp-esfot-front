@@ -3,57 +3,53 @@ import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
 
-const CarrierForm = (props) => {
+const SubjectForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const addCarrier = async (values) => {
+    const addSubject = async (values) => {
         setIsSubmitting(true);
         message.loading( {
             content: 'Guardando los datos de la facultad',
         });
         console.log('Agregando', values);
-        const representative = await API.post( '/careers', values);
+        const representative = await API.post( '/subjects', values);
         console.log(representative);
         setIsSubmitting(false);
         setShowModal(false);
 
     }
 
-    const editCarrier = async (values) => {
+    const editSubject = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
         message.loading( {
             content: 'Editando los datos de la facultad',
         });
         console.log('Editando', values);
-        const representative = await API.put( `/careers/${props.register.id}`, values);
+        const representative = await API.put( `/subjects/${props.register.id}`, values);
         console.log(representative);
         setIsSubmitting(false);
         setShowModal(false);
     }
-
-    const DeleteCarrier = async (values) => {
-        const representative = await API.delete( `/faculties/1` )
-        console.log(representative);
-    }
-
     return(
 
 
         !props.edit?
             (
-
-                <Form onFinish={addCarrier}>
-                    <Form.Item name="name" label="Nombres">
+                <Form onFinish={addSubject}>
+                    <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="pensum" label="Pensum">
+                    <Form.Item name="code" label="Codigo">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="levels" label="Nivel">
+                    <Form.Item name="level" label="Nivel">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="faculty_id" label="Facultad">
+                    <Form.Item name="unit" label="Unidad">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="field" label="Descripcion">
                         <Input />
                     </Form.Item>
                     <Form.Item>
@@ -62,17 +58,20 @@ const CarrierForm = (props) => {
                 </Form>
             ):
             (
-                <Form onFinish={editCarrier} initialValues={{ name: props.register.name ,pensum: props.register.pensum,levels: props.register.levels,faculty_id: props.register.faculty_id }}>
+                <Form onFinish={editSubject} initialValues={{ name: props.register.name ,code: props.register.code,level: props.register.level,unit: props.register.unit,field: props.register.field }}>
                     <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="pensum" label="Pensum">
+                    <Form.Item name="code" label="Codigo">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="levels" label="Nivel">
+                    <Form.Item name="level" label="Nivel">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="faculty_id" label="Facultad">
+                    <Form.Item name="unit" label="Unidad">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="field" label="Descripcion">
                         <Input />
                     </Form.Item>
                     <Form.Item>
@@ -84,4 +83,4 @@ const CarrierForm = (props) => {
     )
 }
 
-export default CarrierForm;
+export default SubjectForm;

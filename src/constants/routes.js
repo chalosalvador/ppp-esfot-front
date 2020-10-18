@@ -22,13 +22,18 @@ const adminRoutes = [
       label: 'CARRERAS'
     },
     {
+        url: '/Materias',
+        label: 'MATERIAS'
+    },
+    {
         url: '/Temas',
         label: 'TEMAS'
     },
     {
-        url: '/Materias',
-        label: 'MATERIAS'
+      url: '/inicio',
+        label:'PRACTICAS'
     },
+
 ]
 
 const privateRoutes = {

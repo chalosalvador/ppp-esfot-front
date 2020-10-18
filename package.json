@@ -41,5 +41,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>src/setupTests.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js"
+  },
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-15": "^1.4.2",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-to-json": "^3.6.1"
   }
 }

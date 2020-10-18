@@ -31,9 +31,20 @@ const FacultiesForm = (props) => {
         setIsSubmitting(false);
         setShowModal(false);
     }
+
+    const DeleteFaculties = async () => {
+        setIsSubmitting(true);
+        message.loading( {
+            content: 'Eliminando los datos de la facultad',
+        });
+        const representative = await API.delete( `/faculties/${props.register.id}` )
+        console.log(representative);
+        setIsSubmitting(false);
+        setShowModal(false);
+    }
     return(
         
-        
+
         !props.edit?
         (
         <Form onFinish={addFacultie}>
@@ -53,10 +64,12 @@ const FacultiesForm = (props) => {
             </Form.Item>
             <Form.Item>
                 <Button htmlType="submit" loading={ isSubmitting }>Editar</Button>
+                <Button htmlType="submit" onClick={DeleteFaculties} loading={isSubmitting}>Eliminar</Button>
             </Form.Item>
         </Form>
+
         )
-    
+
     )
 }
 

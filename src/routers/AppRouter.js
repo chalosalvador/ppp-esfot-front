@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import Routes from '../constants/routes';
 import NotFoundPage from '../pages/NotFoundPage';
 import Loading from '../components/Loading';
+import AssignTeacherForm from "../components/AssignTeacherForm";
 
 /**
  * El módulo loadable (https://loadable-components.com/docs/code-splitting/)

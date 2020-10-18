@@ -3,6 +3,7 @@ import { Modal, } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import FacultiesForm from '../components/FacultiesForm';
 import CarrierForm from "../components/CarrierForm";
+import SubjectForm from "../components/SubjectForm";
 
 const ModalContext = React.createContext({});
 const { confirm } = Modal;
@@ -33,7 +34,10 @@ export const ModalContextProvider = ({children}) => {
                 contentForm = <FacultiesForm edit={edit} register={register}/>
                 break;
             case 'CarrierForm':
-                contentForm = <CarrierForm edit={edit} register={register}/>
+                contentForm = <CarrierForm edit={edit} register={register} />
+                break;
+            case 'SubjectForm':
+                contentForm = <SubjectForm edit={edit} register={register}/>
                 break;
             default:
                 console.log('No se ha enviado un formulario como paráemtro');

@@ -2,9 +2,10 @@ import React, {useContext, useEffect} from 'react';
 import { Button, Table} from 'antd';
 import {useFacultiesList} from '../data/useFacultiesList'
 import ModalContext from '../context/ModalContext';
+import API from "../data";
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-    const {faculties} = useFacultiesList(); 
+    const {faculties} = useFacultiesList();
 
     const columns = [
         {
