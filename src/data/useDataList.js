@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import API from './index';
 
-export const useSubjectsList = () => {
-    const { data, error, mutate } = useSWR( '/subjects', API.fetcher );
+export const useDataList = (url) => {
+    const { data, error, mutate } = useSWR( `/${url}`, API.fetcher );
 
     return {
-        subjects: (data && data.data) || [] ,
+        dataSearch: (data && data.data) || [] ,
         links: data && data.links,
         meta: data && data.meta,
         isLoading: !error && !data,

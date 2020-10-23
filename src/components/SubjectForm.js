@@ -1,19 +1,14 @@
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
-import API from '../data';
+import {AddObject, EditObject} from "./Add";
 
 const SubjectForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addSubject = async (values) => {
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Guardando los datos de la facultad',
-        });
-        console.log('Agregando', values);
-        const representative = await API.post( '/subjects', values);
-        console.log(representative);
+        AddObject("subjects",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -22,12 +17,7 @@ const SubjectForm = (props) => {
     const editSubject = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Editando los datos de la facultad',
-        });
-        console.log('Editando', values);
-        const representative = await API.put( `/subjects/${props.register.id}`, values);
-        console.log(representative);
+        EditObject("subjects",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }

@@ -1,11 +1,11 @@
 import React, {useContext, useEffect} from 'react'; 
 import { Button, Table} from 'antd';
-import {useFacultiesList} from '../data/useFacultiesList'
+import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
-import API from "../data";
+
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-    const {faculties} = useFacultiesList();
+    const {dataSearch} = useDataList('faculties');
 
     const columns = [
         {
@@ -33,9 +33,9 @@ const FacultiesList = (props) => {
             ),
         },
     ]
-    console.log(faculties);
+    console.log(dataSearch);
     return (
-        <Table dataSource={faculties} columns={columns}/>
+        <Table dataSource={dataSearch} columns={columns}/>
     )
 }
 

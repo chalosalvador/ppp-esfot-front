@@ -1,25 +1,23 @@
-import React, { useContext, useState } from 'react';
-import ModalContext from '../context/ModalContext';
+import React from 'react';
 import API from '../data';
-import { Form,Button, Input, message } from 'antd';
+import { message } from 'antd';
 
-const Add = (url, setIsSubmitting) => {
-    const {setShowModal} = useContext(ModalContext);
+export const AddObject = async (url,values) => {
+    message.loading( {
+        content: 'Guardando los datos de la facultad',
+    });
+    console.log('Agregando', values);
+    const representative = await API.post( `/${url}`, values);
+    console.log(representative);
 
-    const addCarrier = async (values) => {
-        setIsSubmitting(true);
-        message.loading( {
-            content: 'Guardando los datos',
-        });
-        console.log('Agregando', values);
-        const representative = await API.post( `${url}`, values);
-        console.log(representative);
-        setIsSubmitting(false);
-        setShowModal(false);
+};
 
-    }
+export const EditObject = async (url,values,idObject) => {
+    message.loading( {
+        content: 'Editando los datos de la facultad',
+    });
+    console.log('Editando', values);
+    const representative = await API.put( `/${url}/${idObject}`, values);
+    console.log(representative);
 
-    return setIsSubmitting
-}
-
-export default Add;
+};

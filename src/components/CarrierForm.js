@@ -1,6 +1,7 @@
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
+import {AddObject, EditObject} from "./Add";
 import API from '../data';
 
 const CarrierForm = (props) => {
@@ -8,12 +9,7 @@ const CarrierForm = (props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addCarrier = async (values) => {
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Guardando los datos de la facultad',
-        });
-        console.log('Agregando', values);
-        const representative = await API.post( '/careers', values);
-        console.log(representative);
+        AddObject("careers",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -22,12 +18,7 @@ const CarrierForm = (props) => {
     const editCarrier = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Editando los datos de la facultad',
-        });
-        console.log('Editando', values);
-        const representative = await API.put( `/careers/${props.register.id}`, values);
-        console.log(representative);
+        EditObject("careers",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }
