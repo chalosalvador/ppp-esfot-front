@@ -4,6 +4,9 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import FacultiesForm from '../components/FacultiesForm';
 import CarrierForm from "../components/CarrierForm";
 import SubjectForm from "../components/SubjectForm";
+import StudentForm from "../components/StudentForm";
+import TeacherForm from "../components/TeacherForm";
+import AdministrativeForm from "../components/AdministrativeForm";
 
 const ModalContext = React.createContext({});
 const { confirm } = Modal;
@@ -38,6 +41,15 @@ export const ModalContextProvider = ({children}) => {
                 break;
             case 'SubjectForm':
                 contentForm = <SubjectForm edit={edit} register={register}/>
+                break;
+            case 'StudentForm':
+                contentForm = <StudentForm edit={edit} register={register}/>
+                break;
+            case 'TeacherForm':
+                contentForm = <TeacherForm edit={edit} register={register}/>
+                break;
+            case 'AdministrativeForm':
+                contentForm = <AdministrativeForm edit={edit} register={register}/>
                 break;
             default:
                 console.log('No se ha enviado un formulario como paráemtro');

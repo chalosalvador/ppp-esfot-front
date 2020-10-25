@@ -4,7 +4,7 @@ import { message } from 'antd';
 
 export const AddObject = async (url,values) => {
     message.loading( {
-        content: 'Guardando los datos de la facultad',
+        content: 'Guardando los datos',
     });
     console.log('Agregando', values);
     const representative = await API.post( `/${url}`, values);
@@ -14,7 +14,7 @@ export const AddObject = async (url,values) => {
 
 export const EditObject = async (url,values,idObject) => {
     message.loading( {
-        content: 'Editando los datos de la facultad',
+        content: 'Editando los datos',
     });
     console.log('Editando', values);
     const representative = await API.put( `/${url}/${idObject}`, values);

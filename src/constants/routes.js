@@ -30,6 +30,18 @@ const adminRoutes = [
         label: 'TEMAS'
     },
     {
+        url: '/Estudiantes',
+        label: 'ESTUDIANTES'
+    },
+    {
+        url: '/Profesores',
+        label: 'PROFESORES'
+    },
+    {
+        url: '/Administrativos',
+        label: 'ADMINISTRATIVOS'
+    },
+    {
       url: '/inicio',
         label:'PRACTICAS'
     },

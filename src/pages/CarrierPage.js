@@ -9,7 +9,7 @@ const CarrierPage = () => {
     return (
         <>
             <ModalContextProvider>
-                <Card title={<h3>CARRERAS</h3>} extra={<Actions form='CarrierForm' title='NUEVA CARRERA'/>}>
+                <Card extra={<Actions form='CarrierForm' title='NUEVA CARRERA'/>}>
                     <CarrierList form='CarrierForm' />
                 </Card>
             </ModalContextProvider>

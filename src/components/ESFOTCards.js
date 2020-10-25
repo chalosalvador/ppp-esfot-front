@@ -1,6 +1,7 @@
 
 import React from 'react'
 import {Card, Col, Row} from "antd";
+import PropTypes from 'prop-types';
 
 const { Meta } = Card;
 const ESFOTCards = (props) =>(
@@ -35,6 +36,8 @@ Buscar la constante actualización de conocimientos a través del autoaprendizaj
     </div>
 );
 
-
+ESFOTCards.propTypes = {
+    title: PropTypes.string
+}
 
 export default ESFOTCards
