@@ -4,6 +4,7 @@ import withAuth from '../hocs/withAuth';
 import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
 import CarrierList from '../components/CarrierList';
+import PropTypes from "prop-types";
 
 const CarrierPage = () => {
     return (
@@ -16,5 +17,6 @@ const CarrierPage = () => {
         </>
     )
 }
+
 
 export default withAuth( CarrierPage);

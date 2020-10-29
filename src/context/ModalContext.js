@@ -6,7 +6,12 @@ import CarrierForm from "../components/CarrierForm";
 import SubjectForm from "../components/SubjectForm";
 import StudentForm from "../components/StudentForm";
 import TeacherForm from "../components/TeacherForm";
+import TopicForm from "../components/TopicForm";
 import AdministrativeForm from "../components/AdministrativeForm";
+import PropTypes from "prop-types";
+import Actions from "../components/Actions";
+import TopicsPage from "../pages/TopicsPage";
+import Topics from "../pages/TopicsPage";
 
 const ModalContext = React.createContext({});
 const { confirm } = Modal;
@@ -42,6 +47,9 @@ export const ModalContextProvider = ({children}) => {
             case 'SubjectForm':
                 contentForm = <SubjectForm edit={edit} register={register}/>
                 break;
+            case 'TopicForm':
+                contentForm = <TopicForm edit={edit} register={register}/>
+                break;
             case 'StudentForm':
                 contentForm = <StudentForm edit={edit} register={register}/>
                 break;
@@ -59,7 +67,7 @@ export const ModalContextProvider = ({children}) => {
     }
       return(
       <>
-      <ModalContext.Provider value= {{setShowModal, setEdit, setRegister, setForm}}>
+      <ModalContext.Provider data-test="Modal" value= {{setShowModal, setEdit, setRegister, setForm}}>
       {children}
       <Modal
         title={!edit? <h3>Agregar</h3> : <h3>Edicion</h3>}
@@ -83,6 +91,16 @@ export const ModalContextProvider = ({children}) => {
       
       </>
       )
+}
+
+ModalContext.propTypes = {
+    setShowModal: PropTypes.bool,
+    setEdit:PropTypes.bool,
+    setForm:PropTypes.string,
+    dataSource: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number
+    }))
+
 }
 
 export default ModalContext;

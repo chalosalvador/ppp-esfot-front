@@ -13,7 +13,7 @@ const ESFOTCards = (props) =>(
         >
             <Row>
                 <Col span={3}>
-                    <img className="AnuncioDefault" alt="example" src={props.image} />
+                    <img className="AnuncioDefault" data-test="EsfotC" alt="example" src={props.image} />
                 </Col>
 
                 <Col span={20} offset={1}>

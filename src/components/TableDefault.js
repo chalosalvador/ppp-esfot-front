@@ -9,7 +9,7 @@ class TableDefault extends React.Component{
 
         const {columns,title,dataSource} = this.props;
         return (
-            <div>
+            <div data-test="Table" >
             <div className="Table-Container">
 
                 <h1>{title}</h1>
@@ -36,5 +36,6 @@ TableDefault.propTypes = {
         id: PropTypes.number
     }))
 }
+
 
 export default TableDefault;
