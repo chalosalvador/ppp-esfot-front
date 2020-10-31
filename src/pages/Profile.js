@@ -1,21 +1,16 @@
 import React, {useState} from 'react';
 import withAuth from '../hocs/withAuth';
-import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import {Button, Card,} from 'antd';
-import { Form} from 'antd';
-
+import {useAuth} from "../providers/Auth";
+import { Descriptions } from 'antd';
 
 
 const Profile = () => {
 
-    const [MyStudent, setMyStudent] = useState([]);
-    const layout = {
-        labelCol: { span: 7 },
-        wrapperCol: { span: 13},
-    };
+    const { currentUser } = useAuth();
+
     return (
         <>
-            <ModalContextProvider>
                 <div className="BodyCard">
 
                     <div>
@@ -27,29 +22,16 @@ const Profile = () => {
                             cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                         >
 
-
-                                    <Form {...layout} name="nest-messages" >
-                                        <Form.Item className="TitleFormDefault">
-                                            <div className="TitleFormDefault">
-                                                <p >INFORMACION PERFIL</p>
-                                            </div>
-
-                                        </Form.Item>
-                                        <Form.Item name='name' label="NOMBRE" >
-                                            <label>N</label>
-                                        </Form.Item>
-                                        <Form.Item name='Apellidos' label="APELLIDOS" >
-                                            <label></label>
-                                        </Form.Item>
-                                        <Form.Item name='EMAIL' label="EMAIL">
-                                            <label></label>
-                                        </Form.Item>
-                                        <Form.Item name='Direccion' label="DIRECCION">
-                                            <label></label>
-                                        </Form.Item>
-
-                                    </Form>
-
+                            <div className="TitleFormDefault">
+                                <p >INFORMACION PERFIL</p>
+                            </div>
+                            <Descriptions  layout="vertical">
+                                <Descriptions.Item label="NOMBRES">{ currentUser && currentUser.name }</Descriptions.Item>
+                                <Descriptions.Item label="APELLIDOS">{ currentUser && currentUser.lastname }</Descriptions.Item>
+                                <Descriptions.Item label="EMAIL">{ currentUser && currentUser.email }</Descriptions.Item>
+                                <Descriptions.Item label="TELEFONO">{ currentUser && currentUser.phone }</Descriptions.Item>
+                                <Descriptions.Item label="GENERO">{ currentUser && currentUser.sex }</Descriptions.Item>
+                            </Descriptions>
 
                         </Card>
                     </div>
@@ -62,9 +44,6 @@ const Profile = () => {
 }
                 `}</style>
                 </div>
-
-            </ModalContextProvider>
-
 
         </>
     )

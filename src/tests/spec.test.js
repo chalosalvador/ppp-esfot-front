@@ -2,10 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ESFOTCards from "../components/ESFOTCards";
 import TableDefault from "../components/TableDefault";
+import Profile from "../pages/Profile";
 import {findByTest, checkProps} from '../utils'
 import checkPropTypes from 'check-prop-types'
 import Actions from "../components/Actions"
 import ModalContext from "../context/ModalContext"
+import {Data} from '../utils/index'
 
 const setUpEsfot = (props={}) => {
     const component = shallow(<ESFOTCards {...props} />);
@@ -21,6 +23,7 @@ const setUpActions = (props={}) => {
     const component = shallow(<Actions {...props} />);
     return component;
 };
+
 
 describe('Props Components', ()=> {
 
@@ -53,7 +56,6 @@ describe('Props Components', ()=> {
             expect(propsErr).toBeUndefined();
         })
 
-
         it ( 'Paso de datos Correcto', () =>{
             const expectedProps = {
                 setShowModal: true,
@@ -67,7 +69,6 @@ describe('Props Components', ()=> {
             expect(propsErr).toBeUndefined();
         })
 
-
     });
 
 
@@ -75,7 +76,6 @@ describe('Props Components', ()=> {
         let dataEsfot;
         let dataTable;
         let dataActions;
-        let dataModel;
 
         beforeEach(() => {
             const propsEsfot = {
@@ -115,7 +115,12 @@ describe('Props Components', ()=> {
 
         });
 
+        it('Render sin errores', () => {
+            const component = findByTest( dataActions, 'Profile');
+            expect(component.length).toBe(1);
 
+        });
 
     });
 });
+

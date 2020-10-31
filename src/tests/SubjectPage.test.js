@@ -1,30 +1,35 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EsfotCards from "../components/ESFOTCards";
-import {findByTest} from '../utils'
+import SubjectPage from "../pages/SubjectsPage";
+import {Data, RenderPages} from '../utils'
+import SubjectList from "../components/SubjectList";
+import SubjectForm from "../components/SubjectForm";
 
-const setUp = (props={}) => {
-    const component = shallow(<EsfotCards {...props} />);
+const setUpPage = (props={}) => {
+    const component = shallow(<SubjectPage {...props} />);
     return component;
 };
 
-describe('Components', ()=> {
+const setUpList = (props={}) => {
+    const component = shallow(<SubjectList {...props} />);
+    return component;
+};
 
-    let component;
-    beforeEach(()=> {
-        component = setUp();
-    });
+const setUpForm = (props={}) => {
+    const component = shallow(<SubjectForm {...props} />);
+    return component;
+};
 
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(component, 'EsfotC' );
-        expect(wrapper.length).toBe(1);
+RenderPages(setUpPage, setUpList,setUpForm);
 
-    });
+it('Los datos recibidos son correctos', async () => {
 
-    it('Render Img sin Problemas', () => {
-        const wrapper = findByTest(component, 'Anuncio' );
-        expect(wrapper.length).toBe(1);
-
-    });
+    const data = Data('subjects')
+    expect(data.dataSource[0].id).toBe(1);
+    expect(data.dataSource[0].name).toBe("Nobis ducyyyyy");
+    expect(data.dataSource[0].code).toBe("aaff0334");
+    expect(data.dataSource[0].level).toBe(4);
+    expect(data.dataSource[0].unit).toBe("Commodi aliquid labore dolores occaecati porro ab");
+    expect(data.dataSource[0].field).toBe("Qui quis maiores cumque nihil reiciendis");
 
 });

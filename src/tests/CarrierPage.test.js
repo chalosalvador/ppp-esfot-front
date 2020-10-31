@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { shallow } from 'enzyme';
 import CarrierPage from "../pages/CarrierPage";
-import {findByTest} from '../utils'
+import {Data, RenderPages} from '../utils'
 import CarrierList from "../components/CarrierList";
 import CarrierForm from "../components/CarrierForm";
+import {useDataList} from "../data/useDataList";
 
 const setUpPage = (props={}) => {
     const component = shallow(<CarrierPage {...props} />);
@@ -20,40 +21,18 @@ const setUpForm = (props={}) => {
     return component;
 };
 
-describe('Components', ()=> {
 
-    let componentPage;
-    let componentList;
-    let componentForm;
+RenderPages(setUpPage, setUpList,setUpForm);
 
-    beforeEach(()=> {
-        componentPage = setUpPage();
-        componentList = setUpList();
-        componentForm = setUpForm();
-    });
+it('Los datos recibidos son correctos', async () => {
 
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentPage, 'Page' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render Img sin Problemas', () => {
-        const wrapper = findByTest(componentPage, 'Modal' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentList, 'List' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentForm, 'Form' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
+    const data = Data('careers')
+    expect(data.dataSource[0].id).toBe(1);
+    expect(data.dataSource[0].name).toBe("Bellhops");
+    expect(data.dataSource[0].pensum).toBe(1997);
+    expect(data.dataSource[0].levels).toBe(5);
+    expect(data.dataSource[0].faculty_id).toBe(1);
 });
+
+
+

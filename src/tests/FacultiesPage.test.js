@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CarrierPage from "../pages/CarrierPage";
-import {findByTest} from '../utils'
+import {Data, RenderPages} from '../utils'
 import FacultiesList from "../components/FacultiesList";
 import FacultiesForm from "../components/FacultiesForm";
 import FacultiesPage from "../pages/Faculties";
@@ -21,40 +21,12 @@ const setUpForm = (props={}) => {
     return component;
 };
 
-describe('Components', ()=> {
+RenderPages(setUpPage, setUpList,setUpForm);
 
-    let componentPage;
-    let componentList;
-    let componentForm;
+it('Los datos recibidos son correctos', async () => {
 
-    beforeEach(()=> {
-        componentPage = setUpPage();
-        componentList = setUpList();
-        componentForm = setUpForm();
-    });
-
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentPage, 'Page' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render Img sin Problemas', () => {
-        const wrapper = findByTest(componentPage, 'Modal' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentList, 'List' );
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Render sin Problemas', () => {
-        const wrapper = findByTest(componentForm, 'Form' );
-        expect(wrapper.length).toBe(1);
-
-    });
+    const data = Data('faculties')
+    expect(data.dataSource[0].id).toBe(1);
+    expect(data.dataSource[0].name).toBe("Bellhopssss");
 
 });
