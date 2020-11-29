@@ -19,7 +19,7 @@ const FacultiesForm = (props) => {
         
     }
 
-    const editFacultie = async (values) => {
+    const editFaculty = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
         message.loading( {
