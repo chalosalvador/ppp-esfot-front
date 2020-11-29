@@ -4,7 +4,11 @@ import {useFacultiesList} from '../data/useFacultiesList'
 import ModalContext from '../context/ModalContext';
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-    const {faculties} = useFacultiesList(); 
+    const DataSet = (record, form) => {
+
+        setShowModal(true); setEdit(true); setRegister(record); setForm(form)
+    };
+    const {faculties} = useFacultiesList();
 
     const columns = [
         {
@@ -22,7 +26,7 @@ const FacultiesList = (props) => {
             key: 'action',
             render: (text, record) => (
                 <>
-                <Button onClick={()=>{setShowModal(true); setEdit(true); setRegister(record); setForm(props.form) }} size="middle">
+                <Button onClick={()=>{DataSet(record,props.form)}} size="middle">
                   Editar
                 </Button>
                 <Button size="middle">

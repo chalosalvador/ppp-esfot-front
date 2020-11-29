@@ -36,7 +36,7 @@ const FacultiesForm = (props) => {
         
         !props.edit?
         (
-        <Form onFinish={addFacultie}>
+        <Form onFinish={addFaculty}>
             <Form.Item name="name" label="Nombre">
                 <Input />
             </Form.Item>
@@ -46,7 +46,7 @@ const FacultiesForm = (props) => {
         </Form>
         ):
         (
-        <Form onFinish={editFacultie} initialValues={{ name: props.register.name }}>
+        <Form onFinish={editFaculty} initialValues={{ name: props.register.name }}>
             <Form.Item name="name" label="Nombre">
                 <Input />
             </Form.Item>

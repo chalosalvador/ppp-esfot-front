@@ -6,7 +6,7 @@ import FacultiesForm from './FacultiesForm';
 
 const { confirm } = Modal;
 
-const FacultiesFormModal = ( { facultie, edit } ) => {
+const FacultiesFormModal = ( { faculty , edit } ) => {
   const [ showModal, setShowModal ] = useState( false );
 
   const handleCancel = () => {
