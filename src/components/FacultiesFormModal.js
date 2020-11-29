@@ -56,7 +56,7 @@ const FacultiesFormModal = ( { facultie, edit } ) => {
         {
           !edit
             ? <FacultiesForm onFinish={ () => setShowModal( false ) } />
-            : <FacultiesForm onFinish={ () => setShowModal( false ) } facultie={ facultie } />
+            : <FacultiesForm onFinish={ () => setShowModal( false ) } faculty={ faculty } />
         }
       </Modal>
     </>
