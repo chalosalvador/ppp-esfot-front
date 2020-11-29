@@ -6,7 +6,7 @@ import API from '../data';
 const FacultiesForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const addFacultie = async (values) => {
+    const addFaculty = async (values) => {
         setIsSubmitting(true);
         message.loading( {
             content: 'Guardando los datos de la facultad',
