@@ -1,11 +1,14 @@
-import { Form,Button, Input, message } from 'antd';
+import {Form, Button, Input, message, Select} from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import {AddObject, EditObject} from "./Add";
+import {useDataList} from "../data/useDataList";
 
 const SubjectForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const {dataSearch} = useDataList('subjects');
+    const { Option } = Select;
     const addTopic = (values) => {
         setIsSubmitting(true);
         AddObject("topics",values);
@@ -27,11 +30,18 @@ const SubjectForm = (props) => {
         !props.edit?
             (
                 <Form onFinish={addTopic}>
-                    <Form.Item name="name" label="Nombre">
+                    <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="subject_id" label="Materia">
-                        <Input />
+                    <Form.Item name="subject_id" label="Materia" rules={[{ required: true, message: 'Porfavor ingrese la materia' }]}>
+                        <Select placeholder="Seleccione la Facultad">
+
+                            {
+                                dataSearch.map((item) => (
+                                    <Option key={ item.id }>{item.name}</Option>
+                                ))}
+
+                        </Select>
                     </Form.Item>
                     <Form.Item>
                         <Button htmlType="submit" loading={ isSubmitting }>Registrar</Button>
@@ -40,11 +50,18 @@ const SubjectForm = (props) => {
             ):
             (
                 <Form onFinish={editTopic} initialValues={{ name: props.register.name, subject_id: props.register.subject_id }}>
-                    <Form.Item name="name" label="Nombre">
+                    <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="subject_id" label="Materia">
-                        <Input />
+                    <Form.Item name="subject_id" label="Materia" rules={[{ required: true, message: 'Porfavor ingrese la materia' }]}>
+                        <Select placeholder="Seleccione la Facultad">
+
+                            {
+                                dataSearch.map((item) => (
+                                    <Option key={ item.id }>{item.name}</Option>
+                                ))}
+
+                        </Select>
                     </Form.Item>
                     <Form.Item>
                         <Button htmlType="submit" loading={ isSubmitting }>Editar</Button>

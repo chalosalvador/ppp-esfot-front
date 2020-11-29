@@ -13,7 +13,15 @@ const MenuUser = () => {
                     case 'ROLE_ADMINISTRATIVE':
                         setCurrentRoutes(Routes.adminRoutes)
                         console.log(Routes.adminRoutes);
+                        break;
+                    case 'ROLE_TEACHER':
+                        setCurrentRoutes(Routes.teacherRoutes)
+                        console.log(Routes.teacherRoutes);
                     break;
+                    case 'ROLE_STUDENT':
+                        setCurrentRoutes(Routes.studentRoutes)
+                        console.log(Routes.studentRoutes);
+                        break;
                 }
     }, []);
     

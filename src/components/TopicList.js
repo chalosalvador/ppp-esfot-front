@@ -3,6 +3,9 @@ import { Button} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
 import TableDefault from "./TableDefault";
+import {Search} from "./Search";
+
+
 const SubjectList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
     const {dataSearch} = useDataList("topics");
@@ -11,16 +14,20 @@ const SubjectList = (props) => {
         {
             title: 'Id',
             dataIndex: 'id',
-            defaultSortOrder: 'descend',
-            sorter: (a, b) => a.ID_CARRERA - b.ID_CARRERA,
+            defaultSortOrder: 'ascend',
+            sorter: (a, b) => a.id - b.id,
         },
         {
             title: 'NOMBRE',
             dataIndex: 'name',
+            ...Search('name'),
+            sorter: (a, b) => a.name.length - b.name.length,
         },
         {
             title: 'Materia',
             dataIndex: 'subject_id',
+            ...Search('subject_id'),
+            sorter: (a, b) => a.subject_id.length - b.subject_id.length,
         },
         {
             title: 'Acción',

@@ -67,6 +67,7 @@ const AppRouter = () => (
       <PrivateRoute path = {Routes.adminRoutes[4].url} component = {AsyncStudent} />
       <PrivateRoute path = {Routes.adminRoutes[5].url} component = {AsyncTeacher} />
       <PrivateRoute path = {Routes.adminRoutes[6].url} component = {AsyncAdministrative} />
+      <PrivateRoute path = {Routes.teacherRoutes[0].url} component = {AsyncFaculties} />
     <Route component={ NotFoundPage } />
   </Switch>
 );

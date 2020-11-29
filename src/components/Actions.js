@@ -4,10 +4,15 @@ import ModalContext from '../context/ModalContext';
 import PropTypes from "prop-types";
 import TableDefault from "./TableDefault";
 
+
 const Actions = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
+    const DataSet = (form) => {
+        setEdit(false); setRegister(''); setShowModal(true); setForm(form)
+    }
+
     return (
-        <Button data-test="Action" type="primary" onClick={()=>{setEdit(false); setRegister(''); setShowModal(true); setForm(props.form)}}>{props.title}</Button>
+        <Button data-test="Action" type="primary" onClick={()=>{DataSet(props.form)}}>{props.title}</Button>
     )
 }
 

@@ -12,6 +12,26 @@ const publicRoutes = {
 
 };
 
+const teacherRoutes = [
+    {
+        url: '/inicio',
+        label:'PRACTICAS'
+    },
+    {
+        url: '/Estudiantes',
+        label: 'ESTUDIANTES'
+    },
+
+]
+
+const studentRoutes = [
+    {
+        url: '/inicio',
+        label:'PRACTICAS'
+    },
+]
+
+
 const adminRoutes = [
     {
     url: '/facultades',
@@ -42,6 +62,14 @@ const adminRoutes = [
         label: 'ADMINISTRATIVOS'
     },
     {
+        url: '/Representatives',
+        label: 'REPRESENTATIVOS'
+    },
+    {
+        url: '/Interships',
+        label: 'PASANTIAS'
+    },
+    {
       url: '/inicio',
         label:'PRACTICAS'
     },
@@ -52,7 +80,9 @@ const privateRoutes = {
   LOGOUT: '/logout',
   USERS: '/usuarios',
   INTERNSHIP_ID: '/practica/:id',
-  adminRoutes
+  adminRoutes,
+    teacherRoutes,
+    studentRoutes
 };
 
 
@@ -60,6 +90,8 @@ const privateRoutes = {
 const Routes = {
   ...publicRoutes,
   ...privateRoutes,
-  ...adminRoutes
+  ...adminRoutes,
+    ...teacherRoutes,
+    ...studentRoutes
 };
 export default Routes;

@@ -27,19 +27,19 @@ const SubjectForm = (props) => {
         !props.edit?
             (
                 <Form onFinish={addSubject}>
-                    <Form.Item name="name" label="Nombre">
+                    <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="code" label="Codigo">
+                    <Form.Item name="code" label="Codigo" rules={[{ required: true, message: 'Porfavor ingrese el codigo' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="level" label="Nivel">
+                    <Form.Item name="level" label="Nivel" rules={[{ required: true, message: 'Porfavor ingrese el nivel' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="unit" label="Unidad">
+                    <Form.Item name="unit" label="Unidad" rules={[{ required: true, message: 'Porfavor ingrese la unidad' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="field" label="Descripcion">
+                    <Form.Item name="field" label="Descripcion" rules={[{ required: true, message: 'Porfavor ingrese la descripcion' }]}>
                         <Input />
                     </Form.Item>
                     <Form.Item>
@@ -49,19 +49,19 @@ const SubjectForm = (props) => {
             ):
             (
                 <Form onFinish={editSubject} initialValues={{ name: props.register.name ,code: props.register.code,level: props.register.level,unit: props.register.unit,field: props.register.field }}>
-                    <Form.Item name="name" label="Nombre">
+                    <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="code" label="Codigo">
+                    <Form.Item name="code" label="Codigo" rules={[{ required: true, message: 'Porfavor ingrese el codigo' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="level" label="Nivel">
+                    <Form.Item name="level" label="Nivel" rules={[{ required: true, message: 'Porfavor ingrese el nivel' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="unit" label="Unidad">
+                    <Form.Item name="unit" label="Unidad" rules={[{ required: true, message: 'Porfavor ingrese la unidad' }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="field" label="Descripcion">
+                    <Form.Item name="field" label="Descripcion" rules={[{ required: true, message: 'Porfavor ingrese la descripcion' }]}>
                         <Input />
                     </Form.Item>
                     <Form.Item>

@@ -39,7 +39,7 @@ const FacultiesForm = (props) => {
         !props.edit?
         (
         <Form onFinish={addFacultie}>
-            <Form.Item name="name" label="Nombre">
+            <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                 <Input />
             </Form.Item>
 
@@ -50,7 +50,7 @@ const FacultiesForm = (props) => {
         ):
         (
         <Form onFinish={editFacultie} initialValues={{ name: props.register.name }}>
-            <Form.Item name="name" label="Nombre">
+            <Form.Item name="name" label="Nombre" rules={[{ required: true, message: 'Porfavor ingrese el nombre' }]}>
                 <Input />
             </Form.Item>
             <Form.Item>
