@@ -29,7 +29,7 @@ const AsyncHome = loadable( () => import( '../pages/HomePage' ), loadableOptions
 const AsyncInternship = loadable( () => import( '../pages/InternshipPage' ), loadableOptions );
 const AsyncAbout = loadable( () => import( '../pages/AboutPage' ), loadableOptions );
 const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions );
-
+const AsyncFaculties = loadable( () => import('../pages/Faculties'), loadableOptions);
 
 /**
  * Este es el componente que se encarga de renderizar el componente adecuado
@@ -52,6 +52,7 @@ const AppRouter = () => (
     <PrivateRoute path={ Routes.HOME } component={ AsyncHome } />
     <PrivateRoute path={ Routes.INTERNSHIP_ID } component={ AsyncInternship } />
     <PrivateRoute path={ Routes.LOGOUT } component={ AsyncLogout } />
+    <PrivateRoute path = {Routes.adminRoutes[0].url} component = {AsyncFaculties} />
 
     <Route component={ NotFoundPage } />
   </Switch>

@@ -10,14 +10,29 @@ const publicRoutes = {
   ABOUT: '/acerca-de',
 };
 
+const adminRoutes = [
+    {
+    url: '/facultades',
+    label: 'FACULTADES'   
+    },
+    {
+      url: '/other',
+      label: 'OTHER'
+    }
+]
+
 const privateRoutes = {
   LOGOUT: '/logout',
   USERS: '/usuarios',
-  INTERNSHIP_ID: '/practica/:id'
+  INTERNSHIP_ID: '/practica/:id',
+  adminRoutes
 };
+
+
 
 const Routes = {
   ...publicRoutes,
-  ...privateRoutes
+  ...privateRoutes,
+  ...adminRoutes
 };
 export default Routes;
