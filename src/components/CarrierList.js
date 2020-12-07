@@ -54,4 +54,4 @@ const CarrierList = (props) => {
     )
 }
 
-export default CarrierList;
+export default CareerList;
