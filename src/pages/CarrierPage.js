@@ -8,7 +8,7 @@ import CarrierList from '../components/CarrierList';
 import CarrierForm from "../components/CarrierForm";
 
 
-const CarrierPage = () => {
+const CareerPage = () => {
 
     return (
         <>
@@ -24,4 +24,4 @@ const CarrierPage = () => {
     )
 }
 
-export default withAuth(CarrierPage);
+export default withAuth(CareerPage);

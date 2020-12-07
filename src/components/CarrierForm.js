@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
 
-const CarrierForm  = (props) => {
+const CareerForm  = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addCarrier = async (values) => {
@@ -77,4 +77,4 @@ const CarrierForm  = (props) => {
     )
 }
 
-export default CarrierForm ;
+export default CareerForm ;
