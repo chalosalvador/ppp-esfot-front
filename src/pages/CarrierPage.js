@@ -5,9 +5,10 @@ import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
 import TableDefault from "../components/TableDefault";
 import CarrierList from '../components/CarrierList';
+import CarrierForm from "../components/CarrierForm";
 
 
-const CareerPage = () => {
+const CarrierPage = () => {
 
     return (
         <>
@@ -23,4 +24,4 @@ const CareerPage = () => {
     )
 }
 
-export default withAuth(CareerPage);
+export default withAuth(CarrierPage);

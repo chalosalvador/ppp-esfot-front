@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import { Button, Table} from 'antd';
 import {useCareersList} from '../data/useCareersList'
 import ModalContext from '../context/ModalContext';
-const CareerList = (props) => {
+const CarrierList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
     const {careers} = useCareersList();
 
@@ -54,4 +54,4 @@ const CareerList = (props) => {
     )
 }
 
-export default CareerList;
+export default CarrierList;
