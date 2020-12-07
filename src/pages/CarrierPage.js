@@ -23,4 +23,4 @@ const CareerPage = () => {
     )
 }
 
-export default withAuth( CarrierPage);
+export default withAuth(CareerPage);
