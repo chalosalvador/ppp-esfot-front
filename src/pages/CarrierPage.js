@@ -7,7 +7,7 @@ import TableDefault from "../components/TableDefault";
 import CarrierList from '../components/CarrierList';
 
 
-const CarrierPage = () => {
+const CareerPage = () => {
 
     return (
         <>
