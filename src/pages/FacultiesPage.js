@@ -6,7 +6,7 @@ import Actions from '../components/Actions';
 import FacultiesList from '../components/FacultiesList';
 
 
-const Faculties = () => {
+const FacultiesPage = () => {
 
 
     return (
@@ -22,4 +22,4 @@ const Faculties = () => {
     )
 }
 
-export default withAuth(Faculties);
+export default withAuth(FacultiesPage);

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Modal, } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import FacultiesForm from '../components/FacultiesForm';
-import CarrierForm from "../components/CarrierForm";
+import CareerForm from "../components/CareerForm";
 import SubjectForm from "../components/SubjectForm";
 import StudentForm from "../components/StudentForm";
 import TeacherForm from "../components/TeacherForm";
@@ -41,8 +41,8 @@ export const ModalContextProvider = ({children}) => {
             case 'FacultiesForm':
                 contentForm = <FacultiesForm edit={edit} register={register}/>
                 break;
-            case 'CarrierForm':
-                contentForm = <CarrierForm edit={edit} register={register} />
+            case 'CareerForm':
+                contentForm = <CareerForm edit={edit} register={register} />
                 break;
             case 'SubjectForm':
                 contentForm = <SubjectForm edit={edit} register={register}/>

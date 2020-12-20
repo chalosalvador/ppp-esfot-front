@@ -3,7 +3,7 @@ import { Button, Table} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
 import TableDefault from "./TableDefault";
-const CarrierList = (props) => {
+const CareerList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
     const {dataSearch} = useDataList('careers');
 
@@ -55,4 +55,4 @@ const CarrierList = (props) => {
     )
 }
 
-export default CarrierList;
+export default CareerList;

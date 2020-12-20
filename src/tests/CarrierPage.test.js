@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CarrierPage from "../pages/CarrierPage";
+import CarrierPage from "../pages/CareerPage";
 import {findByTest} from '../utils'
-import CarrierList from "../components/CarrierList";
-import CarrierForm from "../components/CarrierForm";
+import CareerList from "../components/CareerList";
+import CareerForm from "../components/CareerForm";
 
 const setUpPage = (props={}) => {
     const component = shallow(<CarrierPage {...props} />);
@@ -11,12 +11,12 @@ const setUpPage = (props={}) => {
 };
 
 const setUpList = (props={}) => {
-    const component = shallow(<CarrierList {...props} />);
+    const component = shallow(<CareerList {...props} />);
     return component;
 };
 
 const setUpForm = (props={}) => {
-    const component = shallow(<CarrierForm {...props} />);
+    const component = shallow(<CareerForm {...props} />);
     return component;
 };
 

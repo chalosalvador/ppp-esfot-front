@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CarrierPage from "../pages/CarrierPage";
+import CarrierPage from "../pages/CareerPage";
 import {findByTest} from '../utils'
 import FacultiesList from "../components/FacultiesList";
 import FacultiesForm from "../components/FacultiesForm";
-import FacultiesPage from "../pages/Faculties";
+import FacultiesPage from "../pages/FacultiesPage";
 
 const setUpPage = (props={}) => {
     const component = shallow(<FacultiesPage {...props} />);

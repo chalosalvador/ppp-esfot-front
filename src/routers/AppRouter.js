@@ -30,9 +30,9 @@ const AsyncHome = loadable( () => import( '../pages/HomePage' ), loadableOptions
 const AsyncInternship = loadable( () => import( '../pages/InternshipPage' ), loadableOptions );
 const AsyncAbout = loadable( () => import( '../pages/AboutPage' ), loadableOptions );
 const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions );
-const AsyncFaculties = loadable( () => import('../pages/Faculties'), loadableOptions);
-const AsyncCarrier = loadable( () => import('../pages/CarrierPage'), loadableOptions);
-const AsyncProfile = loadable( () => import('../pages/Profile'), loadableOptions);
+const AsyncFaculties = loadable( () => import('../pages/FacultiesPage'), loadableOptions);
+const AsyncCarrier = loadable( () => import('../pages/CareerPage'), loadableOptions);
+const AsyncProfile = loadable( () => import('../pages/ProfilePage'), loadableOptions);
 const AsyncSubject = loadable( () => import('../pages/SubjectsPage'), loadableOptions);
 const AsyncTopics = loadable( () => import('../pages/TopicsPage'), loadableOptions);
 const AsyncStudent= loadable( () => import('../pages/StudentPage'), loadableOptions);

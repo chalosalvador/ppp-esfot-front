@@ -3,15 +3,15 @@ import { Card} from 'antd';
 import withAuth from '../hocs/withAuth';
 import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
-import CarrierList from '../components/CarrierList';
+import CareerList from '../components/CareerList';
 import PropTypes from "prop-types";
 
-const CarrierPage = () => {
+const CareerPage = () => {
     return (
         <>
             <ModalContextProvider>
-                <Card extra={<Actions form='CarrierForm' title='NUEVA CARRERA'/>}>
-                    <CarrierList form='CarrierForm' />
+                <Card extra={<Actions form='CareerForm' title='NUEVA CARRERA'/>}>
+                    <CareerList form='CareerForm' />
                 </Card>
             </ModalContextProvider>
         </>
@@ -19,4 +19,4 @@ const CarrierPage = () => {
 }
 
 
-export default withAuth( CarrierPage);
+export default withAuth( CareerPage);
