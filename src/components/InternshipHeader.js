@@ -161,8 +161,11 @@ const InternshipHeader = ( props ) => {
         internship.teacher
           ? <Descriptions title={ <Divider orientation='center'><strong>DATOS DE TUTOR(A)</strong></Divider> }
                           bordered column={ 2 }
-                          extra={ currentUser.role === 'ROLE_ADMINISTRATIVE' &&
-                          <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Editar</Button>
+                          extra={ currentUser.role === 'ROLE_ADMINISTRATIVE'
+                          && internship.status !== 'approved'
+                          && internship.status !== 'rejected'
+                          && internship.status !== 'registered'
+                          && <Button type='primary' onClick={ () => setShowAssignTeacherModal( true ) }>Editar</Button>
                           }>
             <Descriptions.Item label='Nombre'>
               { internship.teacher.name } { internship.teacher.lastname }
