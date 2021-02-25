@@ -7,7 +7,7 @@ import {AddObject, EditObject} from "./Add";
 const FacultiesForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const addFacultie = async (values) => {
+    const addFaculty = async (values) => {
         setIsSubmitting(true);
         AddObject("faculties",values);
         setIsSubmitting(false);
@@ -15,7 +15,7 @@ const FacultiesForm = (props) => {
         
     }
 
-    const editFacultie = async (values) => {
+    const editFaculty = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
         EditObject("faculties",values,props.register.id)
@@ -38,7 +38,7 @@ const FacultiesForm = (props) => {
 
         !props.edit?
         (
-        <Form onFinish={addFacultie}>
+        <Form onFinish={addFaculty}>
             <Form.Item name="name" label="Nombre">
                 <Input />
             </Form.Item>
@@ -49,7 +49,7 @@ const FacultiesForm = (props) => {
         </Form>
         ):
         (
-        <Form onFinish={editFacultie} initialValues={{ name: props.register.name }}>
+        <Form onFinish={editFaculty} initialValues={{ name: props.register.name }}>
             <Form.Item name="name" label="Nombre">
                 <Input />
             </Form.Item>
