@@ -6,6 +6,7 @@ import TableDefault from "./TableDefault";
 
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
+
     const {dataSearch} = useDataList('faculties');
 
     const columns = [
@@ -24,7 +25,7 @@ const FacultiesList = (props) => {
             key: 'action',
             render: (text, record) => (
                 <>
-                <Button onClick={()=>{setShowModal(true); setEdit(true); setRegister(record); setForm(props.form) }} size="middle">
+                <Button onClick={()=>{DataSet(record,props.form)}} size="middle">
                   Editar
                 </Button>
                 <Button size="middle">
