@@ -16,7 +16,7 @@ const CareerForm = (props) => {
     }
 
     const editCarrier = async (values) => {
-        values['status'] = 'C';
+        // values['status'] = 'C';
         setIsSubmitting(true);
         EditObject("careers",values,props.register.id)
         setIsSubmitting(false);

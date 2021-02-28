@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
 import {AddObject, EditObject} from "./Add";
+import { mutate } from 'swr';
 
 const FacultiesForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
@@ -12,11 +13,11 @@ const FacultiesForm = (props) => {
         AddObject("faculties",values);
         setIsSubmitting(false);
         setShowModal(false);
-        
+
     }
 
     const editFaculty = async (values) => {
-        values['status'] = 'C';
+        // values['status'] = 'C';
         setIsSubmitting(true);
         EditObject("faculties",values,props.register.id)
         setIsSubmitting(false);
@@ -34,7 +35,7 @@ const FacultiesForm = (props) => {
         setShowModal(false);
     }
     return(
-        
+
 
         !props.edit?
         (
