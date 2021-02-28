@@ -8,6 +8,8 @@ const publicRoutes = {
   REGISTER: '/registro',
   HOME: '/inicio',
   ABOUT: '/acerca-de',
+    PROFILE: '/Profile',
+
 };
 
 const adminRoutes = [
@@ -16,9 +18,34 @@ const adminRoutes = [
     label: 'FACULTADES'   
     },
     {
-      url: '/other',
-      label: 'OTHER'
-    }
+      url: '/Carreras',
+      label: 'CARRERAS'
+    },
+    {
+        url: '/Materias',
+        label: 'MATERIAS'
+    },
+    {
+        url: '/Temas',
+        label: 'TEMAS'
+    },
+    {
+        url: '/Estudiantes',
+        label: 'ESTUDIANTES'
+    },
+    {
+        url: '/Profesores',
+        label: 'PROFESORES'
+    },
+    {
+        url: '/Administrativos',
+        label: 'ADMINISTRATIVOS'
+    },
+    {
+      url: '/inicio',
+        label:'PRACTICAS'
+    },
+
 ]
 
 const privateRoutes = {

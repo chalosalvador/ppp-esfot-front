@@ -1,7 +1,17 @@
 import React, {useState} from 'react';
-import { Button, Col, Modal, Row } from 'antd';
-import { EditOutlined, ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Modal, } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import FacultiesForm from '../components/FacultiesForm';
+import CareerForm from "../components/CareerForm";
+import SubjectForm from "../components/SubjectForm";
+import StudentForm from "../components/StudentForm";
+import TeacherForm from "../components/TeacherForm";
+import TopicForm from "../components/TopicForm";
+import AdministrativeForm from "../components/AdministrativeForm";
+import PropTypes from "prop-types";
+import Actions from "../components/Actions";
+import TopicsPage from "../pages/TopicsPage";
+import Topics from "../pages/TopicsPage";
 
 const ModalContext = React.createContext({});
 const { confirm } = Modal;
@@ -25,11 +35,29 @@ export const ModalContextProvider = ({children}) => {
         } );
       };
     
-    const ModalForm = () => {
+    const ModalForm = (props) => {
         let contentForm;
         switch(form){
             case 'FacultiesForm':
                 contentForm = <FacultiesForm edit={edit} register={register}/>
+                break;
+            case 'CareerForm':
+                contentForm = <CareerForm edit={edit} register={register} />
+                break;
+            case 'SubjectForm':
+                contentForm = <SubjectForm edit={edit} register={register}/>
+                break;
+            case 'TopicForm':
+                contentForm = <TopicForm edit={edit} register={register}/>
+                break;
+            case 'StudentForm':
+                contentForm = <StudentForm edit={edit} register={register}/>
+                break;
+            case 'TeacherForm':
+                contentForm = <TeacherForm edit={edit} register={register}/>
+                break;
+            case 'AdministrativeForm':
+                contentForm = <AdministrativeForm edit={edit} register={register}/>
                 break;
             default:
                 console.log('No se ha enviado un formulario como paráemtro');
@@ -39,10 +67,10 @@ export const ModalContextProvider = ({children}) => {
     }
       return(
       <>
-      <ModalContext.Provider value= {{setShowModal, setEdit, setRegister, setForm}}>
+      <ModalContext.Provider data-test="Modal" value= {{setShowModal, setEdit, setRegister, setForm}}>
       {children}
       <Modal
-        title={!edit? <h3>Nueva Facultad</h3> : <h3>Edición de Facultad</h3>}
+        title={!edit? <h3>Agregar</h3> : <h3>Edicion</h3>}
         visible={ showModal }
         // closable={ false }
         maskClosable={ false }
@@ -54,8 +82,6 @@ export const ModalContextProvider = ({children}) => {
         footer={ null }
         width={ 800 }
         destroyOnClose={ true }>
-        
-         
          <ModalForm/> 
          
         
@@ -65,6 +91,16 @@ export const ModalContextProvider = ({children}) => {
       
       </>
       )
+}
+
+ModalContext.propTypes = {
+    setShowModal: PropTypes.bool,
+    setEdit:PropTypes.bool,
+    setForm:PropTypes.string,
+    dataSource: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number
+    }))
+
 }
 
 export default ModalContext;
