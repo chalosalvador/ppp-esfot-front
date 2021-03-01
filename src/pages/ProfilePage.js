@@ -6,7 +6,7 @@ import { Form} from 'antd';
 
 
 
-const Profile = () => {
+const ProfilePage = () => {
 
     const [MyStudent, setMyStudent] = useState([]);
     const layout = {
@@ -70,4 +70,4 @@ const Profile = () => {
     )
 }
 
-export default withAuth(Profile);
+export default withAuth(ProfilePage);

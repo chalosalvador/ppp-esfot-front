@@ -1,41 +1,40 @@
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
+import {AddObject, EditObject} from "./Add";
 import API from '../data';
 
-const CareerForm  = (props) => {
+
+const CareerForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addCarrier = async (values) => {
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Guardando los datos de la facultad',
-        });
-        console.log('Agregando', values);
-        const representative = await API.post( '/careers', values);
-        console.log(representative);
+        AddObject("careers",values);
         setIsSubmitting(false);
         setShowModal(false);
 
     }
 
     const editCarrier = async (values) => {
-        values['status'] = 'C';
+        // values['status'] = 'C';
         setIsSubmitting(true);
-        message.loading( {
-            content: 'Editando los datos de la facultad',
-        });
-        console.log('Editando', values);
-        const representative = await API.put( `/careers/${props.register.id}`, values);
-        console.log(representative);
+        EditObject("careers",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }
+
+    const DeleteCarrier = async (values) => {
+        const representative = await API.delete( `/faculties/1` )
+        console.log(representative);
+    }
+
     return(
 
 
         !props.edit?
             (
+
                 <Form onFinish={addCarrier}>
                     <Form.Item name="name" label="Nombres">
                         <Input />
@@ -77,4 +76,5 @@ const CareerForm  = (props) => {
     )
 }
 
-export default CareerForm ;
+export default CareerForm;
+

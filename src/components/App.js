@@ -1,6 +1,6 @@
 import React from 'react';
 import { AuthProvider } from '../providers/Auth';
-import '../styles/Default.css';
+import '../styles/default.css';
 import MainLayout from './Layout';
 // import NProgress from 'nprogress';
 import { Router } from 'react-router-dom';

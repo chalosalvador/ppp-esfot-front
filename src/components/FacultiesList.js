@@ -1,14 +1,19 @@
-import React, {useContext, useEffect} from 'react'; 
-import { Button, Table} from 'antd';
-import {useFacultiesList} from '../data/useFacultiesList'
+import React, {useContext, useEffect} from 'react';
+import { Button, Empty, Table } from 'antd';
+import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
+import TableDefault from "./TableDefault";
+import ShowError from './ShowError';
+
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
+
     const DataSet = (record, form) => {
 
         setShowModal(true); setEdit(true); setRegister(record); setForm(form)
     };
-    const {faculties} = useFacultiesList();
+
+    const {dataSearch, isLoading, isError} = useDataList('faculties');
 
     const columns = [
         {
@@ -36,10 +41,28 @@ const FacultiesList = (props) => {
             ),
         },
     ]
-    console.log(faculties);
+    console.log(dataSearch);
+    if( isError ) {
+        return <ShowError error={ isError } />;
+    }
     return (
-        <Table dataSource={faculties} columns={columns}/>
-    )
+      <Table
+      dataSource={ dataSearch }
+      columns={ columns }
+      rowKey={ record => record.key }
+      // pagination={ pagination }
+      loading={ isLoading }
+      // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
+      locale={
+          {
+              emptyText: <Empty image={ Empty.PRESENTED_IMAGE_SIMPLE }
+                                description={ <span>No hay facultades registradas</span> }
+              />
+          }
+      }
+    />
+        // <TableDefault columns={columns} title='FACULTADES' dataSource={dataSearch}/>
+    );
 }
 
 export default FacultiesList;

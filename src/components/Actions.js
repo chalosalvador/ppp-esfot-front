@@ -1,6 +1,8 @@
 import { Button } from 'antd';
 import React, { useContext } from 'react';
 import ModalContext from '../context/ModalContext';
+import PropTypes from "prop-types";
+import TableDefault from "./TableDefault";
 
 const Actions = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
@@ -13,4 +15,9 @@ const Actions = (props) => {
     )
 }
 
+Actions.propTypes = {
+    title: PropTypes.string,
+    form: PropTypes.string
+
+}
 export default Actions;

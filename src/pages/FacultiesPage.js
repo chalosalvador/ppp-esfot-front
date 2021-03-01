@@ -6,13 +6,13 @@ import Actions from '../components/Actions';
 import FacultiesList from '../components/FacultiesList';
 
 
-const Faculties = () => {
+const FacultiesPage = () => {
 
 
     return (
         <>
             <ModalContextProvider>
-                <Card title={<h3>FACULTADES</h3>} extra={<Actions form='FacultiesForm' title='NUEVA FACULTAD'/>}>
+                <Card extra={<Actions form='FacultiesForm' title='NUEVA FACULTAD'/>}>
                 <FacultiesList form='FacultiesForm'/>
                 </Card>  
             </ModalContextProvider>
@@ -22,4 +22,4 @@ const Faculties = () => {
     )
 }
 
-export default withAuth(Faculties);
+export default withAuth(FacultiesPage);

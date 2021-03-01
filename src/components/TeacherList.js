@@ -1,38 +1,28 @@
 import React, {useContext, useEffect} from 'react';
 import { Button, Table} from 'antd';
-import {useCareersList} from '../data/useCareersList'
 import ModalContext from '../context/ModalContext';
-const CareerList = (props) => {
+import TableDefault from "./TableDefault";
+import {useDataList} from "../data/useDataList";
+const TeacherList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-    const {careers} = useCareersList();
+    const {dataSearch} = useDataList('teachers');
+
 
     const columns = [
         {
-            id: 'Código',
-            dataIndex: 'id',
-            key: 'id'
+            title: 'Id',
+            dataIndex: 'teacher_id',
+            defaultSortOrder: 'descend',
+            sorter: (a, b) => a.ID_CARRERA - b.ID_CARRERA,
         },
         {
-            title: 'Carrera',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'GRADO',
+            dataIndex: 'degree',
         },
         {
-            title: 'Pensum',
-            dataIndex: 'pensum',
-            key: 'pensum',
+            title: 'CARRERA',
+            dataIndex: 'career_id',
         },
-        {
-            title: 'Nivel',
-            dataIndex: 'levels',
-            key: 'levels',
-        },
-        {
-            title: 'Facultad',
-            dataIndex: 'faculty_id',
-            key: 'faculty_id',
-        },
-
         {
             title: 'Acción',
             key: 'action',
@@ -48,10 +38,13 @@ const CareerList = (props) => {
             ),
         },
     ]
-    console.log(careers);
+    console.log(dataSearch);
     return (
-        <Table dataSource={careers} columns={columns}/>
+        <div>
+            <TableDefault columns={columns} title='PROFESORES' dataSource={dataSearch}/>
+        </div>
+
     )
 }
 
-export default CareerList;
+export default TeacherList;

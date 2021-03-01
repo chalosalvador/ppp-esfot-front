@@ -1,21 +1,21 @@
 import React from 'react'
 import { Table} from "antd";
-
+import PropTypes from 'prop-types';
 
 class TableDefault extends React.Component{
 
 
     render() {
 
-        const {columns,title,cards} = this.props;
+        const {columns,title,dataSource} = this.props;
         return (
-            <div>
+            <div data-test="Table" >
             <div className="Table-Container">
 
                 <h1>{title}</h1>
 
                 {
-                    <Table  columns={columns} dataSource={cards}  />
+                    <Table  columns={columns} dataSource={dataSource}  />
                 }
             </div>
                 <style jsx>{`
@@ -29,5 +29,13 @@ class TableDefault extends React.Component{
     }
 
 }
+
+TableDefault.propTypes = {
+    title: PropTypes.string,
+    dataSource: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number
+    }))
+}
+
 
 export default TableDefault;

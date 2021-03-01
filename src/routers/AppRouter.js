@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import Routes from '../constants/routes';
 import NotFoundPage from '../pages/NotFoundPage';
 import Loading from '../components/Loading';
+import AssignTeacherForm from "../components/AssignTeacherForm";
 
 /**
  * El módulo loadable (https://loadable-components.com/docs/code-splitting/)
@@ -29,11 +30,14 @@ const AsyncHome = loadable( () => import( '../pages/HomePage' ), loadableOptions
 const AsyncInternship = loadable( () => import( '../pages/InternshipPage' ), loadableOptions );
 const AsyncAbout = loadable( () => import( '../pages/AboutPage' ), loadableOptions );
 const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions );
-const AsyncFaculties = loadable( () => import('../pages/Faculties'), loadableOptions);
-const AsyncCarrier = loadable( () => import('../pages/CarrierPage'), loadableOptions);
-const AsyncProfile = loadable( () => import('../pages/Profile'), loadableOptions);
+const AsyncFaculties = loadable( () => import('../pages/FacultiesPage'), loadableOptions);
+const AsyncCarrier = loadable( () => import('../pages/CareerPage'), loadableOptions);
+const AsyncProfile = loadable( () => import('../pages/ProfilePage'), loadableOptions);
 const AsyncSubject = loadable( () => import('../pages/SubjectsPage'), loadableOptions);
 const AsyncTopics = loadable( () => import('../pages/TopicsPage'), loadableOptions);
+const AsyncStudent= loadable( () => import('../pages/StudentPage'), loadableOptions);
+const AsyncTeacher = loadable( () => import('../pages/TeacherPage'), loadableOptions);
+const AsyncAdministrative = loadable( () => import('../pages/AdministrativePage'), loadableOptions);
 /**
  * Este es el componente que se encarga de renderizar el componente adecuado
  * de acuerdo a la ruta en la que se encuentra el navegador.
@@ -60,6 +64,9 @@ const AppRouter = () => (
     <PrivateRoute path = {Routes.adminRoutes[1].url} component = {AsyncCarrier} />
     <PrivateRoute path = {Routes.adminRoutes[2].url} component = {AsyncSubject} />
     <PrivateRoute path = {Routes.adminRoutes[3].url} component = {AsyncTopics} />
+      <PrivateRoute path = {Routes.adminRoutes[4].url} component = {AsyncStudent} />
+      <PrivateRoute path = {Routes.adminRoutes[5].url} component = {AsyncTeacher} />
+      <PrivateRoute path = {Routes.adminRoutes[6].url} component = {AsyncAdministrative} />
     <Route component={ NotFoundPage } />
   </Switch>
 );

@@ -1,18 +1,16 @@
 import React from 'react';
-import {Card } from 'antd';
+import {Card} from 'antd';
 import withAuth from '../hocs/withAuth';
 import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
-import TopicList from "../components/TopicList";
+import StudentList from '../components/StudentList'
 
-
-
-const Topics = () => {
+const StudentPage = () => {
     return (
         <>
             <ModalContextProvider>
-                <Card title={<h3>TEMAS</h3>} extra={<Actions form='TopicForm' title='NUEVO TEMA'/>}>
-                    <TopicList form='TopicForm'/>
+                <Card extra={<Actions form='StudentForm' title='AGREGAR LISTA DE ESTUDIANTES'/>}>
+                    <StudentList form='StudentForm'/>
                 </Card>
             </ModalContextProvider>
 
@@ -21,4 +19,4 @@ const Topics = () => {
     )
 }
 
-export default withAuth(Topics);
+export default withAuth(StudentPage);

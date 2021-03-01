@@ -1,24 +1,22 @@
 import React from 'react';
-import {Card } from 'antd';
+import { Card} from 'antd';
 import withAuth from '../hocs/withAuth';
 import ModalContext, { ModalContextProvider } from '../context/ModalContext';
 import Actions from '../components/Actions';
-import TopicList from "../components/TopicList";
+import CareerList from '../components/CareerList';
+import PropTypes from "prop-types";
 
-
-
-const Topics = () => {
+const CareerPage = () => {
     return (
         <>
             <ModalContextProvider>
-                <Card title={<h3>TEMAS</h3>} extra={<Actions form='TopicForm' title='NUEVO TEMA'/>}>
-                    <TopicList form='TopicForm'/>
+                <Card extra={<Actions form='CareerForm' title='NUEVA CARRERA'/>}>
+                    <CareerList form='CareerForm' />
                 </Card>
             </ModalContextProvider>
-
-
         </>
     )
 }
 
-export default withAuth(Topics);
+
+export default withAuth( CareerPage);
