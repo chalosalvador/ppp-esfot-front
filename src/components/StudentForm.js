@@ -2,7 +2,7 @@ import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
-import {AddObject, EditObject} from "./Add";
+import {addObject, editObject} from "../utils/formActions";
 
 
 const StudentForm = (props) => {
@@ -10,7 +10,7 @@ const StudentForm = (props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addStudent = async (values) => {
         setIsSubmitting(true);
-        AddObject("students",values);
+        await addObject("students",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -19,7 +19,7 @@ const StudentForm = (props) => {
     const editStudent = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        EditObject("students",values,props.register.id)
+        await editObject("students",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }

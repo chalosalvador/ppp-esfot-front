@@ -1,7 +1,7 @@
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
-import {AddObject, EditObject} from "./Add";
+import {addObject, editObject} from "../utils/formActions";
 import API from '../data';
 
 const CareerForm = (props) => {
@@ -9,7 +9,7 @@ const CareerForm = (props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addCarrier = async (values) => {
         setIsSubmitting(true);
-        AddObject("careers",values);
+        await addObject("careers",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -18,7 +18,7 @@ const CareerForm = (props) => {
     const editCarrier = async (values) => {
         // values['status'] = 'C';
         setIsSubmitting(true);
-        EditObject("careers",values,props.register.id)
+        await editObject("careers",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }

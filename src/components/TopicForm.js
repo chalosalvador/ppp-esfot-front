@@ -1,14 +1,14 @@
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
-import {AddObject, EditObject} from "./Add";
+import {addObject, editObject} from "../utils/formActions";
 
 const SubjectForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const addTopic = (values) => {
+    const addTopic = async (values) => {
         setIsSubmitting(true);
-        AddObject("topics",values);
+        await addObject("topics",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -17,7 +17,7 @@ const SubjectForm = (props) => {
     const editTopic = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        EditObject("topics",values,props.register.id)
+        await editObject("topics",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }

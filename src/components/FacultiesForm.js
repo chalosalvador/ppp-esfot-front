@@ -2,7 +2,7 @@ import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
-import {AddObject, EditObject} from "./Add";
+import {addObject, editObject} from "../utils/formActions";
 import { mutate } from 'swr';
 
 const FacultiesForm = (props) => {
@@ -10,7 +10,7 @@ const FacultiesForm = (props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addFaculty = async (values) => {
         setIsSubmitting(true);
-        AddObject("faculties",values);
+        await addObject("faculties",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -19,18 +19,17 @@ const FacultiesForm = (props) => {
     const editFaculty = async (values) => {
         // values['status'] = 'C';
         setIsSubmitting(true);
-        EditObject("faculties",values,props.register.id)
+        await editObject("faculties",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }
 
-    const DeleteFaculties = async () => {
+    const deleteFaculties = async () => {
         setIsSubmitting(true);
         message.loading( {
             content: 'Eliminando los datos de la facultad',
         });
-        const representative = await API.delete( `/faculties/${props.register.id}` )
-        console.log(representative);
+        await API.delete( `/faculties/${props.register.id}` )
         setIsSubmitting(false);
         setShowModal(false);
     }
@@ -40,7 +39,7 @@ const FacultiesForm = (props) => {
         !props.edit?
         (
         <Form onFinish={addFaculty}>
-            <Form.Item name="name" label="Nombre">
+            <Form.Item name="name" label="Nombre" rules={[{required: true, message:"Ingresa el nombre de la facultad."}]}>
                 <Input />
             </Form.Item>
 
@@ -56,7 +55,7 @@ const FacultiesForm = (props) => {
             </Form.Item>
             <Form.Item>
                 <Button htmlType="submit" loading={ isSubmitting }>Editar</Button>
-                <Button htmlType="submit" onClick={DeleteFaculties} loading={isSubmitting}>Eliminar</Button>
+                <Button htmlType="submit" onClick={deleteFaculties} loading={isSubmitting}>Eliminar</Button>
             </Form.Item>
         </Form>
 

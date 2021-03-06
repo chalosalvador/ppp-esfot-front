@@ -2,14 +2,14 @@ import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import API from '../data';
-import {AddObject, EditObject} from "./Add";
+import {addObject, editObject} from "../utils/formActions";
 
 const AdministrativeForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const addAdministrative = async (values) => {
         setIsSubmitting(true);
-        AddObject("administrative",values);
+        await addObject("administrative",values);
         setIsSubmitting(false);
         setShowModal(false);
 
@@ -18,7 +18,7 @@ const AdministrativeForm = (props) => {
     const editAdministrative = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        EditObject("administrative",values,props.register.administrative_id)
+        await editObject("administrative",values,props.register.administrative_id)
         setIsSubmitting(false);
         setShowModal(false);
     }

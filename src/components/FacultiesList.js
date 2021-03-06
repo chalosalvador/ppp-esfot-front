@@ -49,7 +49,7 @@ const FacultiesList = (props) => {
       <Table
       dataSource={ dataSearch }
       columns={ columns }
-      rowKey={ record => record.key }
+      rowKey={ record => record.id }
       // pagination={ pagination }
       loading={ isLoading }
       // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
@@ -61,7 +61,6 @@ const FacultiesList = (props) => {
           }
       }
     />
-        // <TableDefault columns={columns} title='FACULTADES' dataSource={dataSearch}/>
     );
 }
 

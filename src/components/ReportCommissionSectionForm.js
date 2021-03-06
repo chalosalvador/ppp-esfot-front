@@ -19,7 +19,7 @@ const ReportCommissionSectionForm = ( { form, onSubmit, internship } ) => {
       initialValues={ internship }
     >
       <Form.Item name='commission_approves'
-                 label='¿Recomiendas que otros estudiantes realicen sus ppp en esta Institución o Empresa?'
+                 label='Una vez revisada, analizada y validada la información reportada por el estudiante, ¿avala la aprobación de las horas de prácticas preprofesionales indicadas en este informe?'
                  rules={ [
                    {
                      required: true,
