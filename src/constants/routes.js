@@ -14,24 +14,39 @@ const publicRoutes = {
 const adminRoutes = [
   {
     url: '/facultades',
-    label: 'FACULTADES',
-  },
-  {
-    url: '/Carreras',
-    label: 'CARRERAS',
-  },
-  {
-    url: '/Materias',
-    label: 'MATERIAS',
-  },
-  {
-    url: '/Temas',
-    label: 'TEMAS',
-  },
-  {
-    url: '/inicio',
-    label: 'PRACTICAS',
-  },
+
+    label: 'FACULTADES'   
+    },
+    {
+      url: '/Carreras',
+      label: 'CARRERAS'
+    },
+    {
+        url: '/Materias',
+        label: 'MATERIAS'
+    },
+    {
+        url: '/Temas',
+        label: 'TEMAS'
+    },
+    {
+        url: '/Estudiantes',
+        label: 'ESTUDIANTES'
+    },
+    {
+        url: '/Profesores',
+        label: 'PROFESORES'
+    },
+    {
+        url: '/Administrativos',
+        label: 'ADMINISTRATIVOS'
+    },
+    {
+      url: '/inicio',
+        label:'PRACTICAS'
+    },
+
+
 ]
 
 const privateRoutes = {

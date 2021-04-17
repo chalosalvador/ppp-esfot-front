@@ -1,15 +1,11 @@
-
-import React, {useContext, useEffect} from 'react';
-import { Button, Table} from 'antd';
+import React, {useContext} from 'react';
+import { Button} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
 import TableDefault from "./TableDefault";
-
 const SubjectList = (props) => {
-  const { setShowModal, setEdit, setRegister, setForm } = useContext(
-    ModalContext
-  )
-  const { dataSearch } = useDataList('subjects')
+    const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
+    const {dataSearch} = useDataList("topics");
 
     const columns = [
         {
@@ -23,19 +19,8 @@ const SubjectList = (props) => {
             dataIndex: 'name',
         },
         {
-            title: 'CODIGO',
-            dataIndex: 'code',
-        },
-        {
-            title: 'NIVEL',
-            dataIndex: 'level',
-        },
-        {
-            title: 'UNIDAD',
-            dataIndex: 'unit',
-        },        {
-            title: 'DESCRIPCION',
-            dataIndex: 'field',
+            title: 'Materia',
+            dataIndex: 'subject_id',
         },
         {
             title: 'Acción',
@@ -55,11 +40,10 @@ const SubjectList = (props) => {
     console.log(dataSearch);
     return (
         <div>
-            <TableDefault columns={columns} title='MATERIAS' dataSource={dataSearch}/>
+            <TableDefault columns={columns} title='TEMAS' dataSource={dataSearch}/>
         </div>
-
 
     )
 }
 
-export default SubjectList
+export default SubjectList;

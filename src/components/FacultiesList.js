@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect } from 'react'
 import { Button, Table } from 'antd'
 import { useDataList } from '../data/useDataList'
@@ -46,3 +47,4 @@ const FacultiesList = (props) => {
 }
 
 export default FacultiesList
+

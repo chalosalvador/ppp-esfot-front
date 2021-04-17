@@ -1,3 +1,4 @@
+
 import { Form, Button, Input, message } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
@@ -66,3 +67,4 @@ const FacultiesForm = (props) => {
 }
 
 export default FacultiesForm
+

@@ -1,25 +1,41 @@
 import React from 'react'
-import { Table } from 'antd'
+import { Table} from "antd";
+import PropTypes from 'prop-types';
 
-class TableDefault extends React.Component {
-  render() {
-    const { columns, title, cards } = this.props
-    return (
-      <div>
-        <div className="Table-Container">
-          <h1>{title}</h1>
+class TableDefault extends React.Component{
 
-          {<Table columns={columns} dataSource={cards} />}
-        </div>
-        <style jsx>{`
-          .Table-Container {
-            margin-left: 3%;
-            margin-right: 3%;
-          }
-        `}</style>
-      </div>
-    )
-  }
+
+    render() {
+
+        const {columns,title,dataSource} = this.props;
+        return (
+            <div data-test="Table" >
+            <div className="Table-Container">
+
+                <h1>{title}</h1>
+
+                {
+                    <Table  columns={columns} dataSource={dataSource}  />
+                }
+            </div>
+                <style jsx>{`
+.Table-Container{
+    margin-left: 3%;
+    margin-right: 3%;
+}
+                `}</style>
+            </div>
+        )
+    }
+
 }
 
-export default TableDefault
+TableDefault.propTypes = {
+    title: PropTypes.string,
+    dataSource: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number
+    }))
+}
+
+
+export default TableDefault;

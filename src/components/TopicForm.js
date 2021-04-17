@@ -1,4 +1,3 @@
-
 import { Form,Button, Input, message } from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
@@ -7,18 +6,18 @@ import {addObject, editObject} from "../utils/formActions";
 const SubjectForm = (props) => {
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const addSubject = async (values) => {
+    const addTopic = async (values) => {
         setIsSubmitting(true);
-        await addObject("subjects",values);
+        await addObject("topics",values);
         setIsSubmitting(false);
         setShowModal(false);
 
     }
 
-    const editSubject = async (values) => {
+    const editTopic = async (values) => {
         values['status'] = 'C';
         setIsSubmitting(true);
-        await editObject("subjects",values,props.register.id)
+        await editObject("topics",values,props.register.id)
         setIsSubmitting(false);
         setShowModal(false);
     }
@@ -27,20 +26,11 @@ const SubjectForm = (props) => {
 
         !props.edit?
             (
-                <Form onFinish={addSubject}>
+                <Form onFinish={addTopic}>
                     <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="code" label="Codigo">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="level" label="Nivel">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="unit" label="Unidad">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="field" label="Descripcion">
+                    <Form.Item name="subject_id" label="Materia">
                         <Input />
                     </Form.Item>
                     <Form.Item>
@@ -49,20 +39,11 @@ const SubjectForm = (props) => {
                 </Form>
             ):
             (
-                <Form onFinish={editSubject} initialValues={{ name: props.register.name ,code: props.register.code,level: props.register.level,unit: props.register.unit,field: props.register.field }}>
+                <Form onFinish={editTopic} initialValues={{ name: props.register.name, subject_id: props.register.subject_id }}>
                     <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
-                    <Form.Item name="code" label="Codigo">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="level" label="Nivel">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="unit" label="Unidad">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="field" label="Descripcion">
+                    <Form.Item name="subject_id" label="Materia">
                         <Input />
                     </Form.Item>
                     <Form.Item>
@@ -75,4 +56,3 @@ const SubjectForm = (props) => {
 }
 
 export default SubjectForm;
-

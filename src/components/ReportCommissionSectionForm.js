@@ -34,6 +34,7 @@ const ReportCommissionSectionForm = ({ form, onSubmit, internship }) => {
         >
           <Radio.Button value={1}>Si</Radio.Button>
           <Radio.Button value={0}>No</Radio.Button>
+
         </Radio.Group>
       </Form.Item>
 

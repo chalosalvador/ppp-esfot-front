@@ -7,6 +7,7 @@ import Actions from '../components/Actions'
 import SubjectList from '../components/SubjectList'
 
 const Subjects = () => {
+<<<<<<< HEAD
   return (
     <>
       <ModalContextProvider>
@@ -19,6 +20,19 @@ const Subjects = () => {
       </ModalContextProvider>
     </>
   )
+=======
+    return (
+        <>
+            <ModalContextProvider>
+                <Card extra={<Actions form='SubjectForm' title='NUEVA MATERIA'/>}>
+                    <SubjectList form='SubjectForm'/>
+                </Card>
+            </ModalContextProvider>
+
+
+        </>
+    )
+>>>>>>> dev
 }
 
 export default withAuth(Subjects)

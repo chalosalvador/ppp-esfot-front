@@ -1,8 +1,9 @@
-import React from 'react'
-import { AuthProvider } from '../providers/Auth'
-import '../styles/Default.css'
-import MainLayout from './Layout'
-// import NProgress from 'nprogress';
+
+import React from 'react';
+import { AuthProvider } from '../providers/Auth';
+import '../styles/default.css';
+import MainLayout from './Layout';
+
 import { Router } from 'react-router-dom'
 import AppRouter from '../routers/AppRouter'
 import history from '../utils/history'
