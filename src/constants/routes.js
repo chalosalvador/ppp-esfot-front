@@ -8,13 +8,13 @@ const publicRoutes = {
   REGISTER: '/registro',
   HOME: '/inicio',
   ABOUT: '/acerca-de',
-    PROFILE: '/Profile',
-
-};
+  PROFILE: '/Profile',
+}
 
 const adminRoutes = [
-    {
+  {
     url: '/facultades',
+
     label: 'FACULTADES'   
     },
     {
@@ -46,20 +46,19 @@ const adminRoutes = [
         label:'PRACTICAS'
     },
 
+
 ]
 
 const privateRoutes = {
   LOGOUT: '/logout',
   USERS: '/usuarios',
   INTERNSHIP_ID: '/practica/:id',
-  adminRoutes
-};
-
-
+  adminRoutes,
+}
 
 const Routes = {
   ...publicRoutes,
   ...privateRoutes,
-  ...adminRoutes
-};
-export default Routes;
+  ...adminRoutes,
+}
+export default Routes

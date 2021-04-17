@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {Card, Col, Row} from "antd";
 import PropTypes from 'prop-types';
@@ -19,6 +18,7 @@ const ESFOTCards = (props) =>(
                 <Col span={20} offset={1}>
                     <Meta title={props.title}
                           description="Las funciones o desempeños de la profesión que se espera que los graduados de la carrera de Tecnología Superior en Agua y Saneamiento Ambiental alcancen dentro de los 3 a 5 años posteriores a su graduación son:
+>>>>>>> dev
 Apoyar en servicios de consultoría para el desarrollo de proyectos de tecnologías en agua y saneamiento ambiental, orientados a la gestión, planeación, análisis, diseño, implementación, operación y mantenimiento de sistemas.
 Participar en obras de abastecimiento de agua y saneamiento ambiental, garantizando aspectos de seguridad, calidad y conservación del ambiente, a través de la aplicación de procesos y modelos estándares para la consecución de los objetivos estratégicos de las instituciones, empresas y comunidades.
 Operar en forma integral los sistemas de agua y saneamiento ambiental en las áreas urbanas y rurales.
@@ -41,3 +41,4 @@ ESFOTCards.propTypes = {
 }
 
 export default ESFOTCards
+

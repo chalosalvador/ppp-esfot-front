@@ -1,11 +1,15 @@
+
 import React, {useContext, useEffect} from 'react';
 import { Button, Table} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
 import TableDefault from "./TableDefault";
+
 const SubjectList = (props) => {
-    const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-    const {dataSearch} = useDataList("subjects");
+  const { setShowModal, setEdit, setRegister, setForm } = useContext(
+    ModalContext
+  )
+  const { dataSearch } = useDataList('subjects')
 
     const columns = [
         {
@@ -58,4 +62,4 @@ const SubjectList = (props) => {
     )
 }
 
-export default SubjectList;
+export default SubjectList

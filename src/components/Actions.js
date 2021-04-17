@@ -1,3 +1,4 @@
+
 import { Button } from 'antd';
 import React, { useContext } from 'react';
 import ModalContext from '../context/ModalContext';
@@ -21,3 +22,4 @@ Actions.propTypes = {
 
 }
 export default Actions;
+

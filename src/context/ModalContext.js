@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import { Modal, } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -88,9 +89,8 @@ export const ModalContextProvider = ({children}) => {
         
       </Modal>
       </ModalContext.Provider>
-      
-      </>
-      )
+    </>
+  )
 }
 
 ModalContext.propTypes = {
