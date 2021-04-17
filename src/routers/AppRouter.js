@@ -1,12 +1,12 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import loadable from '@loadable/component';
-import PublicRoute from './PublicRoute';
-import PrivateRoute from './PrivateRoute';
-import Routes from '../constants/routes';
-import NotFoundPage from '../pages/NotFoundPage';
-import Loading from '../components/Loading';
-import AssignTeacherForm from "../components/AssignTeacherForm";
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
+import loadable from '@loadable/component'
+import PublicRoute from './PublicRoute'
+import PrivateRoute from './PrivateRoute'
+import Routes from '../constants/routes'
+import NotFoundPage from '../pages/NotFoundPage'
+import Loading from '../components/Loading'
+import AssignTeacherForm from '../components/AssignTeacherForm'
 
 /**
  * El módulo loadable (https://loadable-components.com/docs/code-splitting/)
@@ -19,22 +19,40 @@ import AssignTeacherForm from "../components/AssignTeacherForm";
  *
  * @type {{fallback: JSX.Element}}
  */
-const loadableOptions = { fallback: <Loading /> };
+const loadableOptions = { fallback: <Loading /> }
 
-const AsyncIndex = loadable( () => import( '../pages/Index' ), loadableOptions );
-const AsyncLogin = loadable( () => import( '../pages/LoginPage' ), loadableOptions );
-const AsyncRegister = loadable( () => import( '../pages/RegisterPage' ), loadableOptions );
-const AsyncHome = loadable( () => import( '../pages/HomePage' ), loadableOptions );
+const AsyncIndex = loadable(() => import('../pages/Index'), loadableOptions)
+const AsyncLogin = loadable(() => import('../pages/LoginPage'), loadableOptions)
+const AsyncRegister = loadable(
+  () => import('../pages/RegisterPage'),
+  loadableOptions
+)
+const AsyncHome = loadable(() => import('../pages/HomePage'), loadableOptions)
 // const AsyncPrivate = loadable( () => import( '../pages/Private' ), loadableOptions );
 // const AsyncArticles = loadable( () => import( '../pages/Articles' ), loadableOptions );
-const AsyncInternship = loadable( () => import( '../pages/InternshipPage' ), loadableOptions );
-const AsyncAbout = loadable( () => import( '../pages/AboutPage' ), loadableOptions );
-const AsyncLogout = loadable( () => import( '../pages/Logout' ), loadableOptions );
-const AsyncFaculties = loadable( () => import('../pages/Faculties'), loadableOptions);
-const AsyncCarrier = loadable( () => import('../pages/CarrierPage'), loadableOptions);
-const AsyncProfile = loadable( () => import('../pages/Profile'), loadableOptions);
-const AsyncSubject = loadable( () => import('../pages/SubjectsPage'), loadableOptions);
-const AsyncTopics = loadable( () => import('../pages/TopicsPage'), loadableOptions);
+const AsyncInternship = loadable(
+  () => import('../pages/InternshipPage'),
+  loadableOptions
+)
+const AsyncAbout = loadable(() => import('../pages/AboutPage'), loadableOptions)
+const AsyncLogout = loadable(() => import('../pages/Logout'), loadableOptions)
+const AsyncFaculties = loadable(
+  () => import('../pages/Faculties'),
+  loadableOptions
+)
+const AsyncCarrier = loadable(
+  () => import('../pages/CarrierPage'),
+  loadableOptions
+)
+const AsyncProfile = loadable(() => import('../pages/Profile'), loadableOptions)
+const AsyncSubject = loadable(
+  () => import('../pages/SubjectsPage'),
+  loadableOptions
+)
+const AsyncTopics = loadable(
+  () => import('../pages/TopicsPage'),
+  loadableOptions
+)
 /**
  * Este es el componente que se encarga de renderizar el componente adecuado
  * de acuerdo a la ruta en la que se encuentra el navegador.
@@ -48,21 +66,21 @@ const AsyncTopics = loadable( () => import('../pages/TopicsPage'), loadableOptio
  */
 const AppRouter = () => (
   <Switch>
-    <PublicRoute exact path={ Routes.INDEX } component={ AsyncIndex } />
-    <PublicRoute path={ Routes.LOGIN } component={ AsyncLogin } />
-    <PublicRoute path={ Routes.REGISTER } component={ AsyncRegister } />
-    <PublicRoute path={ Routes.ABOUT } component={ AsyncAbout } />
+    <PublicRoute exact path={Routes.INDEX} component={AsyncIndex} />
+    <PublicRoute path={Routes.LOGIN} component={AsyncLogin} />
+    <PublicRoute path={Routes.REGISTER} component={AsyncRegister} />
+    <PublicRoute path={Routes.ABOUT} component={AsyncAbout} />
 
-    <PrivateRoute path={ Routes.HOME } component={ AsyncHome } />
-    <PrivateRoute path={ Routes.INTERNSHIP_ID } component={ AsyncInternship } />
-    <PrivateRoute path={ Routes.LOGOUT } component={ AsyncLogout } />
-      <PrivateRoute path = {Routes.PROFILE} component = {AsyncProfile} />
-    <PrivateRoute path = {Routes.adminRoutes[0].url} component = {AsyncFaculties} />
-    <PrivateRoute path = {Routes.adminRoutes[1].url} component = {AsyncCarrier} />
-    <PrivateRoute path = {Routes.adminRoutes[2].url} component = {AsyncSubject} />
-    <PrivateRoute path = {Routes.adminRoutes[3].url} component = {AsyncTopics} />
-    <Route component={ NotFoundPage } />
+    <PrivateRoute path={Routes.HOME} component={AsyncHome} />
+    <PrivateRoute path={Routes.INTERNSHIP_ID} component={AsyncInternship} />
+    <PrivateRoute path={Routes.LOGOUT} component={AsyncLogout} />
+    <PrivateRoute path={Routes.PROFILE} component={AsyncProfile} />
+    <PrivateRoute path={Routes.adminRoutes[0].url} component={AsyncFaculties} />
+    <PrivateRoute path={Routes.adminRoutes[1].url} component={AsyncCarrier} />
+    <PrivateRoute path={Routes.adminRoutes[2].url} component={AsyncSubject} />
+    <PrivateRoute path={Routes.adminRoutes[3].url} component={AsyncTopics} />
+    <Route component={NotFoundPage} />
   </Switch>
-);
+)
 
-export default AppRouter;
+export default AppRouter
