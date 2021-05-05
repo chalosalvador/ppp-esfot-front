@@ -1,30 +1,58 @@
-import React, {useContext, useEffect} from 'react';
-import { Button, Empty, Table } from 'antd';
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Empty, Table, Popconfirm, Input} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
-import TableDefault from "./TableDefault";
 import ShowError from './ShowError';
+import {deleteObject} from "../utils/formActions";
+
 
 const FacultiesList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
-
     const DataSet = (record, form) => {
-
         setShowModal(true); setEdit(true); setRegister(record); setForm(form)
     };
+    const {dataSearch, isLoading, isError, setDataSearch} = useDataList('faculties');
+    const [dataSource, setDataSource] = useState(dataSearch);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [value, setValue] = useState('');
 
-    const {dataSearch, isLoading, isError} = useDataList('faculties');
+    const deleteFaculty = async (record) => {
+        setIsSubmitting(true);
+        await deleteObject("faculties", record.id);
+        setIsSubmitting(false);
+        setShowModal(false);
+    };
+
+    const FilterByNameInput = (
+        <Input
+            placeholder="Buscar por nombre"
+            value={value}
+            onChange={e => {
+                const currValue = e.target.value;
+                setValue(currValue);
+                const filteredData = dataSearch.filter(entry =>
+                    entry.name.includes(currValue)
+                );
+                setDataSource(filteredData);
+            }}
+        />
+    );
 
     const columns = [
         {
-        id: 'Código',
-        dataIndex: 'id',
-        key: 'id'
+            id: 'Código',
+            dataIndex: 'id',
+            key: 'id'
         },
         {
-        title: 'Facultad',
-        dataIndex: 'name',
-        key: 'name',
+            title: FilterByNameInput,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Estado',
+            dataIndex:'status',
+            key:'status',
         },
         {
             title: 'Acción',
@@ -32,27 +60,26 @@ const FacultiesList = (props) => {
             render: (text, record) => (
                 <>
                 <Button onClick={()=>{DataSet(record,props.form)}} size="middle">
-                  Editar
+                    Editar
                 </Button>
-                <Button size="middle">
-                Eliminar
-              </Button>
+                <Popconfirm title="Desea eliminar el dato?" onConfirm={() => deleteFaculty(record)}>
+                    <Button size="middle">Eliminar</Button>
+                </Popconfirm>
               </>
             ),
         },
     ]
-    console.log(dataSearch);
+
     if( isError ) {
         return <ShowError error={ isError } />;
     }
+
     return (
       <Table
-      dataSource={ dataSearch }
+      dataSource={ dataSource }
       columns={ columns }
       rowKey={ record => record.id }
-      // pagination={ pagination }
       loading={ isLoading }
-      // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
       locale={
           {
               emptyText: <Empty image={ Empty.PRESENTED_IMAGE_SIMPLE }

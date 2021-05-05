@@ -1,32 +1,91 @@
-import { Form,Button, Input, message } from 'antd';
+import {Form, Button, Input, message, Select} from 'antd';
 import React, { useContext, useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import {addObject, editObject} from "../utils/formActions";
+import {useCareersList} from "../data/useCareersList";
+import {useDataList} from "../data/useDataList";
+import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+
+const { Option } = Select;
+
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 18 },
+        sm: { span: 6 },
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 20 },
+    },
+};
+
+const formItemLayoutWithOutLabel = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0
+        },
+        sm: {
+            span: 18,
+            offset: 6
+        },
+    },
+};
 
 const SubjectForm = (props) => {
+
     const {setShowModal} = useContext(ModalContext);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const {dataSearch, isLoading, isError} = useDataList('faculties');
+    const [currentCareers, setCurrentCareers] = useState( [] );
+    const {careers} = useCareersList();
+
     const addSubject = async (values) => {
         setIsSubmitting(true);
         await addObject("subjects",values);
         setIsSubmitting(false);
         setShowModal(false);
-
-    }
+    };
 
     const editSubject = async (values) => {
-        values['status'] = 'C';
         setIsSubmitting(true);
-        await editObject("subjects",values,props.register.id)
+        await editObject("subjects",values,props.register.id);
         setIsSubmitting(false);
         setShowModal(false);
-    }
+    };
+
+    const handleChangeFaculty = ( value ) => {
+        dataSearch.map((faculty)=>(
+            (faculty.id) == value ? setCurrentCareers(faculty.careers) : []
+        ));
+    };
+    console.log('matera con temas ', props);
     return(
-
-
         !props.edit?
             (
-                <Form onFinish={addSubject}>
+                <Form
+                    { ...formItemLayout }
+                    onFinish={addSubject}>
+                    <Form.Item name='faculty_id' label='Facultad' rules={ [
+                        {
+                            required: true,
+                            message: 'Selecciona una facultad...'
+                        },
+                    ] }>
+                        <Select placeholder='Selecciona una facultad' onChange={ handleChangeFaculty } loading={ isLoading }>
+                            { dataSearch.map( ( faculty) => <Option key={ faculty.id } value={ faculty.id }>{faculty.name}</Option> ) }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name='career_id' label='Carrera' rules={ [
+                        {
+                            required: true,
+                            message: 'Selecciona un carrera...'
+                        },
+                    ] }>
+                        <Select placeholder='Selecciona una carrera' loading={ isLoading }>
+                            { currentCareers.map( ( career ) => <Option key={ career.id } value={ career.id }>{ career.name }</Option> ) }
+                        </Select>
+                    </Form.Item>
                     <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
@@ -48,7 +107,28 @@ const SubjectForm = (props) => {
                 </Form>
             ):
             (
-                <Form onFinish={editSubject} initialValues={{ name: props.register.name ,code: props.register.code,level: props.register.level,unit: props.register.unit,field: props.register.field }}>
+                <Form { ...formItemLayout }
+                      onFinish={editSubject}
+                      initialValues={{
+                          career_id: props.register.career_id,
+                          name: props.register.name,
+                          code: props.register.code,
+                          level: props.register.level,
+                          unit: props.register.unit,
+                          field: props.register.field,
+                          topics: props.register.topics.length > 0 ? props.register.topics.map((activity) => activity.name) : [''],
+                      }}>
+                    <Form.Item name='career_id' label='Carrera' rules={ [
+                        {
+                            required: true,
+                            message: 'Selecciona un carrera...'
+                        },
+                    ] }>
+                        <Select placeholder='Selecciona una carrera' loading={ isLoading }>
+                            { careers.map( ( career ) =>
+                                <Option key={ career.id } value={ career.id }>{ career.name } { career.pensum }</Option> ) }
+                        </Select>
+                    </Form.Item>
                     <Form.Item name="name" label="Nombre">
                         <Input />
                     </Form.Item>
@@ -64,6 +144,64 @@ const SubjectForm = (props) => {
                     <Form.Item name="field" label="Descripcion">
                         <Input />
                     </Form.Item>
+                    <Form.List name='topics'>
+                        { ( fields, { add, remove } ) => {
+                            console.log('fileds info:', fields)
+                            return (
+                                <div>
+                                    { fields.map( ( field, index ) => (
+                                        //console.log('recorro fields: ', field);
+                                        <Form.Item
+                                            { ...(index === 0
+                                                ? formItemLayout
+                                                : formItemLayoutWithOutLabel) }
+                                            label={ index === 0
+                                                ? 'Temas:'
+                                                : '' }
+                                            required={ true }
+                                            key={ field.key }
+                                        >
+                                            <Form.Item
+                                                { ...field }
+                                                rules={ [
+                                                    {
+                                                        required: true,
+                                                        whitespace: true,
+                                                        message: 'Agregue los temas que corresponden a la matería.',
+                                                    },
+                                                    {
+                                                        min: 40,
+                                                        message: 'Debes ingresar al menos 40 caracteres.'
+                                                    }
+                                                ] }
+                                                noStyle
+                                            >
+                                                <Input.TextArea placeholder='Nombre del tema'
+                                                                autoSize={ { maxRows: 4 } }
+                                                                style={ { width: '90%' } } />
+                                            </Form.Item>
+                                            { fields.length > 1
+                                                ? (
+                                                    <MinusCircleOutlined
+                                                        className='dynamic-delete-button'
+                                                        style={ { margin: '0 8px' } }
+                                                        onClick={ () => {
+                                                            remove( field.name );
+                                                        } }
+                                                    />
+                                                )
+                                                : null }
+                                        </Form.Item>
+                                    ) ) }
+                                    <Form.Item { ...formItemLayoutWithOutLabel }>
+                                        <Button type='dashed' onClick={ () => { add(); } } style={ { width: '90%' } }>
+                                            <PlusOutlined /> Añadir un tema
+                                        </Button>
+                                    </Form.Item>
+                                </div>
+                            );
+                        } }
+                    </Form.List>
                     <Form.Item>
                         <Button htmlType="submit" loading={ isSubmitting }>Editar</Button>
                     </Form.Item>

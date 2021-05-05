@@ -32,7 +32,7 @@ const MainLayout = props => {
   return (
     <div className='app'>
       <Layout>
-            
+
             <Header className="header">
             <Row type='flex' justify='space-between' align='bottom'>
                 <Col xs={ 24 } md={ 6 } className='logo-wrapper'>
@@ -57,7 +57,7 @@ const MainLayout = props => {
       <Layout style={{ padding: '0 24px 24px' }}>
       <Content className='content'>
           <Row type='flex' justify='center' style={ { flex: 'auto' } }>
-            <Col xs={ 22 } md={ 20 }>
+            <Col xs={ 24 } md={ 24 }>
               { props.children }
             </Col>
           </Row>

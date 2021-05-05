@@ -7,7 +7,6 @@ import { Form} from 'antd';
 
 
 const ProfilePage = () => {
-
     const [MyStudent, setMyStudent] = useState([]);
     const layout = {
         labelCol: { span: 7 },

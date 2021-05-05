@@ -26,10 +26,6 @@ const adminRoutes = [
         label: 'MATERIAS'
     },
     {
-        url: '/Temas',
-        label: 'TEMAS'
-    },
-    {
         url: '/Estudiantes',
         label: 'ESTUDIANTES'
     },

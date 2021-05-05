@@ -1,12 +1,23 @@
-import React, {useContext, useEffect} from 'react';
-import { Button, Empty, Table } from 'antd';
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Empty, Popconfirm, Table} from 'antd';
 import {useDataList} from '../data/useDataList'
 import ModalContext from '../context/ModalContext';
 import TableDefault from "./TableDefault";
 import ShowError from './ShowError';
+import {deleteObject} from "../utils/formActions";
 const CareerList = (props) => {
     const {setShowModal, setEdit, setRegister, setForm} = useContext(ModalContext);
+    const DataSet = (record, form) => {
+        setShowModal(true); setEdit(true); setRegister(record); setForm(form)
+    };
     const {dataSearch, isLoading, isError} = useDataList('careers');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const deleteCareers = async (record) => {
+        setIsSubmitting(true);
+        await deleteObject("careers", record.id);
+        setIsSubmitting(false);
+        setShowModal(false);
+    };
 
     const columns = [
         {
@@ -31,46 +42,48 @@ const CareerList = (props) => {
         },
         {
             title: 'Facultad',
-            dataIndex: 'faculty_id',
+            dataIndex: ['faculty', 'name'],
             key: 'faculty_id',
         },
-
+        {
+            title: 'Estado',
+            dataIndex: 'status',
+            key: 'status',
+        },
         {
             title: 'Acción',
             key: 'action',
             render: (text, record) => (
                 <>
-                    <Button onClick={()=>{setShowModal(true); setEdit(true); setRegister(record); setForm(props.form) }} size="middle">
+                    <Button onClick={()=>{DataSet(record,props.form)}} size="middle">
                         Editar
                     </Button>
-                    <Button size="middle">
-                        Eliminar
-                    </Button>
+                    <Popconfirm title="Desea eliminar el dato?" onConfirm={() => deleteCareers(record)}>
+                        <Button size="middle">Eliminar</Button>
+                    </Popconfirm>
                 </>
             ),
         },
     ]
-    console.log(dataSearch);
+
     if( isError ) {
         return <ShowError error={ isError } />;
     }
+
     return (
-      <Table
-        dataSource={ dataSearch }
-        columns={ columns }
-        rowKey={ record => record.id }
-        // pagination={ pagination }
-        loading={ isLoading }
-        // onChange={ ( pagination ) => setPageIndex( pagination.current ) }
-        locale={
-            {
-                emptyText: <Empty image={ Empty.PRESENTED_IMAGE_SIMPLE }
-                                  description={ <span>No hay carreras registradas</span> }
-                />
+        <Table
+            dataSource={ dataSearch }
+            columns={ columns }
+            rowKey={ record => record.id }
+            loading={ isLoading }
+            locale={
+                {
+                    emptyText: <Empty image={ Empty.PRESENTED_IMAGE_SIMPLE }
+                                      description={ <span>No hay carreras registradas</span> }
+                    />
+                }
             }
-        }
-      />
-        // <TableDefault columns={columns} title='CARRERAS' dataSource={dataSearch}/>
+    />
     )
 }
 

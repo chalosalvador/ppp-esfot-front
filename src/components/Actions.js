@@ -10,8 +10,7 @@ const Actions = (props) => {
         setEdit(false); setRegister(''); setShowModal(true); setForm(form)
     }
     return (
-
-        <Button type="primary" onClick={()=>{DataSet(props.form)}}>Nueva Facultad</Button>
+        <Button type="primary" onClick={()=>{DataSet(props.form)}}>{props.title}</Button>
     )
 }
 

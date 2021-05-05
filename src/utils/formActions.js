@@ -37,3 +37,20 @@ export const editObject = async( url, values, idObject ) => {
     hide();
   }
 };
+
+export const deleteObject = async(url, idObject) => {
+  const hide = message.loading({
+    content: 'Eliminando dato',
+  });
+
+  try{
+    console.log('Eliminando dato', idObject);
+    await API.put(`/${ url }/${ idObject }/disabled`);
+    await mutate( `/${ url }` );
+    hide();
+  }catch ( e ) {
+    const errorList = e.error && <ErrorList errors = { e.error }/>
+    message.error(<>{translateMessage(e.message)}{errorList}</>);
+    hide();
+  }
+};

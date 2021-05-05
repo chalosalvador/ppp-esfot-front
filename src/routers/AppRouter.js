@@ -34,7 +34,6 @@ const AsyncFaculties = loadable( () => import('../pages/FacultiesPage'), loadabl
 const AsyncCarrier = loadable( () => import('../pages/CareerPage'), loadableOptions);
 const AsyncProfile = loadable( () => import('../pages/ProfilePage'), loadableOptions);
 const AsyncSubject = loadable( () => import('../pages/SubjectsPage'), loadableOptions);
-const AsyncTopics = loadable( () => import('../pages/TopicsPage'), loadableOptions);
 const AsyncStudent= loadable( () => import('../pages/StudentPage'), loadableOptions);
 const AsyncTeacher = loadable( () => import('../pages/TeacherPage'), loadableOptions);
 const AsyncAdministrative = loadable( () => import('../pages/AdministrativePage'), loadableOptions);
@@ -63,10 +62,9 @@ const AppRouter = () => (
     <PrivateRoute path = {Routes.adminRoutes[0].url} component = {AsyncFaculties} />
     <PrivateRoute path = {Routes.adminRoutes[1].url} component = {AsyncCarrier} />
     <PrivateRoute path = {Routes.adminRoutes[2].url} component = {AsyncSubject} />
-    <PrivateRoute path = {Routes.adminRoutes[3].url} component = {AsyncTopics} />
-      <PrivateRoute path = {Routes.adminRoutes[4].url} component = {AsyncStudent} />
-      <PrivateRoute path = {Routes.adminRoutes[5].url} component = {AsyncTeacher} />
-      <PrivateRoute path = {Routes.adminRoutes[6].url} component = {AsyncAdministrative} />
+      <PrivateRoute path = {Routes.adminRoutes[3].url} component = {AsyncStudent} />
+      <PrivateRoute path = {Routes.adminRoutes[4].url} component = {AsyncTeacher} />
+      <PrivateRoute path = {Routes.adminRoutes[5].url} component = {AsyncAdministrative} />
     <Route component={ NotFoundPage } />
   </Switch>
 );
