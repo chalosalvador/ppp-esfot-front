@@ -1,4 +1,4 @@
-import { Form, Button, Input, message, Select } from 'antd'
+import { Form, Button, Input, message, Select, InputNumber } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import API from '../data'
@@ -89,20 +89,41 @@ const StudentForm = (props) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="name" label="Nombre">
+      <Form.Item name="name" label="Nombre" 
+      rules={[
+        { required: true, message: 'Ingresa el nombre del estudiante' },
+      ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="lastname" label="Apellido">
+      <Form.Item name="lastname" label="Apellido"
+      rules={[
+        { required: true, message: 'Ingresa el apellido del estudiante.' },
+      ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="email" label="Email">
+      <Form.Item name="email" label="Email"
+      rules={[
+        { required: true, message: 'Ingresa el email del estudiante.' },
+      ]}
+    
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="phone" label="Teléfono">
-        <Input />
+      <Form.Item name="phone" label="Teléfono"
+            rules={[
+              { required: true, message: 'Ingresa el telefono del estudiante.' },
+            ]}
+      >
+        <InputNumber />
       </Form.Item>
-      <Form.Item name="mobile" label="Celular">
-        <Input />
+      <Form.Item name="mobile" label="Celular"
+            rules={[
+              { required: true, type: 'number', message: 'Ingresa el celular del estudiante.' },
+            ]}
+      >
+        <InputNumber />
       </Form.Item>
       <Form.Item
         name="sex"
@@ -181,20 +202,41 @@ const StudentForm = (props) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="name" label="Nombre">
+      <Form.Item name="name" label="Nombre" 
+      rules={[
+        { required: true, message: 'Ingresa el nombre del estudiante' },
+      ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="lastname" label="Apellido">
+      <Form.Item name="lastname" label="Apellido"
+      rules={[
+        { required: true, message: 'Ingresa el apellido del estudiante.' },
+      ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="email" label="Email">
+      <Form.Item name="email" label="Email"
+      rules={[
+        { required: true, message: 'Ingresa el email del estudiante.' },
+      ]}
+    
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="phone" label="Teléfono">
-        <Input />
+      <Form.Item name="phone" label="Teléfono"
+            rules={[
+              { required: true, type: 'number',message: 'Ingresa el telefono del estudiante.' },
+            ]}
+      >
+        <InputNumber />
       </Form.Item>
-      <Form.Item name="mobile" label="Celular">
-        <Input />
+      <Form.Item name="mobile" label="Celular"
+            rules={[
+              { required: true,type: 'number', message: 'Ingresa el celular del estudiante.' },
+            ]}
+      >
+        <InputNumber />
       </Form.Item>
       <Form.Item
         name="sex"

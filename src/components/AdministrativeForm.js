@@ -1,4 +1,4 @@
-import { Form, Button, Input, message, Select } from 'antd'
+import { Form, Button, Input, message, Select,  InputNumber } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import API from '../data'
@@ -90,23 +90,25 @@ const AdministrativeForm = (props) => {
         rules={[
           {
             required: true,
+            type: 'number',
             message: 'Ingresa su numero de teléfono convencional.',
           },
         ]}
       >
-        <Input />
+         <InputNumber />
       </Form.Item>
       <Form.Item
         name="mobile"
         label="Celular"
         rules={[
           {
-            required: false,
+            required: true,
+            type: 'number',
             message: 'Ingresa su número de teléfono celular.',
           },
         ]}
       >
-        <Input />
+         <InputNumber />
       </Form.Item>
       <Form.Item
         name="sex"
@@ -189,23 +191,25 @@ const AdministrativeForm = (props) => {
         rules={[
           {
             required: true,
+            type: 'number',
             message: 'Ingresa su numero de teléfono convencional.',
           },
         ]}
       >
-        <Input />
+         <InputNumber />
       </Form.Item>
       <Form.Item
         name="mobile"
         label="Celular"
         rules={[
           {
-            required: false,
+            required: true,
+            type: 'number',
             message: 'Ingresa su número de teléfono celular.',
           },
         ]}
       >
-        <Input />
+         <InputNumber />
       </Form.Item>
       <Form.Item
         name="sex"
