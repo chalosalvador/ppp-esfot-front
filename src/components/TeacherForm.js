@@ -81,7 +81,7 @@ const TeacherForm = (props) => {
         ]}
       >
         <Select placeholder="Selecciona una carrera" loading={isLoading}>
-          {careers.map((career) => (
+          {currentCareers.map((career) => (
             <Option key={career.id} value={career.id}>
               {career.name}
             </Option>
@@ -180,7 +180,7 @@ const TeacherForm = (props) => {
         sex: props.register.teacher.sex,
       }}
     >
-      <Form.Item
+<Form.Item
         name="faculty_id"
         label="Facultad"
         rules={[
@@ -213,7 +213,7 @@ const TeacherForm = (props) => {
         ]}
       >
         <Select placeholder="Selecciona una carrera" loading={isLoading}>
-          {careers.map((career) => (
+          {currentCareers.map((career) => (
             <Option key={career.id} value={career.id}>
               {career.name}
             </Option>
