@@ -189,7 +189,7 @@ const CareerForm = (props) => {
         <InputNumber />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" loading={isSubmitting}>
+        <Button class="buttonDefault" htmlType="submit" loading={isSubmitting}>
           Editar
         </Button>
       </Form.Item>

@@ -60,12 +60,14 @@ const AdministrativeList = (props) => {
               DataSet(record, props.form)
             }}
             size="middle"
+            
           >
             Editar
           </Button>
           <Popconfirm
             title="Desea eliminar el dato?"
             onConfirm={() => deleteAdministrative(record)}
+            
           >
             <Button size="middle">Eliminar</Button>
           </Popconfirm>

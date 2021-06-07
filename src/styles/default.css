@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 #components-layout-demo-side .logo {
   height: 32px;
@@ -62,10 +62,9 @@ h1 {
 }
 
 .buttonDefault {
-  margin-top: 2%;
-  margin-bottom: 2%;
   background-color: #001529;
   border-color: #001529;
+  color: white;
 }
 
 .ContenedorDefault {

@@ -228,7 +228,7 @@ const AdministrativeForm = (props) => {
         </Select>
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" loading={isSubmitting}>
+        <Button className="buttonDefault" htmlType="submit" loading={isSubmitting}>
           Registrar
         </Button>
       </Form.Item>

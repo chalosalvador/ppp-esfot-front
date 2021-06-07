@@ -9,6 +9,8 @@ const publicRoutes = {
   HOME: '/inicio',
   ABOUT: '/acerca-de',
   PROFILE: '/Profile',
+  RECOVERPASSWORD: '/RecoverPassword',
+
 }
 
 const adminRoutes = [
@@ -46,6 +48,7 @@ const privateRoutes = {
   LOGOUT: '/logout',
   USERS: '/usuarios',
   INTERNSHIP_ID: '/practica/:id',
+  CHANGEPASSWORD: '/ChangePassword',
   adminRoutes,
 }
 

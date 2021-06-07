@@ -78,7 +78,11 @@ const Navigation = (props) => {
                   Perfil
                 </Link>
               </Menu.Item>
-              <Menu.Item key="setting:2">Option 2</Menu.Item>
+              <Menu.Item key={Routes.CHANGEPASSWORD}>
+              <Link to={Routes.CHANGEPASSWORD} style={linkStyle}>
+                  Cambiar Contraseña
+                </Link>
+              </Menu.Item>
             </Menu.ItemGroup>
 
             <Menu.Item key={Routes.LOGIN}>

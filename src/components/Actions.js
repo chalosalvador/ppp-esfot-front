@@ -15,6 +15,7 @@ const Actions = (props) => {
   }
   return (
     <Button
+    className="buttonDefault"
       type="primary"
       onClick={() => {
         DataSet(props.form)

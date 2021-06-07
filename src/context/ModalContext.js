@@ -12,6 +12,7 @@ import PropTypes from 'prop-types'
 import Actions from '../components/Actions'
 import TopicsPage from '../pages/TopicsPage'
 import Topics from '../pages/TopicsPage'
+import RecoverPasswordPage from '../pages/RecoverPasswordPage'
 
 const ModalContext = React.createContext({})
 const { confirm } = Modal
@@ -58,6 +59,9 @@ export const ModalContextProvider = ({ children }) => {
         break
       case 'AdministrativeForm':
         contentForm = <AdministrativeForm edit={edit} register={register} />
+        break
+      case 'RecoverPasswordPage':
+        contentForm = <RecoverPasswordPage edit={edit} register={register} />
         break
       default:
         console.log('No se ha enviado un formulario como paráemtro')

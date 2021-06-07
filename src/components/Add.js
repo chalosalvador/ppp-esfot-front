@@ -9,6 +9,7 @@ export const AddObject = async (url, values) => {
   console.log('Agregando', values)
   const representative = await API.post(`/${url}`, values)
   console.log(representative)
+  
 }
 
 export const EditObject = async (url, values, idObject) => {

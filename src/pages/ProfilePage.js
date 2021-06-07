@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import withAuth from '../hocs/withAuth'
+import { useAuth } from '../providers/Auth'
 import ModalContext, { ModalContextProvider } from '../context/ModalContext'
 import { Button, Card } from 'antd'
 import { Form } from 'antd'
 
 const ProfilePage = () => {
-  const [MyStudent, setMyStudent] = useState([])
+  const { currentUser } = useAuth()
   const layout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 13 },
@@ -30,17 +31,17 @@ const ProfilePage = () => {
                     <p>INFORMACION PERFIL</p>
                   </div>
                 </Form.Item>
-                <Form.Item name="name" label="NOMBRE">
-                  <label>N</label>
+                <Form.Item name="NOMBRE" label="NOMBRE">
+                  <label>{currentUser && currentUser.name}</label>
                 </Form.Item>
                 <Form.Item name="Apellidos" label="APELLIDOS">
-                  <label></label>
+                  <label>{currentUser && currentUser.lastname}</label>
                 </Form.Item>
                 <Form.Item name="EMAIL" label="EMAIL">
-                  <label></label>
+                  <label>{currentUser && currentUser.email}</label>
                 </Form.Item>
-                <Form.Item name="Direccion" label="DIRECCION">
-                  <label></label>
+                <Form.Item name="TELEFONO" label="TELEFONO">
+                  <label>{currentUser && currentUser.phone}</label>
                 </Form.Item>
               </Form>
             </Card>
