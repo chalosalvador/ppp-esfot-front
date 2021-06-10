@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import withAuth from '../hocs/withAuth'
 import { useAuth } from '../providers/Auth'
 import ModalContext, { ModalContextProvider } from '../context/ModalContext'
-import { Button, Card, Input} from 'antd'
+import { Button, Card, Input } from 'antd'
 import { Form } from 'antd'
 import { EditPassword } from '../utils/formActions'
 
@@ -17,9 +17,9 @@ const ChangePasswordPage = () => {
 
   const ChangePassword = async (values) => {
     setIsSubmitting(true)
-    await  EditPassword('user', values, user)
+    await EditPassword('user', values, user)
     setIsSubmitting(false)
-  
+
   }
   return (
     <>
@@ -27,30 +27,30 @@ const ChangePasswordPage = () => {
         <div className="BodyCard">
           <div>
             <Card>
-              <Form 
-              onFinish={ChangePassword}
-              {...layout} name="nest-messages">
-              <Form.Item className="TitleFormDefault">
+              <Form
+                onFinish={ChangePassword}
+                {...layout} name="nest-messages">
+                <Form.Item className="TitleFormDefault">
                   <div className="TitleFormDefault">
                     <p>CAMBIO DE CREDENCIALES</p>
                   </div>
                 </Form.Item>
-                <Form.Item name="NewPassword" label="Escriba su nueva Contraseña"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Escriba la contraseña',
-                  },
-                ]}
+                <Form.Item name="password" label="Escriba su nueva Contraseña"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Escriba la contraseña',
+                    },
+                  ]}
                 >
-                <Input />
+                  <Input />
                 </Form.Item>
                 <Form.Item className="button">
-                <Button className="buttonDefault" htmlType="submit" loading={isSubmitting}>
-          ENVIAR
-        </Button>
+                  <Button className="buttonDefault" htmlType="submit" loading={isSubmitting}>
+                    ENVIAR
+                  </Button>
                 </Form.Item>
-                
+
               </Form>
             </Card>
           </div>
