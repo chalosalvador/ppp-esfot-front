@@ -35,6 +35,16 @@ const ChangePasswordPage = () => {
                     <p>CAMBIO DE CREDENCIALES</p>
                   </div>
                 </Form.Item>
+                <Form.Item name="currentPassword" label="Escriba su contraseña actual"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Escriba la contraseña',
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
                 <Form.Item name="password" label="Escriba su nueva Contraseña"
                   rules={[
                     {
@@ -43,7 +53,25 @@ const ChangePasswordPage = () => {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item dependencies={['password']} name="confirmPassword " label="Vuelva a escribir su nueva Contraseña"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Escriba la contraseña',
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('Las contraseñas no coinciden'));
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password />
                 </Form.Item>
                 <Form.Item className="button">
                   <Button className="buttonDefault" htmlType="submit" loading={isSubmitting}>
