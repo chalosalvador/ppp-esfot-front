@@ -104,7 +104,8 @@ const CareerList = (props) => {
 
   return (
     <>
-      <Divider orientation="right">
+      {/* 
+    <Divider orientation="right">
         <Button
           onClick={() => {
             handleChangeCareer('disabled')
@@ -114,8 +115,11 @@ const CareerList = (props) => {
           Mostrar registros Actuales
         </Button>
       </Divider>
+ 
+*/}
+
       <Table
-        dataSource={currentCareer}
+        dataSource={dataSearch}
         columns={columns}
         rowKey={(record) => record.id}
         loading={isLoading}

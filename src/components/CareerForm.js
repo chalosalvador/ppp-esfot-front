@@ -90,12 +90,11 @@ const CareerForm = (props) => {
         rules={[
           {
             required: true,
-            type: 'number',
             message: 'Ingresa el pensum de la carrera.',
           },
         ]}
       >
-        <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="levels"

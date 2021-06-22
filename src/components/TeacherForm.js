@@ -1,4 +1,4 @@
-import { Form, Button, Input, message, Select , InputNumber} from 'antd'
+import { Form, Button, Input, message, Select, InputNumber } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import { addObject, editObject } from '../utils/formActions'
@@ -123,11 +123,19 @@ const TeacherForm = (props) => {
           {
             required: true,
             type: 'number',
-
             message: 'Ingresa su numero de teléfono convencional.',
           },
+          {
+            required: true,
+            type: 'number',
+            min: 999999,
+            max: 9999999,
+            message: 'Maximo 7 Caracteres.',
+          },
+
         ]}
       >
+
         <InputNumber />
       </Form.Item>
       <Form.Item
@@ -138,6 +146,13 @@ const TeacherForm = (props) => {
             required: true,
             type: 'number',
             message: 'Ingresa su número de teléfono celular.',
+          },
+          {
+            required: true,
+            type: 'number',
+            min: 99999999,
+            max: 999999999,
+            message: 'Maximo 10 Caracteres.',
           },
         ]}
       >
@@ -180,6 +195,7 @@ const TeacherForm = (props) => {
         sex: props.register.teacher.sex,
       }}
     >
+      {/*
 <Form.Item
         name="faculty_id"
         label="Facultad"
@@ -202,6 +218,7 @@ const TeacherForm = (props) => {
           ))}
         </Select>
       </Form.Item>
+      */}
       <Form.Item
         name="career_id"
         label="Carrera"
@@ -250,7 +267,7 @@ const TeacherForm = (props) => {
       </Form.Item>
       <Form.Item
         name="phone"
-        
+
         label="Teléfono"
         rules={[
           {
@@ -258,6 +275,14 @@ const TeacherForm = (props) => {
             type: 'number',
             message: 'Ingresa su numero de teléfono convencional.',
           },
+          {
+            required: true,
+            type: 'number',
+            min: 999999,
+            max: 9999999,
+            message: 'Maximo 7 Caracteres.',
+          },
+
         ]}
       >
         <InputNumber />
@@ -270,6 +295,13 @@ const TeacherForm = (props) => {
             required: true,
             type: 'number',
             message: 'Ingresa su número de teléfono celular.',
+          },
+          {
+            required: true,
+            type: 'number',
+            min: 99999999,
+            max: 999999999,
+            message: 'Maximo 10 Caracteres.',
           },
         ]}
       >

@@ -26,6 +26,9 @@ const FacultiesList = (props) => {
     setIsSubmitting(false)
     setShowModal(false)
   }
+  console.log(props)
+
+
 
   const FilterByNameInput = (
     <Input
@@ -48,11 +51,11 @@ const FacultiesList = (props) => {
       dataIndex: 'id',
       key: 'id',
     },
-    {
+    {/* 
       title: FilterByNameInput,
       dataIndex: 'name',
       key: 'name',
-    },
+     */},
     {
       title: 'Estado',
       dataIndex: 'status',
