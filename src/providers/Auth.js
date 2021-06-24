@@ -1,9 +1,9 @@
 /**
  * Created by chalosalvador on 2/5/20
  */
-import React, { useEffect } from 'react';
-import API from '../data';
-import Cookies from 'js-cookie';
+import React, { useEffect } from 'react'
+import API from '../data'
+import Cookies from 'js-cookie'
 
 /**
  * Context está diseñado para compartir datos que pueden
@@ -14,11 +14,10 @@ import Cookies from 'js-cookie';
  *
  * @type {React.Context<{setAuthenticated: setAuthenticated, isAuthenticated: boolean}>}
  */
-const AuthContext = React.createContext( {
+const AuthContext = React.createContext({
   isAuthenticated: false,
   setAuthenticated: () => {},
-} );
-
+})
 
 /**
  * El provider del contexto expone las siguientes variables que pueden ser usadas
@@ -34,10 +33,10 @@ const AuthContext = React.createContext( {
  * @returns {JSX.Element}
  * @constructor
  */
-export const AuthProvider = ( { children } ) => {
-  const [ isAuthenticated, setAuthenticated ] = React.useState( false );
-  const [ isCheckingAuth, setIsCheckingAuth ] = React.useState( true );
-  const [ currentUser, setCurrentUser ] = React.useState( null );
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setAuthenticated] = React.useState(false)
+  const [isCheckingAuth, setIsCheckingAuth] = React.useState(true)
+  const [currentUser, setCurrentUser] = React.useState(null)
 
   /**
    * Este efecto se lanza cuando se monta el contexto y
@@ -45,41 +44,40 @@ export const AuthProvider = ( { children } ) => {
    * También añade el evento storage para mantener sincronizadas
    * las sesiones en las diferentes ventanas que tengan abierta la sesión
    */
-  useEffect( () => {
-    const initializeAuth = async() => {
-      window.addEventListener( 'storage', syncLogout );
-      console.log( 'added storage event' );
+  useEffect(() => {
+    const initializeAuth = async () => {
+      window.addEventListener('storage', syncLogout)
+      console.log('added storage event')
 
-      const token = !!Cookies.get( 'token' );
-      if( token ) {
+      const token = !!Cookies.get('token')
+      if (token) {
         try {
           // TODO change to useSWR and revalidate
-          const currentUserResponse = await API.get( '/user' );
-          console.log( 'currentUserResponse', currentUserResponse );
-          setCurrentUser( currentUserResponse && currentUserResponse.data );
-          setAuthenticated( true );
-        } catch( e ) {
-          console.log( 'e', e );
-          Cookies.remove( 'token' );
-          delete API.headers[ 'Authorization' ];
-          window.localStorage.setItem( 'login', JSON.stringify( false ) );
-          setAuthenticated( false );
-          setCurrentUser( null );
+          const currentUserResponse = await API.get('/user')
+          console.log('currentUserResponse', currentUserResponse)
+          setCurrentUser(currentUserResponse && currentUserResponse.data)
+          setAuthenticated(true)
+        } catch (e) {
+          console.log('e', e)
+          Cookies.remove('token')
+          delete API.headers['Authorization']
+          window.localStorage.setItem('login', JSON.stringify(false))
+          setAuthenticated(false)
+          setCurrentUser(null)
         }
       }
-      setIsCheckingAuth( false );
+      setIsCheckingAuth(false)
 
       return () => {
-        console.log( 'remove storage event' );
+        console.log('remove storage event')
 
-        window.removeEventListener( 'storage', syncLogout );
-        window.localStorage.removeItem( 'login' );
-      };
-    };
+        window.removeEventListener('storage', syncLogout)
+        window.localStorage.removeItem('login')
+      }
+    }
 
-    initializeAuth();
-  }, [] );
-
+    initializeAuth()
+  }, [])
 
   /**
    * Esta es la función que se lanza en otras ventanas
@@ -88,38 +86,38 @@ export const AuthProvider = ( { children } ) => {
    *
    * @param event
    */
-  const syncLogout = event => {
-    console.log( 'event', event );
+  const syncLogout = (event) => {
+    console.log('event', event)
 
-    if( event.key === 'login' ) {
+    if (event.key === 'login') {
       // if( event.newValue === 'true' ) {
-        console.log( 'login from storage!' );
-        // const token = Cookies.get( 'token' ); // check if the token exists
-        // setAuthenticated( true );
-        window.location.reload();
+      console.log('login from storage!')
+      // const token = Cookies.get( 'token' ); // check if the token exists
+      // setAuthenticated( true );
+      window.location.reload()
       // } else {
-        // console.log( 'logged out from storage!' );
-        // Cookies.remove( 'token' );
-        // setCurrentUser( null );
-        // setAuthenticated( false );
+      // console.log( 'logged out from storage!' );
+      // Cookies.remove( 'token' );
+      // setCurrentUser( null );
+      // setAuthenticated( false );
       // }
     }
-  };
+  }
 
   return (
     <AuthContext.Provider
-      value={ {
+      value={{
         isAuthenticated,
         isCheckingAuth,
         setAuthenticated,
         currentUser,
-        setCurrentUser
-      } }
+        setCurrentUser,
+      }}
     >
-      { children }
+      {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
 /**
  * Este es un hook personalizado que nos permite acceder a la información
@@ -128,11 +126,11 @@ export const AuthProvider = ( { children } ) => {
  * @returns {{setAuthenticated: setAuthenticated, isAuthenticated: boolean}}
  */
 export function useAuth() {
-  const context = React.useContext( AuthContext );
-  if( context === undefined ) {
-    throw new Error( 'useAuth must be used within an AuthProvider' );
+  const context = React.useContext(AuthContext)
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider')
   }
-  return context;
+  return context
 }
 
 // export function useIsAuthenticated() {
