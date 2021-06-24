@@ -14,7 +14,7 @@ const FacultiesList = (props) => {
     setRegister(record)
     setForm(form)
   }
-  const { dataSearch, isLoading, isError, setDataSearch } =
+  const { dataSearch, isLoading, isError } =
     useDataList('faculties')
   const [dataSource, setDataSource] = useState(dataSearch)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -52,10 +52,10 @@ const FacultiesList = (props) => {
       key: 'id',
     },
     {/* 
-      title: FilterByNameInput,
+      title: FilterByNameInput,*/
       dataIndex: 'name',
       key: 'name',
-     */},
+    },
     {
       title: 'Estado',
       dataIndex: 'status',
@@ -91,7 +91,7 @@ const FacultiesList = (props) => {
 
   return (
     <Table
-      dataSource={dataSource}
+      dataSource={dataSearch}
       columns={columns}
       rowKey={(record) => record.id}
       loading={isLoading}
