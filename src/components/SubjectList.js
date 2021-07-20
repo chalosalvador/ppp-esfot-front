@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Form, Select, Table, Divider, Row, Col, Empty } from 'antd'
+import { Button, Form, Select, Table, Divider, Row, Col, Empty, Popconfirm } from 'antd'
 import { useDataList } from '../data/useDataList'
 import { useCareersList } from '../data/useCareersList'
+import { deleteObject } from '../utils/formActions'
 import ModalContext from '../context/ModalContext'
 import TableDefault from './TableDefault'
 import { EditOutlined, PlusOutlined } from '@ant-design/icons'
@@ -22,6 +23,13 @@ const SubjectList = (props) => {
   const { dataSearch, isLoading, isError } = useDataList('careers')
   const [currentSubjects, setCurrentSubjects] = useState([])
   const [currentCareerId, setCurrentCareerId] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const deleteSubject = async (record) => {
+    setIsSubmitting(true)
+    await deleteObject('subjects', record.id)
+    setIsSubmitting(false)
+    setShowModal(false)
+  }
 
   const handleChangeCareer = (value) => {
     setCurrentCareerId(value)
@@ -59,6 +67,11 @@ const SubjectList = (props) => {
       key: 'unit',
     },
     {
+      title: 'ESTADO',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
       title: 'Acción',
       key: 'action',
       render: (text, record) => (
@@ -74,7 +87,12 @@ const SubjectList = (props) => {
           >
             Editar
           </Button>
-          <Button size="middle">Eliminar</Button>
+          <Popconfirm
+            title="Desea eliminar el dato?"
+            onConfirm={() => deleteSubject(record)}
+          >
+            <Button size="middle">Eliminar</Button>
+          </Popconfirm>
         </>
       ),
     },

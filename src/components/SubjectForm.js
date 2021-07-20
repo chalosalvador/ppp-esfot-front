@@ -135,12 +135,11 @@ const SubjectForm = (props) => {
         rules={[
           {
             required: true,
-            type: 'number',
             message: 'Ingresa nivel de la materia.',
           },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="unit"
@@ -225,12 +224,11 @@ const SubjectForm = (props) => {
         rules={[
           {
             required: true,
-            type: 'number',
             message: 'Ingresa el nivel de la materia.',
           },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="unit"

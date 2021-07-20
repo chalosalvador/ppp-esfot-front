@@ -89,41 +89,41 @@ const StudentForm = (props) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="name" label="Nombre" 
-      rules={[
-        { required: true, message: 'Ingresa el nombre del estudiante' },
-      ]}
+      <Form.Item name="name" label="Nombre"
+        rules={[
+          { required: true, message: 'Ingresa el nombre del estudiante' },
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item name="lastname" label="Apellido"
-      rules={[
-        { required: true, message: 'Ingresa el apellido del estudiante.' },
-      ]}
+        rules={[
+          { required: true, message: 'Ingresa el apellido del estudiante.' },
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item name="email" label="Email"
-      rules={[
-        { required: true, message: 'Ingresa el email del estudiante.' },
-      ]}
-    
+        rules={[
+          { required: true, message: 'Ingresa el email del estudiante.' },
+        ]}
+
       >
         <Input />
       </Form.Item>
       <Form.Item name="phone" label="Teléfono"
-            rules={[
-              { required: true, message: 'Ingresa el telefono del estudiante.' },
-            ]}
+        rules={[
+          { required: true, message: 'Ingresa el telefono del estudiante.' },
+        ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item name="mobile" label="Celular"
-            rules={[
-              { required: true, type: 'number', message: 'Ingresa el celular del estudiante.' },
-            ]}
+        rules={[
+          { required: true, message: 'Ingresa el celular del estudiante.' },
+        ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="sex"
@@ -162,6 +162,7 @@ const StudentForm = (props) => {
         sex: props.register.student.sex,
       }}
     >
+      {/*
       <Form.Item
         name="faculty_id"
         label="Facultad"
@@ -184,6 +185,7 @@ const StudentForm = (props) => {
           ))}
         </Select>
       </Form.Item>
+          */}
       <Form.Item
         name="career_id"
         label="Carrera"
@@ -202,41 +204,41 @@ const StudentForm = (props) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="name" label="Nombre" 
-      rules={[
-        { required: true, message: 'Ingresa el nombre del estudiante' },
-      ]}
+      <Form.Item name="name" label="Nombre"
+        rules={[
+          { required: true, message: 'Ingresa el nombre del estudiante' },
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item name="lastname" label="Apellido"
-      rules={[
-        { required: true, message: 'Ingresa el apellido del estudiante.' },
-      ]}
+        rules={[
+          { required: true, message: 'Ingresa el apellido del estudiante.' },
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item name="email" label="Email"
-      rules={[
-        { required: true, message: 'Ingresa el email del estudiante.' },
-      ]}
-    
+        rules={[
+          { required: true, message: 'Ingresa el email del estudiante.' },
+        ]}
+
       >
         <Input />
       </Form.Item>
       <Form.Item name="phone" label="Teléfono"
-            rules={[
-              { required: true, type: 'number',message: 'Ingresa el telefono del estudiante.' },
-            ]}
+        rules={[
+          { required: true, message: 'Ingresa el telefono del estudiante.' },
+        ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item name="mobile" label="Celular"
-            rules={[
-              { required: true,type: 'number', message: 'Ingresa el celular del estudiante.' },
-            ]}
+        rules={[
+          { required: true, message: 'Ingresa el celular del estudiante.' },
+        ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="sex"
