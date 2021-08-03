@@ -1,135 +1,48 @@
-import React, { useContext, useEffect, useState, Space, useRef } from 'react'
-import { Button, Empty, Table, Popconfirm, Input, Tag } from 'antd'
+import React, { useContext, useEffect, useState, useRef } from 'react'
+import { Button, Empty, Table, Popconfirm, Input, Tag, Space } from 'antd'
 import { useDataList } from '../data/useDataList'
 import ModalContext from '../context/ModalContext'
 import ShowError from './ShowError'
 import { deleteObject } from '../utils/formActions'
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
+
+import {
+  SearchOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
 const FacultiesList = (props) => {
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef < Input > (null)
-
-  const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-        : '',
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => searchInput && searchInput.current && searchInput.current.select(), 100);
-      }
-    },
-    render: text =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = clearFilters => {
-    clearFilters();
-
-    setSearchText('');
-
-  };
-
-  const { setShowModal, setEdit, setRegister, setForm } =
-    useContext(ModalContext)
+  const { setShowModal, setEdit, setRegister, setForm } = useContext(ModalContext)
   const DataSet = (record, form) => {
     setShowModal(true)
     setEdit(true)
     setRegister(record)
     setForm(form)
   }
-  const { dataSearch, isLoading, isError } =
-    useDataList('faculties')
-  const [dataSource, setDataSource] = useState(dataSearch)
+  const { dataSearch, isLoading, isError } = useDataList('faculties')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [value, setValue] = useState('')
-  const [tags, setTags] = useState("")
   const deleteFaculty = async (record) => {
     setIsSubmitting(true)
     await deleteObject('faculties', record.id)
     setIsSubmitting(false)
     setShowModal(false)
   }
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if (e.key === 'Enter' && val) {
-      setTags(...tags, val)
-
+  //-------------- estos son los campos que se utilizan para la busqueda
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null); // stackoverflow
+  //--------------
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
     }
   }
-
-  console.log(tags)
-
-  const FilterByNameInput = (
-    <Input
-      placeholder="Buscar por nombre"
-      value={value}
-      onChange={(e) => {
-        const currValue = e.target.value
-        setValue(currValue)
-        const filteredData = dataSearch.filter((entry) =>
-          entry.name.includes(currValue)
-        )
-        setDataSource(filteredData)
-      }}
-    />
-  )
-
   const columns = [
     {
       id: 'Código',
@@ -137,7 +50,7 @@ const FacultiesList = (props) => {
       key: 'id',
     },
     {
-      title: "Nombre",
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
       ...getColumnSearchProps('name'),
@@ -146,6 +59,12 @@ const FacultiesList = (props) => {
       title: 'Estado',
       dataIndex: 'status',
       key: 'status',
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+
+        </>
+      )
     },
     {
       title: 'Acción',
@@ -170,14 +89,71 @@ const FacultiesList = (props) => {
       ),
     },
   ]
-
   if (isError) {
     return <ShowError error={isError} />
   }
+  //------------------------------------------------------------------------------- inicio de busqueda
+  function getColumnSearchProps(dataIndex) {
+    return {
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={searchInput}
 
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{ width: 188, marginBottom: 8, display: 'block' }}
+          />
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+              icon={<SearchOutlined />}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Buscar
+            </Button>
+            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+              Restablecer
+            </Button>
+          </Space>
+        </div>
+      ),
+      filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+      onFilter: (value, record) =>
+        record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: visible => {
+        if (visible) {
+          // setTimeout(() => this.searchInput.select());
+        }
+      },
+      render: text =>
+        searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text.toString()}
+          />
+        ) : (
+          text
+        ),
+    }
+  };
+  function handleSearch(selectedKeys, confirm, dataIndex) {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  function handleReset(clearFilters) {
+    clearFilters();
+    setSearchText('');
+  };
+  //------------------------------------------------------------------------------- fin de busqueda
   return (
     <div>
-      <input type="text" onKeyDown={inputKeyDown} />
       <Table
         dataSource={dataSearch}
         columns={columns}
@@ -195,5 +171,4 @@ const FacultiesList = (props) => {
     </div>
   )
 }
-
 export default FacultiesList
