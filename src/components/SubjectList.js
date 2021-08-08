@@ -95,6 +95,17 @@ const SubjectList = (props) => {
       title: 'ESTADO',
       dataIndex: 'status',
       key: 'status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
       render: (record) => (
         <>
           {handleChangeStatus(record)}

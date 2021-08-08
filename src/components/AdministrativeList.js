@@ -32,11 +32,11 @@ const AdministrativeList = (props) => {
     setIsSubmitting(false)
     setShowModal(false)
   }
-  //-------------- estos son los campos que se utilizan para la busqueda
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null); // stackoverflow
-  //--------------
+  const searchInput = useRef(null);
+
 
   const handleChangeStatus = (record) => {
     if (record == "active") {
@@ -113,7 +113,7 @@ const AdministrativeList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  //------------------------------------------------------------------------------- inicio de busqueda
+
   function getColumnSearchProps(dataIndex) {
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -172,7 +172,7 @@ const AdministrativeList = (props) => {
     clearFilters();
     setSearchText('');
   };
-  //------------------------------------------------------------------------------- fin de busqueda
+
 
   return (
     <Table

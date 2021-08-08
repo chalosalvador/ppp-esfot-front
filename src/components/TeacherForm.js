@@ -116,64 +116,21 @@ const TeacherForm = (props) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="phone"
-        label="Teléfono"
+      <Form.Item name="phone" label="Teléfono"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su numero de teléfono convencional.',
-          },
-          {
-            required: true,
-            type: 'number',
-            min: 999999,
-            max: 9999999,
-            message: 'Maximo 7 Caracteres.',
-          },
+          { required: true, message: 'Ingresa el telefono del profesor.' },
+        ]}
+      >
+        <Input type="number" />
+      </Form.Item>
+      <Form.Item name="mobile" label="Celular"
+        rules={[
+          { required: true, message: 'Ingresa el celular del profesor.' },
+        ]}
+      >
+        <Input type="number" />
+      </Form.Item>
 
-        ]}
-      >
-
-        <InputNumber />
-      </Form.Item>
-      <Form.Item
-        name="mobile"
-        label="Celular"
-        rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su número de teléfono celular.',
-          },
-          {
-            required: true,
-            type: 'number',
-            min: 99999999,
-            max: 999999999,
-            message: 'Maximo 10 Caracteres.',
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-      <Form.Item
-        name="sex"
-        label="Sexo"
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Por favor seleccione su sexo',
-          },
-        ]}
-      >
-        <Select placeholder="Seleccione su sexo">
-          <Option value="female">Mujer</Option>
-          <Option value="male">Hombre</Option>
-        </Select>
-      </Form.Item>
       <Form.Item>
         <Button htmlType="submit" loading={isSubmitting}>
           Registrar
@@ -230,7 +187,7 @@ const TeacherForm = (props) => {
         ]}
       >
         <Select placeholder="Selecciona una carrera" loading={isLoading}>
-          {currentCareers.map((career) => (
+          {careers.map((career) => (
             <Option key={career.id} value={career.id}>
               {career.name}
             </Option>
@@ -265,47 +222,20 @@ const TeacherForm = (props) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="phone"
 
-        label="Teléfono"
+      <Form.Item name="phone" label="Teléfono"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su numero de teléfono convencional.',
-          },
-          {
-            required: true,
-            type: 'number',
-            min: 999999,
-            max: 9999999,
-            message: 'Maximo 7 Caracteres.',
-          },
-
+          { required: true, message: 'Ingresa el telefono del profesor.' },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
-      <Form.Item
-        name="mobile"
-        label="Celular"
+      <Form.Item name="mobile" label="Celular"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su número de teléfono celular.',
-          },
-          {
-            required: true,
-            type: 'number',
-            min: 99999999,
-            max: 999999999,
-            message: 'Maximo 10 Caracteres.',
-          },
+          { required: true, message: 'Ingresa el celular del profesor.' },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="sex"

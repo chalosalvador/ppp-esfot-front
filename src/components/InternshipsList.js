@@ -10,15 +10,19 @@ import Highlighter from 'react-highlight-words';
 import {
   SearchOutlined,
   CheckCircleOutlined,
-  CloseCircleOutlined
+  SyncOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  ClockCircleOutlined,
+  MinusCircleOutlined,
 
 } from '@ant-design/icons';
 const InternshipsList = () => {
-  //-------------- estos son los campos que se utilizan para la busqueda
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null); // stackoverflow
-  //--------------
+  const searchInput = useRef(null);
+
   const [pageIndex, setPageIndex] = useState(1)
   const { internships, meta, isLoading, isError } =
     useInternshipsList(pageIndex)
@@ -36,6 +40,70 @@ const InternshipsList = () => {
       return (
         <div>
           <Tag icon={<CheckCircleOutlined />} color="success">{record}</Tag>
+
+        </div>
+      )
+    }
+  }
+
+  const handleChangeStatusInterships = (record) => {
+
+    if ((record + "") == "rejected") {
+      return (
+        <div>
+          <Tag icon={<CloseCircleOutlined />} color="error">Rechazado</Tag>
+
+        </div>
+      )
+    } else if ((record + "") == "approved") {
+      return (
+        <div>
+          <Tag icon={<CheckCircleOutlined />} color="success">Aprobado</Tag>
+
+        </div>
+      )
+    } else if ((record + "") == "pending") {
+      return (
+        <div>
+          <Tag icon={<ExclamationCircleOutlined />} color="default">Pendiente</Tag>
+
+        </div>
+      )
+    } else if ((record + "") == "registered") {
+      return (
+        <div>
+          <Tag icon={<CheckCircleOutlined />} color="success">Registrado</Tag>
+
+        </div>
+      )
+    } else if ((record + "") == "in_progress") {
+      return (
+        <div>
+          <Tag icon={<SyncOutlined spin />} color="processing">En Progreso</Tag>
+
+        </div>
+      )
+    }
+    else if ((record + "") == "commission_pending") {
+      return (
+        <div>
+          <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Comision</Tag>
+
+        </div>
+      )
+    }
+    else if ((record + "") == "tutor_pending") {
+      return (
+        <div>
+          <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Tutor</Tag>
+
+        </div>
+      )
+    }
+    else if ((record + "") == "representative_pending") {
+      return (
+        <div>
+          <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Representativo</Tag>
 
         </div>
       )
@@ -95,6 +163,48 @@ const InternshipsList = () => {
       title: 'Estado',
       dataIndex: 'status',
       key: 'status',
+      filters: [
+        {
+          text: 'Aprobado',
+          value: 'approved',
+        },
+        {
+          text: 'Rechazado',
+          value: 'rejected',
+        },
+        {
+          text: 'Pendiente',
+          value: 'pending',
+        },
+        {
+          text: 'Registrado',
+          value: 'registered',
+        },
+        {
+          text: 'En Progreso',
+          value: 'in_progress',
+        },
+        {
+          text: 'Aprobacion Comision',
+          value: 'commission_pending',
+        },
+        {
+          text: 'Aprobacion Tutor',
+          value: 'tutor_pending',
+        },
+        {
+          text: 'Aprobacion pendiente Representativo',
+          value: 'representative_pending',
+        },
+
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatusInterships(record)}
+
+        </>
+      )
     },
     {
       title: 'Acciones',
@@ -178,7 +288,7 @@ const InternshipsList = () => {
     clearFilters();
     setSearchText('');
   };
-  //------------------------------------------------------------------------------- fin de busqueda
+
 
   const getDataSource = () => {
     if (internships) {

@@ -23,6 +23,7 @@ import {
   CloseCircleOutlined
 
 } from '@ant-design/icons';
+import get from "lodash.get"
 const StudentList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
@@ -34,7 +35,7 @@ const StudentList = (props) => {
   }
   const { dataSearch, isLoading, isError } = useDataList('students')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  //UPLOAD FILE
+
   const [fileData, setFileData] = useState('')
   const handleChange = (file) => {
     setFileData(file[0])
@@ -47,18 +48,18 @@ const StudentList = (props) => {
     await API.post('/students/uploadImportFile', fData)
     message.success('Los datos de los estudiante se han cargado con exito...')
   }
-  //END UPLOAD FILE
+
   const deleteStudent = async (record) => {
     setIsSubmitting(true)
     await deleteObject('students', record.student_id)
     setIsSubmitting(false)
     setShowModal(false)
   }
-  //-------------- estos son los campos que se utilizan para la busqueda
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null); // stackoverflow
-  //--------------
+  const searchInput = useRef(null);
+
   const handleChangeStatus = (record) => {
     if (record == "active") {
       return (
@@ -81,7 +82,7 @@ const StudentList = (props) => {
       title: 'Nombre',
       dataIndex: ['student', 'name'],
       key: ['student', 'name'],
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps(['student', 'name']),
     },
     {
       title: 'Apellido',
@@ -104,6 +105,19 @@ const StudentList = (props) => {
       title: 'Estado',
       dataIndex: ['student', 'status'],
       key: ['student', 'status'],
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+
+      onFilter: (value, record) => get(record).indexOf(value) === 0,
+
       render: (record) => (
         <>
           {handleChangeStatus(record)}
@@ -138,7 +152,6 @@ const StudentList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  //------------------------------------------------------------------------------- inicio de busqueda
   function getColumnSearchProps(dataIndex) {
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -168,8 +181,10 @@ const StudentList = (props) => {
         </div>
       ),
       filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-      onFilter: (value, record) =>
-        (record[dataIndex]).toString().toLowerCase().includes(value.toLowerCase()),
+      onFilter: (value, record) => {
+        return get(record, dataIndex).toString().toLowerCase().includes(value.toLowerCase());
+
+      },
       onFilterDropdownVisibleChange: visible => {
         if (visible) {
           // setTimeout(() => this.searchInput.select());
@@ -181,7 +196,7 @@ const StudentList = (props) => {
             highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[searchText]}
             autoEscape
-            textToHighlight={text.toString()}
+            textToHighlight={(text).toString()}
           />
         ) : (
           text
@@ -197,7 +212,6 @@ const StudentList = (props) => {
     clearFilters();
     setSearchText('');
   };
-  //------------------------------------------------------------------------------- fin de busqueda
 
   return (
     <>

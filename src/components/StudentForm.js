@@ -197,7 +197,7 @@ const StudentForm = (props) => {
         ]}
       >
         <Select placeholder="Selecciona una carrera" loading={isLoading}>
-          {currentCareers.map((career) => (
+          {careers.map((career) => (
             <Option key={career.id} value={career.id}>
               {career.name}
             </Option>

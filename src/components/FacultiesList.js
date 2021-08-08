@@ -43,6 +43,8 @@ const FacultiesList = (props) => {
       )
     }
   }
+
+
   const columns = [
     {
       id: 'Código',
@@ -53,18 +55,31 @@ const FacultiesList = (props) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      ...getColumnSearchProps('name'),
+
     },
     {
       title: 'Estado',
       dataIndex: 'status',
       key: 'status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+
       render: (record) => (
         <>
           {handleChangeStatus(record)}
 
         </>
-      )
+      ),
+
     },
     {
       title: 'Acción',
@@ -92,7 +107,7 @@ const FacultiesList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  //------------------------------------------------------------------------------- inicio de busqueda
+
   function getColumnSearchProps(dataIndex) {
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -151,7 +166,9 @@ const FacultiesList = (props) => {
     clearFilters();
     setSearchText('');
   };
-  //------------------------------------------------------------------------------- fin de busqueda
+
+
+
   return (
     <div>
       <Table
