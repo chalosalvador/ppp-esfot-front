@@ -1,108 +1,72 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import { Button, Space, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
-const GetColumnSearchProps = (
-    dataIndex,
-    searchInput,
-    searchText,
-    setSearchText,
-    searchedColumn,
-    setSearchedColumn
-) => ({
-    filterDropdown: ({
-                         setSelectedKeys,
-                         selectedKeys,
-                         confirm,
-                         clearFilters
-                     }) => (
-        <div style={{ padding: 8 }}>
-            <Input
-                ref={(node) => (searchInput = node)}
-                placeholder={`Search ${dataIndex}`}
-                value={selectedKeys[0]}
-                onChange={(e) =>
-                    setSelectedKeys(e.target.value ? [e.target.value] : [])
-                }
-                onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                style={{ width: 188, marginBottom: 8, display: "block" }}
-            />
-            <Space>
-                <Button
-                    type="primary"
-                    onClick={() =>
-                        handleSearch(
-                            selectedKeys,
-                            confirm,
-                            dataIndex,
-                            setSearchText,
-                            setSearchedColumn
-                        )
-                    }
-                    icon={<SearchOutlined />}
-                    size="small"
-                    style={{ width: 90 }}
-                >
-                    Buscar
-                </Button>
-                <Button
-                    onClick={() =>
-                        handleReset(
-                            clearFilters,
-                            setSearchText,
-                            setSearchText,
-                            setSearchedColumn
-                        )
-                    }
-                    size="small"
-                    style={{ width: 90 }}
-                >
-                    Limpiar
-                </Button>
-            </Space>
-        </div>
-    ),
-    filterIcon: (filtered) => (
-        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-        record[dataIndex]
-            ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-            : "",
-    onFilterDropdownVisibleChange: (visible) => {
-        if (visible) {
-            setTimeout(() => searchInput.select(), 100);
-        }
-    },
-    render: (text) =>
-        searchedColumn === dataIndex ? (
-            <Highlighter
-                highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-                searchWords={[searchText]}
-                autoEscape
-                textToHighlight={text ? text.toString() : ""}
-            />
-        ) : (
-            text
-        )
-});
+let searchInput;
+let searchText;
+let searchedColumn;
 
-const handleSearch = (
-    selectedKeys,
-    confirm,
-    dataIndex,
-    setSearchText,
-    setSearchedColumn
-) => {
+const handleSearch = (selectedKeys, confirm) => {
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
+    searchText = selectedKeys[0];
 };
 
-const handleReset = (clearFilters, setSearchText) => {
+const handleReset = (clearFilters) => {
     clearFilters();
-    setSearchText("");
+    searchText = "";
 };
+
+const GetColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Buscar`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Buscar
+                    </Button>
+                    <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                        Restablecer
+                    </Button>
+                </Space>
+            </div>
+        ),
+
+        filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+
+        onFilter: (value, record) =>
+            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+
+        onFilterDropdownVisibleChange: visible => {
+            if (visible) {
+                // setTimeout(() => this.searchInput.select());
+            }
+        },
+
+        render: text =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text.toString()}
+                />
+            ) : (
+                text
+            ),
+});
 
 export default GetColumnSearchProps;

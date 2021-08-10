@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Button,
   Empty,
@@ -8,22 +8,19 @@ import {
   Divider,
   Row,
   Col,
-  Tag, Space,
-  Input
+  Tag,
 } from 'antd'
 import ModalContext from '../context/ModalContext'
 import { useDataList } from '../data/useDataList'
 import { deleteObject } from '../utils/formActions'
 import ShowError from './ShowError'
 import API from '../data'
-import Highlighter from 'react-highlight-words';
 import {
-  SearchOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined
-
 } from '@ant-design/icons';
-import get from "lodash.get"
+import GetColumnSearchProps from "./GetColumnSearchProps";
+
 const StudentList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
@@ -56,10 +53,6 @@ const StudentList = (props) => {
     setShowModal(false)
   }
 
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null);
-
   const handleChangeStatus = (record) => {
     if (record == "active") {
       return (
@@ -80,31 +73,40 @@ const StudentList = (props) => {
     },
     {
       title: 'Nombre',
-      dataIndex: ['student', 'name'],
-      key: ['student', 'name'],
-      ...getColumnSearchProps(['student', 'name']),
+      dataIndex: 'student_name',
+      key: 'student_name',
+      ...GetColumnSearchProps('student_name',
+
+      )
     },
     {
       title: 'Apellido',
-      dataIndex: ['student', 'lastname'],
-      key: ['student', 'lastname'],
+      dataIndex: 'student_lastname',
+      key: 'student_lastname',
+      ...GetColumnSearchProps(
+          'student_lastname'
+      )
     },
     {
       title: 'Carrera',
       dataIndex: 'career',
       key: 'career',
-      ...getColumnSearchProps('career'),
+      ...GetColumnSearchProps(
+          'career'
+      )
     },
     {
       title: 'Facultad',
       dataIndex: 'faculty',
       key: 'faculty',
-      ...getColumnSearchProps('faculty'),
+      ...GetColumnSearchProps(
+          'faculty'
+      )
     },
     {
       title: 'Estado',
-      dataIndex: ['student', 'status'],
-      key: ['student', 'status'],
+      dataIndex: 'student_status',
+      key: 'student_status',
       filters: [
         {
           text: 'Activos',
@@ -115,13 +117,10 @@ const StudentList = (props) => {
           value: 'disabled',
         },
       ],
-
-      onFilter: (value, record) => get(record).indexOf(value) === 0,
-
+      onFilter: (value, record) => record.student_status.indexOf(value) === 0,
       render: (record) => (
         <>
           {handleChangeStatus(record)}
-
         </>
       )
     },
@@ -152,66 +151,6 @@ const StudentList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  function getColumnSearchProps(dataIndex) {
-    return {
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
-          <Input
-            ref={searchInput}
-
-            value={selectedKeys[0]}
-            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            style={{ width: 188, marginBottom: 8, display: 'block' }}
-          />
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-              icon={<SearchOutlined />}
-              size="small"
-              style={{ width: 90 }}
-            >
-              Buscar
-            </Button>
-            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-              Restablecer
-            </Button>
-          </Space>
-        </div>
-      ),
-      filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-      onFilter: (value, record) => {
-        return get(record, dataIndex).toString().toLowerCase().includes(value.toLowerCase());
-
-      },
-      onFilterDropdownVisibleChange: visible => {
-        if (visible) {
-          // setTimeout(() => this.searchInput.select());
-        }
-      },
-      render: text =>
-        searchedColumn === dataIndex ? (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={(text).toString()}
-          />
-        ) : (
-          text
-        ),
-    }
-  };
-  function handleSearch(selectedKeys, confirm, dataIndex) {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  function handleReset(clearFilters) {
-    clearFilters();
-    setSearchText('');
-  };
 
   return (
     <>

@@ -1,8 +1,7 @@
-import { Form, Button, Input, message, Select, InputNumber } from 'antd'
+import { Form, Button, Input, Select, InputNumber } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import { addObject, editObject } from '../utils/formActions'
-import API from '../data'
 import { useDataList } from '../data/useDataList'
 
 const { Option } = Select

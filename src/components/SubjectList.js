@@ -1,23 +1,17 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
-import { Button, Form, Input, Select, Table, Divider, Row, Col, Empty, Popconfirm, Tag, Space } from 'antd'
+import React, { useContext, useState, useRef } from 'react'
+import { Button, Select, Table, Divider, Empty, Popconfirm, Tag} from 'antd'
 import { useDataList } from '../data/useDataList'
-import { useCareersList } from '../data/useCareersList'
 import { deleteObject } from '../utils/formActions'
 import ModalContext from '../context/ModalContext'
-import TableDefault from './TableDefault'
-import { EditOutlined, PlusOutlined } from '@ant-design/icons'
 import ShowError from './ShowError'
-import Highlighter from 'react-highlight-words';
 import {
-  SearchOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined
-
 } from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const { Option } = Select
 
 const SubjectList = (props) => {
-  const [contador, setContador] = useState(0)
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
   const DataSet = (record, form) => {
@@ -56,11 +50,7 @@ const SubjectList = (props) => {
       )
     }
   }
-  //-------------- estos son los campos que se utilizan para la busqueda
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null); // stackoverflow
-  //--------------
+
   const columns = [
     {
       id: 'Código',
@@ -71,25 +61,25 @@ const SubjectList = (props) => {
       title: 'NOMBRE',
       dataIndex: 'name',
       key: 'name',
-      ...getColumnSearchProps('name'),
+      ...GetColumnSearchProps('name'),
     },
     {
       title: 'CODIGO',
       dataIndex: 'code',
       key: 'code',
-      ...getColumnSearchProps('code'),
+      ...GetColumnSearchProps('code'),
     },
     {
       title: 'NIVEL',
       dataIndex: 'level',
       key: 'level',
-      ...getColumnSearchProps('level'),
+      ...GetColumnSearchProps('level'),
     },
     {
       title: 'UNIDAD',
       dataIndex: 'unit',
       key: 'unit',
-      ...getColumnSearchProps('unit'),
+      ...GetColumnSearchProps('unit'),
     },
     {
       title: 'ESTADO',
@@ -142,66 +132,7 @@ const SubjectList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  //------------------------------------------------------------------------------- inicio de busqueda
-  function getColumnSearchProps(dataIndex) {
-    return {
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
-          <Input
-            ref={searchInput}
 
-            value={selectedKeys[0]}
-            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            style={{ width: 188, marginBottom: 8, display: 'block' }}
-          />
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-              icon={<SearchOutlined />}
-              size="small"
-              style={{ width: 90 }}
-            >
-              Buscar
-            </Button>
-            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-              Restablecer
-            </Button>
-          </Space>
-        </div>
-      ),
-      filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-      onFilter: (value, record) =>
-        record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-      onFilterDropdownVisibleChange: visible => {
-        if (visible) {
-          // setTimeout(() => this.searchInput.select());
-        }
-      },
-      render: text =>
-        searchedColumn === dataIndex ? (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={text.toString()}
-          />
-        ) : (
-          text
-        ),
-    }
-  };
-  function handleSearch(selectedKeys, confirm, dataIndex) {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  function handleReset(clearFilters) {
-    clearFilters();
-    setSearchText('');
-  };
-  //------------------------------------------------------------------------------- fin de busqueda
   return (
     <>
       <Divider orientation="right">

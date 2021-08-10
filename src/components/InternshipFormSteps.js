@@ -85,6 +85,11 @@ const InternshipFormSteps = ({ internship, ...props }) => {
           const companyData = companyForm.getFieldsValue()
           const representativeData = representativeForm.getFieldsValue()
           const internshipData = internshipForm.getFieldsValue()
+          console.log("datos para enviar inicio")
+          console.log(companyData)
+          console.log(representativeData)
+          console.log(internshipData)
+          console.log("datos para enviar fin")
           let companyId = companyData.id
 
           if (!companyId) {
@@ -99,7 +104,7 @@ const InternshipFormSteps = ({ internship, ...props }) => {
           }
 
           let representativeId = representativeData.representative_id
-          if (!representativeId) {
+          if (representativeId) {
             // crear representante
             message.loading({
               content: 'Guardando los datos del representante...',
@@ -111,6 +116,8 @@ const InternshipFormSteps = ({ internship, ...props }) => {
             )
             representativeId = representative.data.representative_id
             console.log('representative created', representative)
+          }else{
+            representativeId = representativeData.id;
           }
 
           // crear practica

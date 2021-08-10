@@ -1,4 +1,4 @@
-import { Form, Button, Input, message, Select, InputNumber } from 'antd'
+import { Form, Button, Input, Select } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import { addObject, editObject } from '../utils/formActions'
@@ -37,7 +37,6 @@ const SubjectForm = (props) => {
   const { setShowModal } = useContext(ModalContext)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { dataSearch, isLoading, isError } = useDataList('faculties')
-  const { dataSearch2, isLoading2 } = useDataList('careers')
   const [currentCareers, setCurrentCareers] = useState([])
   const { careers } = useCareersList()
 
@@ -57,16 +56,8 @@ const SubjectForm = (props) => {
 
   const handleChangeFaculty = (value) => {
     dataSearch.map((faculty) =>
-      faculty.id == value ? setCurrentCareers(faculty.careers) : []
+      faculty.id === value ? setCurrentCareers(faculty.careers) : []
     )
-  }
-  console.log('matera con temas ', props)
-
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      number: '${label} is not a valid number!',
-    },
   }
 
   return !props.edit ? (

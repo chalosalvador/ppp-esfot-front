@@ -91,14 +91,21 @@ const TeacherForm = (props) => {
       <Form.Item
         name="name"
         label="Nombre"
-        rules={[{ required: true, message: 'Ingresa su nombre.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su nombre.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="lastname"
         label="Apellido"
-        rules={[{ required: true, message: 'Ingresa su apellido.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su apellido.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
+
       >
         <Input />
       </Form.Item>
@@ -112,23 +119,32 @@ const TeacherForm = (props) => {
       <Form.Item
         name="email"
         label="Email"
-        rules={[{ required: true, message: 'Ingresa su email.' }]}
+        rules={[
+            { required: true, message: 'Ingrese un email.' },
+            { type: 'email', message: 'Ingrese un email valido.'}
+        ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item name="phone" label="Teléfono"
-        rules={[
-          { required: true, message: 'Ingresa el telefono del profesor.' },
-        ]}
+      <Form.Item
+          name="phone"
+          label="Teléfono"
+          rules={[
+              { required: true, message: 'Ingresa su numero de teléfono convencional.' },
+              { pattern: /(^[0-9]{7})+/g, message: 'Ingrese un número, 7 digitos.' },
+          ]}
       >
-        <Input type="number" />
+        <Input />
       </Form.Item>
-      <Form.Item name="mobile" label="Celular"
-        rules={[
-          { required: true, message: 'Ingresa el celular del profesor.' },
-        ]}
+      <Form.Item
+          name="mobile"
+          label="Celular"
+         rules={[
+             { required: true, message: 'Ingresa su número de teléfono celular.' },
+             { pattern: /(^[0-9]{10})+/g, message: 'Ingrese un número, 10 digitos.'}
+         ]}
       >
-        <Input type="number" />
+        <Input />
       </Form.Item>
 
       <Form.Item>
@@ -143,39 +159,15 @@ const TeacherForm = (props) => {
       onFinish={editTeacher}
       initialValues={{
         career_id: props.register.career_id,
-        name: props.register.teacher.name,
-        lastname: props.register.teacher.lastname,
+        name: props.register.teacher_name,
+        lastname: props.register.teacher_lastname,
         degree: props.register.degree,
-        email: props.register.teacher.email,
-        phone: props.register.teacher.phone,
-        mobile: props.register.teacher.mobile,
-        sex: props.register.teacher.sex,
+        email: props.register.teacher_email,
+        phone: props.register.teacher_phone,
+        mobile: props.register.teacher_mobile,
+        sex: props.register.teacher_sex,
       }}
     >
-      {/*
-<Form.Item
-        name="faculty_id"
-        label="Facultad"
-        rules={[
-          {
-            required: true,
-            message: 'Selecciona una facultad...',
-          },
-        ]}
-      >
-        <Select
-          placeholder="Selecciona una facultad"
-          onChange={handleChangeFaculty}
-          loading={isLoading}
-        >
-          {dataSearch.map((faculty) => (
-            <Option key={faculty.id} value={faculty.id}>
-              {faculty.name}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-      */}
       <Form.Item
         name="career_id"
         label="Carrera"
@@ -197,14 +189,20 @@ const TeacherForm = (props) => {
       <Form.Item
         name="name"
         label="Nombre"
-        rules={[{ required: true, message: 'Ingresa su nombre.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su nombre.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="lastname"
         label="Apellido"
-        rules={[{ required: true, message: 'Ingresa su apellido.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su apellido.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
       >
         <Input />
       </Form.Item>
@@ -218,24 +216,31 @@ const TeacherForm = (props) => {
       <Form.Item
         name="email"
         label="Email"
-        rules={[{ required: true, message: 'Ingresa su email.' }]}
+        rules={[
+            { required: true, message: 'Ingrese un email.' },
+            { type: 'email', message: 'Ingrese un email valido.'}
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item name="phone" label="Teléfono"
-        rules={[
-          { required: true, message: 'Ingresa el telefono del profesor.' },
-        ]}
+         rules={[
+             { required: true, message: 'Ingresa su numero de teléfono convencional.' },
+             { pattern: /(^[0-9]{7})+/g, message: 'Ingrese un número, 7 digitos.' },
+         ]}
       >
-        <Input type="number" />
+        <Input />
       </Form.Item>
-      <Form.Item name="mobile" label="Celular"
-        rules={[
-          { required: true, message: 'Ingresa el celular del profesor.' },
-        ]}
+      <Form.Item
+          name="mobile"
+          label="Celular"
+         rules={[
+             { required: true, message: 'Ingresa su número de teléfono celular.' },
+             { pattern: /(^[0-9]{10})+/g, message: 'Ingrese un número, 10 digitos.'}
+         ]}
       >
-        <Input type="number" />
+        <Input />
       </Form.Item>
       <Form.Item
         name="sex"

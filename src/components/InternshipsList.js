@@ -1,28 +1,19 @@
 import React, { useState, useRef } from 'react'
-import { Button, Empty, Table, Tag, Space, Input } from 'antd'
+import { Empty, Table, Tag} from 'antd'
 import { useInternshipsList } from '../data/useInternshipsList'
 import ShowError from './ShowError'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import Routes from '../constants/routes'
 import { useAuth } from '../providers/Auth'
-import Highlighter from 'react-highlight-words';
 import {
-  SearchOutlined,
   CheckCircleOutlined,
   SyncOutlined,
   CloseCircleOutlined,
-  ExclamationCircleOutlined,
-  ClockCircleOutlined,
-  MinusCircleOutlined,
-
+  ExclamationCircleOutlined
 } from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const InternshipsList = () => {
-
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null);
-
   const [pageIndex, setPageIndex] = useState(1)
   const { internships, meta, isLoading, isError } =
     useInternshipsList(pageIndex)
@@ -48,35 +39,35 @@ const InternshipsList = () => {
 
   const handleChangeStatusInterships = (record) => {
 
-    if ((record + "") == "rejected") {
+    if ((record + "") === "rejected") {
       return (
         <div>
           <Tag icon={<CloseCircleOutlined />} color="error">Rechazado</Tag>
 
         </div>
       )
-    } else if ((record + "") == "approved") {
+    } else if ((record + "") === "approved") {
       return (
         <div>
           <Tag icon={<CheckCircleOutlined />} color="success">Aprobado</Tag>
 
         </div>
       )
-    } else if ((record + "") == "pending") {
+    } else if ((record + "") === "pending") {
       return (
         <div>
           <Tag icon={<ExclamationCircleOutlined />} color="default">Pendiente</Tag>
 
         </div>
       )
-    } else if ((record + "") == "registered") {
+    } else if ((record + "") === "registered") {
       return (
         <div>
-          <Tag icon={<CheckCircleOutlined />} color="success">Registrado</Tag>
+          <Tag icon={<CheckCircleOutlined />} color="orange">Registrado</Tag>
 
         </div>
       )
-    } else if ((record + "") == "in_progress") {
+    } else if ((record + "") === "in_progress") {
       return (
         <div>
           <Tag icon={<SyncOutlined spin />} color="processing">En Progreso</Tag>
@@ -84,7 +75,7 @@ const InternshipsList = () => {
         </div>
       )
     }
-    else if ((record + "") == "commission_pending") {
+    else if ((record + "") === "commission_pending") {
       return (
         <div>
           <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Comision</Tag>
@@ -92,7 +83,7 @@ const InternshipsList = () => {
         </div>
       )
     }
-    else if ((record + "") == "tutor_pending") {
+    else if ((record + "") === "tutor_pending") {
       return (
         <div>
           <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Tutor</Tag>
@@ -100,7 +91,7 @@ const InternshipsList = () => {
         </div>
       )
     }
-    else if ((record + "") == "representative_pending") {
+    else if ((record + "") === "representative_pending") {
       return (
         <div>
           <Tag icon={<ExclamationCircleOutlined />} color="default">Aprobacion pendiente Representativo</Tag>
@@ -119,20 +110,20 @@ const InternshipsList = () => {
       title: 'Estudiante',
       dataIndex: 'student',
       key: 'student',
-      ...getColumnSearchProps('student'),
+      ...GetColumnSearchProps('student'),
     },
     {
       title: 'Empresa',
       dataIndex: 'company',
       key: 'company',
-      ...getColumnSearchProps('company'),
+      ...GetColumnSearchProps('company'),
     },
     {
 
       title: 'Tutor',
       dataIndex: 'tutor',
       key: 'tutor',
-      ...getColumnSearchProps('tutor'),
+      ...GetColumnSearchProps('tutor'),
       render: (record) => (
         <>
           {handleChangeStatus(record)}
@@ -145,19 +136,19 @@ const InternshipsList = () => {
       title: 'Fecha de inicio',
       dataIndex: 'start_date',
       key: 'start_date',
-      ...getColumnSearchProps('start_date'),
+      ...GetColumnSearchProps('start_date'),
     },
     {
       title: 'Fecha de fin',
       dataIndex: 'finish_date',
       key: 'finish_date',
-      ...getColumnSearchProps('finish_date'),
+      ...GetColumnSearchProps('finish_date'),
     },
     {
       title: 'Tipo',
       dataIndex: 'type',
       key: 'type',
-      ...getColumnSearchProps('type'),
+      ...GetColumnSearchProps('type'),
     },
     {
       title: 'Estado',
@@ -230,65 +221,6 @@ const InternshipsList = () => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  function getColumnSearchProps(dataIndex) {
-    return {
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
-          <Input
-            ref={searchInput}
-
-            value={selectedKeys[0]}
-            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            style={{ width: 188, marginBottom: 8, display: 'block' }}
-          />
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-              icon={<SearchOutlined />}
-              size="small"
-              style={{ width: 90 }}
-            >
-              Buscar
-            </Button>
-            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-              Restablecer
-            </Button>
-          </Space>
-        </div>
-      ),
-      filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-      onFilter: (value, record) =>
-        (record[dataIndex] + "").toString().toLowerCase().includes(value.toLowerCase()),
-      onFilterDropdownVisibleChange: visible => {
-        if (visible) {
-          // setTimeout(() => this.searchInput.select());
-        }
-      },
-      render: text =>
-        searchedColumn === dataIndex ? (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={(text + "").toString()}
-          />
-        ) : (
-          text
-        ),
-    }
-  };
-  function handleSearch(selectedKeys, confirm, dataIndex) {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  function handleReset(clearFilters) {
-    clearFilters();
-    setSearchText('');
-  };
-
 
   const getDataSource = () => {
     if (internships) {
