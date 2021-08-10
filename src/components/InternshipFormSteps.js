@@ -85,11 +85,6 @@ const InternshipFormSteps = ({ internship, ...props }) => {
           const companyData = companyForm.getFieldsValue()
           const representativeData = representativeForm.getFieldsValue()
           const internshipData = internshipForm.getFieldsValue()
-          console.log("datos para enviar inicio")
-          console.log(companyData)
-          console.log(representativeData)
-          console.log(internshipData)
-          console.log("datos para enviar fin")
           let companyId = companyData.id
 
           if (!companyId) {
