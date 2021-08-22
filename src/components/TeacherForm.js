@@ -146,6 +146,22 @@ const TeacherForm = (props) => {
       >
         <Input />
       </Form.Item>
+        <Form.Item
+            name="sex"
+            label="Sexo"
+            hasFeedback
+            rules={[
+                {
+                    required: true,
+                    message: 'Por favor seleccione su sexo',
+                },
+            ]}
+        >
+            <Select placeholder="Seleccione su sexo">
+                <Option value="female">Mujer</Option>
+                <Option value="male">Hombre</Option>
+            </Select>
+        </Form.Item>
 
       <Form.Item>
         <Button htmlType="submit" loading={isSubmitting}>
