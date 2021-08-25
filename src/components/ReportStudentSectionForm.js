@@ -32,7 +32,7 @@ const formItemLayoutWithOutLabel = {
 
 const ReportStudentSectionForm = ({ form, onSubmit, internship }) => {
   // TODO careerId
-  const { topicsBySubject, isLoading } = useTopicsBySubject(1)
+  const { topicsBySubject, isLoading } = useTopicsBySubject(internship.student.career_id)
 
   const disabledDate = (current) => current && current > moment().endOf('day')
 

@@ -5,8 +5,9 @@ import React, { useState } from 'react'
 
 import Routes from '../constants/routes'
 import { useAuth } from '../providers/Auth'
-import { Menu } from 'antd'
+import {Menu, Tag} from 'antd'
 import {
+  CheckCircleOutlined, CloseCircleOutlined,
   LoadingOutlined,
   LoginOutlined,
   LogoutOutlined,
@@ -42,6 +43,31 @@ const Navigation = (props) => {
     })
   }
 
+  const currentUserRol = (record) => {
+    if (record == "ROLE_ADMINISTRATIVE") {
+      return (
+          "ADMINISTRATIVO"
+      )
+    }else if (record == "ROLE_TEACHER") {
+      return (
+          "PROFESOR"
+      )
+    }
+    else if (record == "ROLE_COMMISSION") {
+      return (
+          "COMISIÓN"
+      )
+    } if (record == "ROLE_STUDENT") {
+      return (
+          "ESTUDIANTE"
+      )
+    } else{
+      return (
+          "JEFE"
+      )
+    }
+  }
+
   return (
     <>
       <Menu
@@ -70,7 +96,7 @@ const Navigation = (props) => {
         {isAuthenticated ? (
           <Menu.SubMenu
             icon={<UserOutlined />}
-            title={currentUser && currentUser.name}
+            title={currentUser.name +" - "+ currentUserRol(currentUser.role)}
           >
             <Menu.ItemGroup title="CONFIGURACION">
               <Menu.Item key={Routes.PROFILE}>
