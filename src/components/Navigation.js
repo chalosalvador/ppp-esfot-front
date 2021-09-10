@@ -43,7 +43,7 @@ const Navigation = (props) => {
     })
   }
 
-  const currentUserRol = (record) => {
+  /*const currentUserRol = (record) => {
     if (record == "ROLE_ADMINISTRATIVE") {
       return (
           "ADMINISTRATIVO"
@@ -66,7 +66,7 @@ const Navigation = (props) => {
           "JEFE"
       )
     }
-  }
+  }*/
 
   return (
     <>
@@ -96,7 +96,7 @@ const Navigation = (props) => {
         {isAuthenticated ? (
           <Menu.SubMenu
             icon={<UserOutlined />}
-            title={currentUser.name +" - "+ currentUserRol(currentUser.role)}
+            title={currentUser && currentUser.name}
           >
             <Menu.ItemGroup title="CONFIGURACION">
               <Menu.Item key={Routes.PROFILE}>

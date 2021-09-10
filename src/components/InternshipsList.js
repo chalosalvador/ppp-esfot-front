@@ -38,7 +38,6 @@ const InternshipsList = () => {
   }
 
   const handleChangeStatusInterships = (record) => {
-
     if ((record + "") === "rejected") {
       return (
         <div>
@@ -98,6 +97,17 @@ const InternshipsList = () => {
 
         </div>
       )
+    }
+  }
+  const status = (internship) => {
+    switch(internship.status) {
+      case "registered":
+        return <>
+          <Link to={Routes.REPORT_ID.replace(':id', internship.key)}>
+            Reporte
+          </Link></>;
+      default:
+        return <></>
     }
   }
   const columns = [
@@ -203,9 +213,13 @@ const InternshipsList = () => {
       key: 'actions',
       render: (value, internship) => {
         return (
-          <Link to={Routes.INTERNSHIP_ID.replace(':id', internship.key)}>
+          <>
+           <Link to={Routes.INTERNSHIP_ID.replace(':id', internship.key)}>
             Ver detalles
-          </Link>
+           </Link>
+           {' '}
+           {status(internship)}
+          </>
         )
       },
     },

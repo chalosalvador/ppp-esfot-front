@@ -49,6 +49,7 @@ const privateRoutes = {
   USERS: '/usuarios',
   INTERNSHIP_ID: '/practica/:id',
   CHANGEPASSWORD: '/ChangePassword',
+  REPORT_ID: '/report/:id',
   adminRoutes,
 }
 
