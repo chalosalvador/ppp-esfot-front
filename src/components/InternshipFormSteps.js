@@ -98,7 +98,7 @@ const InternshipFormSteps = ({ internship, ...props }) => {
             console.log('company created', company)
           }
 
-          let representativeId = representativeData.representative_id
+          let representativeId = representativeData.id
           if (!representativeId) {
             // crear representante
             message.loading({
@@ -107,10 +107,12 @@ const InternshipFormSteps = ({ internship, ...props }) => {
             })
             const representative = await API.post(
               `/companies/${companyId}/representatives`,
-              representativeData
+                representativeData
             )
             representativeId = representative.data.representative_id
             console.log('representative created', representative)
+          }else{
+            representativeId = representativeData.id;
           }
 
           // crear practica

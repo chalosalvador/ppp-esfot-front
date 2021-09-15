@@ -5,8 +5,9 @@ import React, { useState } from 'react'
 
 import Routes from '../constants/routes'
 import { useAuth } from '../providers/Auth'
-import { Menu } from 'antd'
+import {Menu, Tag} from 'antd'
 import {
+  CheckCircleOutlined, CloseCircleOutlined,
   LoadingOutlined,
   LoginOutlined,
   LogoutOutlined,
@@ -42,6 +43,31 @@ const Navigation = (props) => {
     })
   }
 
+  /*const currentUserRol = (record) => {
+    if (record == "ROLE_ADMINISTRATIVE") {
+      return (
+          "ADMINISTRATIVO"
+      )
+    }else if (record == "ROLE_TEACHER") {
+      return (
+          "PROFESOR"
+      )
+    }
+    else if (record == "ROLE_COMMISSION") {
+      return (
+          "COMISIÓN"
+      )
+    } if (record == "ROLE_STUDENT") {
+      return (
+          "ESTUDIANTE"
+      )
+    } else{
+      return (
+          "JEFE"
+      )
+    }
+  }*/
+
   return (
     <>
       <Menu
@@ -55,8 +81,8 @@ const Navigation = (props) => {
           width: 'fit-content',
         }}
       >
-        <Menu.Item key={Routes.INDEX}>
-          <Link to={Routes.INDEX} style={linkStyle}>
+        <Menu.Item key={Routes.HOME}>
+          <Link to={Routes.HOME} style={linkStyle}>
             Inicio
           </Link>
         </Menu.Item>

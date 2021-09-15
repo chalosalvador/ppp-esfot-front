@@ -18,6 +18,10 @@ const formItemLayout = {
 }
 
 const RepresentativeForm = ({ form, onSubmit, representative }) => {
+    console.log("///////////////->>>>");
+    console.log(form);
+    console.log(onSubmit);
+    console.log(representative);
   return (
     <Form
       {...formItemLayout}

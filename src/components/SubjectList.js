@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Form, Select, Table, Divider, Row, Col, Empty } from 'antd'
+import React, { useContext, useState, useRef } from 'react'
+import { Button, Select, Table, Divider, Empty, Popconfirm, Tag} from 'antd'
 import { useDataList } from '../data/useDataList'
-import { useCareersList } from '../data/useCareersList'
+import { deleteObject } from '../utils/formActions'
 import ModalContext from '../context/ModalContext'
-import TableDefault from './TableDefault'
-import { EditOutlined, PlusOutlined } from '@ant-design/icons'
 import ShowError from './ShowError'
-
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const { Option } = Select
 
 const SubjectList = (props) => {
-  const [contador, setContador] = useState(0)
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
   const DataSet = (record, form) => {
@@ -20,16 +21,64 @@ const SubjectList = (props) => {
     setForm(form)
   }
   const { dataSearch, isLoading, isError } = useDataList('careers')
-  const [currentSubjects, setCurrentSubjects] = useState([])
-  const [currentCareerId, setCurrentCareerId] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleChangeCareer = (value) => {
-    setCurrentCareerId(value)
-    dataSearch.map((career) => {
-      if (career.id == value) {
-        setCurrentSubjects(career.subjects)
-      }
-    })
+  const deleteSubject = async (record) => {
+    setIsSubmitting(true)
+    await deleteObject('subjects', record.id)
+    setIsSubmitting(false)
+    setShowModal(false)
+  }
+
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
+    }
+  }
+
+  const getFilters = () =>{
+    const filters = [];
+    if(dataSearch){
+      dataSearch.forEach((datos1)=> {
+        var filter = {text: datos1.name , value: datos1.name};
+        filters.push(filter);
+      });
+      return filters;
+    }else{
+      return [];
+    }
+  }
+
+  const getDataSource = () =>{
+    if(dataSearch){
+      const datos2 = [];
+      dataSearch.forEach((datos1)=>{
+        datos1.subjects.forEach((subject)=>{
+          var dato = {
+            'id' : subject.id,
+            'name' : subject.name,
+            'code' : subject.code,
+            'level' : subject.level,
+            'unit' : subject.unit,
+            'status' : subject.status,
+            'field' : subject.field,
+            'career' : datos1.name,
+            'career_id' : datos1.id,
+            'topics': subject.topics,
+          };
+          datos2.push(dato);
+        });
+      });
+      return datos2;
+    }else{
+      return [];
+    }
   }
 
   const columns = [
@@ -42,30 +91,60 @@ const SubjectList = (props) => {
       title: 'NOMBRE',
       dataIndex: 'name',
       key: 'name',
+      ...GetColumnSearchProps('name'),
     },
     {
       title: 'CODIGO',
       dataIndex: 'code',
       key: 'code',
+      ...GetColumnSearchProps('code'),
     },
     {
       title: 'NIVEL',
       dataIndex: 'level',
-      key: 'code',
+      key: 'level',
+      ...GetColumnSearchProps('level'),
     },
     {
       title: 'UNIDAD',
       dataIndex: 'unit',
       key: 'unit',
+      ...GetColumnSearchProps('unit'),
+    },
+    {
+      title: 'CARRERA',
+      dataIndex: 'career',
+      key: 'career',
+      filters: getFilters(),
+      onFilter: (value, record) => record.career.indexOf(value) === 0,
+    },
+
+    {
+      title: 'ESTADO',
+      dataIndex: 'status',
+      key: 'status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+        </>
+      )
     },
     {
       title: 'Acción',
       key: 'action',
       render: (text, record) => (
         <>
-          <div style={{ display: 'none' }}>
-            {(record['career_id'] = currentCareerId)}
-          </div>
           <Button
             onClick={() => {
               DataSet(record, props.form)
@@ -74,7 +153,12 @@ const SubjectList = (props) => {
           >
             Editar
           </Button>
-          <Button size="middle">Eliminar</Button>
+          <Popconfirm
+            title="Desea eliminar el dato?"
+            onConfirm={() => deleteSubject(record)}
+          >
+            <Button size="middle">Eliminar</Button>
+          </Popconfirm>
         </>
       ),
     },
@@ -84,27 +168,8 @@ const SubjectList = (props) => {
   }
   return (
     <>
-      <Divider orientation="right">
-        <Select
-          showSearch
-          style={{ width: 240 }}
-          placeholder="Seleccione una carrera"
-          onChange={handleChangeCareer}
-          loading={isLoading}
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-        >
-          {dataSearch.map((career, i) => (
-            <Option key={i} value={career.id}>
-              {career.name}
-            </Option>
-          ))}
-        </Select>
-      </Divider>
       <Table
-        dataSource={currentSubjects}
+        dataSource={getDataSource()}
         columns={columns}
         rowKey={(record) => record.id}
         loading={isLoading}

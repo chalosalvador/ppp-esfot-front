@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Empty, Popconfirm, Table, Select, Divider, Col } from 'antd'
+import React, { useContext, useState } from 'react'
+import { Button, Empty, Popconfirm, Table, Select, Tag} from 'antd'
 import { useDataList } from '../data/useDataList'
 import ModalContext from '../context/ModalContext'
-import TableDefault from './TableDefault'
 import ShowError from './ShowError'
 import { deleteObject } from '../utils/formActions'
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const { Option } = Select
-
 const CareerList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
@@ -17,17 +20,6 @@ const CareerList = (props) => {
     setForm(form)
   }
   const { dataSearch, isLoading, isError } = useDataList('careers')
-  const [currentCareer, setCurrentCareer] = useState([{}])
-  const [currentCareer2, setCurrentCareer2] = useState([
-    {
-      id: 1,
-      name: '',
-      pensum: 2007,
-      levels: 5,
-      faculty_id: 1,
-      status: 'active',
-    },
-  ])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const deleteCareers = async (record) => {
     setIsSubmitting(true)
@@ -36,12 +28,16 @@ const CareerList = (props) => {
     setShowModal(false)
   }
 
-  const handleChangeCareer = (value) => {
-    dataSearch.map((career) => {
-      if (career.status == 'active') {
-        setCurrentCareer((currentCareer) => [...currentCareer, career])
-      }
-    })
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
+    }
   }
   const columns = [
     {
@@ -53,16 +49,19 @@ const CareerList = (props) => {
       title: 'Carrera',
       dataIndex: 'name',
       key: 'name',
+      ...GetColumnSearchProps('name'),
     },
     {
       title: 'Pensum',
       dataIndex: 'pensum',
       key: 'pensum',
+      ...GetColumnSearchProps('pensum'),
     },
     {
       title: 'Nivel',
       dataIndex: 'levels',
       key: 'levels',
+      ...GetColumnSearchProps('levels'),
     },
     {
       title: 'Facultad',
@@ -73,6 +72,24 @@ const CareerList = (props) => {
       title: 'Estado',
       dataIndex: 'status',
       key: 'status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+
+        </>
+      )
+
     },
     {
       title: 'Acción',
@@ -104,26 +121,11 @@ const CareerList = (props) => {
 
   return (
     <>
-      {/* 
-    <Divider orientation="right">
-        <Button
-          onClick={() => {
-            handleChangeCareer('disabled')
-          }}
-          size="middle"
-        >
-          Mostrar registros Actuales
-        </Button>
-      </Divider>
- 
-*/}
-
       <Table
         dataSource={dataSearch}
         columns={columns}
         rowKey={(record) => record.id}
         loading={isLoading}
-        onChange={handleChangeCareer}
         locale={{
           emptyText: (
             <Empty

@@ -1,8 +1,7 @@
-import { Form, Button, Input, message, Select, InputNumber } from 'antd'
+import { Form, Button, Input, Select, InputNumber } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
 import { addObject, editObject } from '../utils/formActions'
-import API from '../data'
 import { useDataList } from '../data/useDataList'
 
 const { Option } = Select
@@ -167,12 +166,11 @@ const CareerForm = (props) => {
         rules={[
           {
             required: true,
-            type: 'number',
             message: 'Ingresa el pensum de la carrera.',
           },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item
         name="levels"
@@ -180,12 +178,11 @@ const CareerForm = (props) => {
         rules={[
           {
             required: true,
-            type: 'number',
             message: 'Ingresa el nivel de la carrera.',
           },
         ]}
       >
-        <InputNumber />
+        <Input type="number" />
       </Form.Item>
       <Form.Item>
         <Button class="buttonDefault" htmlType="submit" loading={isSubmitting}>

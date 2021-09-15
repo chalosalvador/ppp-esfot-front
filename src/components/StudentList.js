@@ -8,12 +8,18 @@ import {
   Divider,
   Row,
   Col,
+  Tag,
 } from 'antd'
 import ModalContext from '../context/ModalContext'
 import { useDataList } from '../data/useDataList'
 import { deleteObject } from '../utils/formActions'
 import ShowError from './ShowError'
 import API from '../data'
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 
 const StudentList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
@@ -26,11 +32,12 @@ const StudentList = (props) => {
   }
   const { dataSearch, isLoading, isError } = useDataList('students')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  //UPLOAD FILE
+
   const [fileData, setFileData] = useState('')
   const handleChange = (file) => {
     setFileData(file[0])
   }
+
   const submitData = async (e) => {
     e.preventDefault()
     const fData = new FormData()
@@ -38,13 +45,26 @@ const StudentList = (props) => {
     await API.post('/students/uploadImportFile', fData)
     message.success('Los datos de los estudiante se han cargado con exito...')
   }
-  //END UPLOAD FILE
+
   const deleteStudent = async (record) => {
     setIsSubmitting(true)
     await deleteObject('students', record.student_id)
     setIsSubmitting(false)
     setShowModal(false)
   }
+
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
+    }
+  }
+
   const columns = [
     {
       id: 'Código',
@@ -53,28 +73,56 @@ const StudentList = (props) => {
     },
     {
       title: 'Nombre',
-      dataIndex: ['student', 'name'],
-      key: ['student', 'name'],
+      dataIndex: 'student_name',
+      key: 'student_name',
+      ...GetColumnSearchProps('student_name',
+
+      )
     },
     {
       title: 'Apellido',
-      dataIndex: ['student', 'lastname'],
-      key: ['student', 'name'],
+      dataIndex: 'student_lastname',
+      key: 'student_lastname',
+      ...GetColumnSearchProps(
+          'student_lastname'
+      )
     },
     {
       title: 'Carrera',
       dataIndex: 'career',
       key: 'career',
+      ...GetColumnSearchProps(
+          'career'
+      )
     },
     {
       title: 'Facultad',
       dataIndex: 'faculty',
       key: 'faculty',
+      ...GetColumnSearchProps(
+          'faculty'
+      )
     },
     {
       title: 'Estado',
-      dataIndex: ['student', 'status'],
-      key: ['student', 'status'],
+      dataIndex: 'student_status',
+      key: 'student_status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.student_status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+        </>
+      )
     },
     {
       title: 'Acción',

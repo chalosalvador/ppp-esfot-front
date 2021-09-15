@@ -1,9 +1,9 @@
 /**
  * Created by chalosalvador on 3/1/20
  */
-import React, { useState } from 'react'
+import React from 'react'
 import Navigation from './Navigation'
-import { Button, Col, Layout, Popover, Row, Menu } from 'antd'
+import { Col, Layout, Row } from 'antd'
 import logoEsfot from '../images/logo-esfot.png'
 import { useAuth } from '../providers/Auth'
 import MenuUser from './MenuUser'

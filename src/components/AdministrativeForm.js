@@ -1,7 +1,6 @@
-import { Form, Button, Input, message, Select,  InputNumber } from 'antd'
+import { Form, Button, Input, Select} from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
-import API from '../data'
 import { addObject, editObject } from '../utils/formActions'
 import { useDataList } from '../data/useDataList'
 
@@ -19,8 +18,6 @@ const formItemLayout = {
 }
 
 const AdministrativeForm = (props) => {
-  console.log('datos de administrativo', props)
-
   const { setShowModal } = useContext(ModalContext)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { dataSearch, isLoading, isError } = useDataList('faculties')
@@ -66,21 +63,30 @@ const AdministrativeForm = (props) => {
       <Form.Item
         name="name"
         label="Nombre"
-        rules={[{ required: true, message: 'Ingresa su nombre.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su nombre.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+            ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="lastname"
         label="Apellido"
-        rules={[{ required: true, message: 'Ingresa su apellido.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su apellido.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+            ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="email"
         label="Email"
-        rules={[{ required: true, message: 'Ingresa su email.' }]}
+        rules={[
+            { required: true, message: 'Ingrese un email.' },
+            { type: 'email', message: 'Ingrese un email valido.'}
+            ]}
       >
         <Input />
       </Form.Item>
@@ -88,27 +94,21 @@ const AdministrativeForm = (props) => {
         name="phone"
         label="Teléfono"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su numero de teléfono convencional.',
-          },
+            { required: true, message: 'Ingresa su numero de teléfono convencional.' },
+            { pattern: /(^[0-9]{7})+/g, message: 'Ingrese un número, 7 digitos.' },
         ]}
       >
-         <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="mobile"
         label="Celular"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su número de teléfono celular.',
-          },
+            { required: true, message: 'Ingresa su número de teléfono celular.' },
+            { pattern: /(^[0-9]{10})+/g, message: 'Ingrese un número, 10 digitos.'}
         ]}
       >
-         <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="sex"
@@ -138,12 +138,12 @@ const AdministrativeForm = (props) => {
       {...formItemLayout}
       initialValues={{
         faculty_id: props.register.faculty_id,
-        name: props.register.administrative.name,
-        lastname: props.register.administrative.lastname,
-        email: props.register.administrative.email,
-        phone: props.register.administrative.phone,
-        mobile: props.register.administrative.mobile,
-        sex: props.register.administrative.sex,
+        name: props.register.administrative_name,
+        lastname: props.register.administrative_lastname,
+        email: props.register.administrative_email,
+        phone: props.register.administrative_phone,
+        mobile: props.register.administrative_mobile,
+        sex: props.register.administrative_sex,
       }}
     >
       <Form.Item
@@ -167,21 +167,30 @@ const AdministrativeForm = (props) => {
       <Form.Item
         name="name"
         label="Nombre"
-        rules={[{ required: true, message: 'Ingresa su nombre.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su nombre.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="lastname"
         label="Apellido"
-        rules={[{ required: true, message: 'Ingresa su apellido.' }]}
+        rules={[
+            { required: true, message: 'Ingresa su apellido.' },
+            { pattern: /^[a-zA-Z ]+/g, message: 'Ingrese solo letras.' }
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="email"
         label="Email"
-        rules={[{ required: true, message: 'Ingresa su email.' }]}
+        rules={[
+            { required: true, message: 'Ingrese un email.' },
+            { type: 'email', message: 'Ingrese un email valido.'}
+        ]}
       >
         <Input />
       </Form.Item>
@@ -189,27 +198,21 @@ const AdministrativeForm = (props) => {
         name="phone"
         label="Teléfono"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su numero de teléfono convencional.',
-          },
+            { required: true, message: 'Ingresa su numero de teléfono convencional.' },
+            { pattern: /(^[0-9]{7})+/g, message: 'Ingrese un número, 7 digitos.' },
         ]}
       >
-         <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="mobile"
         label="Celular"
         rules={[
-          {
-            required: true,
-            type: 'number',
-            message: 'Ingresa su número de teléfono celular.',
-          },
+            { required: true, message: 'Ingresa su número de teléfono celular.' },
+            { pattern: /(^[0-9]{10})+/g, message: 'Ingrese un número, 10 digitos.'}
         ]}
       >
-         <InputNumber />
+        <Input />
       </Form.Item>
       <Form.Item
         name="sex"

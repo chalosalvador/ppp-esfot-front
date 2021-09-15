@@ -1,9 +1,7 @@
 import { Form, Button, Input, message } from 'antd'
 import React, { useContext, useState } from 'react'
 import ModalContext from '../context/ModalContext'
-import API from '../data'
 import { addObject, editObject } from '../utils/formActions'
-import { mutate } from 'swr'
 
 const formItemLayout = {
   labelCol: {

@@ -1,9 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Empty, Popconfirm, Table } from 'antd'
+import React, { useContext, useState} from 'react'
+import {
+  Button, Empty, Popconfirm, Table, Tag
+} from 'antd'
 import ModalContext from '../context/ModalContext'
 import { useDataList } from '../data/useDataList'
 import ShowError from './ShowError'
 import { deleteObject } from '../utils/formActions'
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+
+} from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const AdministrativeList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
@@ -23,7 +31,18 @@ const AdministrativeList = (props) => {
     setShowModal(false)
   }
 
-  console.log(dataSearch)
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
+    }
+  }
+
   const columns = [
     {
       id: 'Código',
@@ -32,23 +51,43 @@ const AdministrativeList = (props) => {
     },
     {
       title: 'Nombre',
-      dataIndex: ['administrative', 'name'],
-      key: ['administrative', 'name'],
+      dataIndex: 'administrative_name',
+      key: 'administrative_name',
+      ...GetColumnSearchProps('administrative_name'),
     },
     {
       title: 'Apellido',
-      dataIndex: ['administrative', 'lastname'],
-      key: ['administrative', 'lastname'],
+      dataIndex: 'administrative_lastname',
+      key: 'administrative_lastname',
+      ...GetColumnSearchProps('administrative_name'),
     },
     {
       title: 'Facultad',
       dataIndex: 'faculty',
       key: 'faculty',
+      ...GetColumnSearchProps('faculty'),
     },
     {
       title: 'Estado',
-      dataIndex: ['administrative', 'status'],
-      key: ['administrative', 'status'],
+      dataIndex: 'administrative_status',
+      key: 'administrative_status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.administrative_status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+
+        </>
+      )
     },
     {
       title: 'Acción',
@@ -60,14 +99,14 @@ const AdministrativeList = (props) => {
               DataSet(record, props.form)
             }}
             size="middle"
-            
+
           >
             Editar
           </Button>
           <Popconfirm
             title="Desea eliminar el dato?"
             onConfirm={() => deleteAdministrative(record)}
-            
+
           >
             <Button size="middle">Eliminar</Button>
           </Popconfirm>

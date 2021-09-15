@@ -1,9 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Empty, Popconfirm, Table } from 'antd'
+import React, { useContext, useState } from 'react'
+import {
+  Button, Empty, Popconfirm, Table, Tag } from 'antd'
 import ModalContext from '../context/ModalContext'
 import { useDataList } from '../data/useDataList'
 import ShowError from './ShowError'
 import { deleteObject } from '../utils/formActions'
+
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+
+} from '@ant-design/icons';
+import GetColumnSearchProps from "./GetColumnSearchProps";
 const TeacherList = (props) => {
   const { setShowModal, setEdit, setRegister, setForm } =
     useContext(ModalContext)
@@ -21,6 +29,18 @@ const TeacherList = (props) => {
     setIsSubmitting(false)
     setShowModal(false)
   }
+
+  const handleChangeStatus = (record) => {
+    if (record == "active") {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">Activo</Tag>
+      )
+    } else {
+      return (
+        <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
+      )
+    }
+  }
   const columns = [
     {
       id: 'Código',
@@ -29,28 +49,48 @@ const TeacherList = (props) => {
     },
     {
       title: 'Nombre',
-      dataIndex: ['teacher', 'name'],
-      key: ['teacher', 'name'],
+      dataIndex: 'teacher_name',
+      key: 'teacher_name',
+      ...GetColumnSearchProps('teacher_name'),
     },
     {
       title: 'Apellido',
-      dataIndex: ['teacher', 'lastname'],
-      key: ['teacher', 'lastname'],
+      dataIndex: 'teacher_lastname',
+      key: 'teacher_lastname',
+      ...GetColumnSearchProps('teacher_lastname'),
     },
     {
       title: 'Profesión',
       dataIndex: 'degree',
       key: 'degree',
+      ...GetColumnSearchProps('degree'),
     },
     {
       title: 'Carrera',
       dataIndex: 'career',
       key: 'career',
+      ...GetColumnSearchProps('career'),
     },
     {
       title: 'Estado',
-      dataIndex: ['teacher', 'status'],
-      key: ['teacher', 'status'],
+      dataIndex: 'teacher_status',
+      key: 'teacher_status',
+      filters: [
+        {
+          text: 'Activos',
+          value: 'active',
+        },
+        {
+          text: 'Desactivados',
+          value: 'disabled',
+        },
+      ],
+      onFilter: (value, record) => record.teacher_status.indexOf(value) === 0,
+      render: (record) => (
+        <>
+          {handleChangeStatus(record)}
+        </>
+      )
     },
     {
       title: 'Acción',
@@ -78,7 +118,7 @@ const TeacherList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-  console.log(dataSearch)
+
   return (
     <Table
       dataSource={dataSearch}
