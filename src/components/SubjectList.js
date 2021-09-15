@@ -21,9 +21,8 @@ const SubjectList = (props) => {
     setForm(form)
   }
   const { dataSearch, isLoading, isError } = useDataList('careers')
-  const [currentSubjects, setCurrentSubjects] = useState([])
-  const [currentCareerId, setCurrentCareerId] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+
   const deleteSubject = async (record) => {
     setIsSubmitting(true)
     await deleteObject('subjects', record.id)
@@ -31,14 +30,6 @@ const SubjectList = (props) => {
     setShowModal(false)
   }
 
-  const handleChangeCareer = (value) => {
-    setCurrentCareerId(value)
-    dataSearch.map((career) => {
-      if (career.id == value) {
-        setCurrentSubjects(career.subjects)
-      }
-    })
-  }
   const handleChangeStatus = (record) => {
     if (record == "active") {
       return (
@@ -48,6 +39,45 @@ const SubjectList = (props) => {
       return (
         <Tag icon={<CloseCircleOutlined />} color="error">Desactivado</Tag>
       )
+    }
+  }
+
+  const getFilters = () =>{
+    const filters = [];
+    if(dataSearch){
+      dataSearch.forEach((datos1)=> {
+        var filter = {text: datos1.name , value: datos1.name};
+        filters.push(filter);
+      });
+      return filters;
+    }else{
+      return [];
+    }
+  }
+
+  const getDataSource = () =>{
+    if(dataSearch){
+      const datos2 = [];
+      dataSearch.forEach((datos1)=>{
+        datos1.subjects.forEach((subject)=>{
+          var dato = {
+            'id' : subject.id,
+            'name' : subject.name,
+            'code' : subject.code,
+            'level' : subject.level,
+            'unit' : subject.unit,
+            'status' : subject.status,
+            'field' : subject.field,
+            'career' : datos1.name,
+            'career_id' : datos1.id,
+            'topics': subject.topics,
+          };
+          datos2.push(dato);
+        });
+      });
+      return datos2;
+    }else{
+      return [];
     }
   }
 
@@ -82,6 +112,14 @@ const SubjectList = (props) => {
       ...GetColumnSearchProps('unit'),
     },
     {
+      title: 'CARRERA',
+      dataIndex: 'career',
+      key: 'career',
+      filters: getFilters(),
+      onFilter: (value, record) => record.career.indexOf(value) === 0,
+    },
+
+    {
       title: 'ESTADO',
       dataIndex: 'status',
       key: 'status',
@@ -99,7 +137,6 @@ const SubjectList = (props) => {
       render: (record) => (
         <>
           {handleChangeStatus(record)}
-
         </>
       )
     },
@@ -108,9 +145,6 @@ const SubjectList = (props) => {
       key: 'action',
       render: (text, record) => (
         <>
-          <div style={{ display: 'none' }}>
-            {(record['career_id'] = currentCareerId)}
-          </div>
           <Button
             onClick={() => {
               DataSet(record, props.form)
@@ -132,30 +166,10 @@ const SubjectList = (props) => {
   if (isError) {
     return <ShowError error={isError} />
   }
-
   return (
     <>
-      <Divider orientation="right">
-        <Select
-          showSearch
-          style={{ width: 240 }}
-          placeholder="Seleccione una carrera"
-          onChange={handleChangeCareer}
-          loading={isLoading}
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-        >
-          {dataSearch.map((career, i) => (
-            <Option key={i} value={career.id}>
-              {career.name}
-            </Option>
-          ))}
-        </Select>
-      </Divider>
       <Table
-        dataSource={currentSubjects}
+        dataSource={getDataSource()}
         columns={columns}
         rowKey={(record) => record.id}
         loading={isLoading}

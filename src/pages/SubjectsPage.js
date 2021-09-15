@@ -12,7 +12,7 @@ const Subjects = () => {
     <>
       <ModalContextProvider>
         <Card extra={<Actions form="SubjectForm" title="NUEVA MATERIA" />}>
-          <Title>Materias por Carrera</Title>
+          <Title>Materias</Title>
           <SubjectList form="SubjectForm" />
         </Card>
       </ModalContextProvider>
